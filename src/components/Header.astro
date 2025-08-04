@@ -1,6 +1,6 @@
 ---
 // src/components/Header.astro
-// Your branded site header with logo, nav links, and call/email CTAs.
+// Branded site header with a larger logo, nav links, and call/email CTAs.
 
 import HeaderLink from './HeaderLink.astro';
 const SITE_TITLE = 'Signal Development Operations LLC';
@@ -44,9 +44,9 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     gap: 1rem;
   }
   .logo img {
-    height: 40px;
-    display: block;
-  }
+  height: 100px;             /* your chosen size */
+  width: auto;               /* preserve aspect ratio */
+}
   .internal-links {
     display: flex;
     gap: 1rem;
@@ -59,9 +59,14 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     font-size: 1.25rem;
     text-decoration: none;
   }
-  @media (max-width: 720px) {
-    .internal-links {
-      display: none;
-    }
+
+  /* Mobile override: shrink logo on smaller screens */
+@media (max-width: 720px) {
+  .logo img {
+    height: 60px;            /* adjust as needed for mobile */
   }
+  nav {
+    min-height: auto;        /* let the nav shrink if necessary */
+  }
+}
 </style>
