@@ -1,31 +1,63 @@
 ---
-// src/pages/index.astro
-
 import MainLayout from '../layouts/MainLayout.astro';
-
 export const prerender = true;
 
-const title = 'Cookeville IT Consulting & Government Contracting | YourFirmName';
-const description = 'YourFirmName offers expert IT consulting, network security, and government-contracting support in Cookeville, TN.';
-
+const title = 'Professional IT & AI Consulting | Signal Development Operations';
+const description = 'Signal Development Operations offers AI & machine learning solutions, data strategy & analytics, cloud infrastructure, and 24/7 managed services in Cookeville, TN.';
 ---
 <MainLayout {title} {description}>
-  <h1>Welcome to Signal Development Operations</h1>
-  <p>
-    We’re your trusted IT partner in Cookeville specializing in:
-  </p>
-  <ul>
-    <li>🔒 Network Security Assessments</li>
-    <li>☁️ Cloud Infrastructure & Migrations</li>
-    <li>📜 CMMC & NIST Compliance Readiness</li>
-    <li>🖥️ 24/7 Managed IT Support</li>
-  </ul>
 
-  <div class="cta" style="display:flex; gap:1rem; margin-top:2rem;">
-    <a href="tel:+16155550123">Call Us</a>
-    <a href="mailto:info@yourfirm.com">Email Us</a>
-    <a href="https://calendly.com/yourfirm/consultation" target="_blank" rel="noopener">
-      Schedule Online
-    </a>
-  </div>
+  <!-- HERO -->
+  <section class="hero professional">
+    <div class="hero-content container">
+      <h1>Empowering Your Business with Professional IT & AI Consulting</h1>
+      <p class="tagline">
+        Custom AI solutions, data-driven insights, and secure cloud infrastructure—backed by 24/7 managed support.
+      </p>
+      <div class="hero-cta">
+        <a href="tel:+16155550123" class="button primary">Call Us</a>
+        <a href="mailto:info@signaldevops.com" class="button outline">Email Us</a>
+        <a href="https://calendly.com/signaldevops/consultation" class="button primary">Schedule a Consultation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE GRID -->
+  <section class="expertise container">
+    <h2>Our Expertise</h2>
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <div class="icon">🤖</div>
+        <h3>AI &amp; Machine Learning</h3>
+        <p>Model development, integration, and MLOps pipelines to unlock new capabilities.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="icon">📊</div>
+        <h3>Data Strategy &amp; Analytics</h3>
+        <p>End-to-end data architectures, BI dashboards, and governance frameworks.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="icon">☁️</div>
+        <h3>Cloud &amp; Infrastructure</h3>
+        <p>Secure migrations, scalable deployments, and performance optimization on AWS/Azure/GCP.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="icon">💼</div>
+        <h3>Managed Services</h3>
+        <p>24/7 monitoring, helpdesk support, and continuous improvement of your IT stack.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why container">
+    <h2>Why Choose Signal DevOps?</h2>
+    <ul class="why-list">
+      <li>✅ 10+ years of proven IT & AI consulting experience</li>
+      <li>✅ Trusted by government contractors and enterprises</li>
+      <li>✅ Holistic, end-to-end approach from strategy to operations</li>
+      <li>✅ Dedicated 24/7 support & SLA-backed services</li>
+    </ul>
+  </section>
+
 </MainLayout>

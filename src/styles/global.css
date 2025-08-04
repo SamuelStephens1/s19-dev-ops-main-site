@@ -190,3 +190,103 @@ footer {
   .hero-content p { font-size: 1rem; }
   .services-grid { grid-template-columns: 1fr; }
 }
+
+/* =========================
+   Homepage Professional Styles
+   ========================= */
+
+/* HERO: Professional look */
+.hero.professional {
+  background: var(--color-primary) url('/assets/hero-bg.jpg') no-repeat center/cover;
+  color: #fff;
+  padding: var(--space-xl) 0;
+}
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero-content h1 {
+  font-size: 2.75rem;
+  margin-bottom: var(--space-sm);
+}
+.hero-content .tagline {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-md);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+/* EXPERTISE GRID */
+.expertise {
+  padding: var(--space-xl) 0;
+  text-align: center;
+}
+.expertise h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-lg);
+}
+.expertise-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.expertise-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: var(--space-md);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.expertise-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.expertise-card .icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+/* WHY CHOOSE US */
+.why {
+  padding: var(--space-xl) 0;
+  text-align: center;
+}
+.why h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+.why-list {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.why-list li {
+  margin: var(--space-sm) 0;
+  font-size: 1.125rem;
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 720px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content .tagline {
+    font-size: 1rem;
+  }
+  .expertise-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-cta {
+    flex-direction: column;
+  }
+}
