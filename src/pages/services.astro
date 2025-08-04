@@ -1,68 +1,9 @@
 ---
-/**
- * Services page for YourFirmName Cookeville IT Consulting
- */
 import MainLayout from '../layouts/MainLayout.astro';
-
-export const prerender = true;     // prerender as static HTML
-const title       = 'Cookeville IT Services | YourFirmName';
-const description = 'Top-tier IT consulting in Cookeville, TN — network security, cloud migrations, CMMC & NIST compliance, and 24/7 support.';
-const siteUrl     = Astro.site.replace(/\/$/, '');  // from astro.config.mjs: site: 'https://yourdomain.com'
-const pageUrl     = `${siteUrl}${Astro.url.pathname}`;
-
-// JSON-LD for your local business
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'YourFirmName',
-  description,
-  url: siteUrl,
-  telephone: '+1-615-555-0123',
-  email: 'info@yourfirm.com',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '123 Main St',
-    addressLocality: 'Cookeville',
-    addressRegion: 'TN',
-    postalCode: '38501',
-    addressCountry: 'US'
-  },
-  areaServed: 'Cookeville, TN',
-  openingHours: 'Mo-Fr 08:00-18:00'
-};
+export const prerender = true;
+const title = '…';
+const description = '…';
 ---
 <MainLayout {title} {description}>
-  <!-- JSON-LD snippet -->
-  <script type="application/ld+json">
-    {JSON.stringify(jsonLd)}
-  </script>
-
-  <h1>IT Services in Cookeville, TN</h1>
-  <p>
-    At <strong>YourFirmName</strong>, we secure networks, migrate you to the cloud, 
-    and guide you through CMMC &amp; NIST compliance.
-  </p>
-  <ul>
-    <li>🔒 Network Security Assessments</li>
-    <li>☁️ Cloud Infrastructure &amp; Migrations</li>
-    <li>📜 CMMC &amp; NIST Compliance Readiness</li>
-    <li>🖥️ 24/7 Managed IT Support</li>
-  </ul>
-
-  <div style="display:flex; gap:1rem; margin-top:2rem;">
-    <a href="tel:+16155550123" style="padding:.75rem 1.5rem; background:#0366d6; color:#fff; border-radius:4px;">
-      Call Us
-    </a>
-    <a href="mailto:info@yourfirm.com" style="padding:.75rem 1.5rem; background:#0366d6; color:#fff; border-radius:4px;">
-      Email Us
-    </a>
-    <a
-      href="https://calendly.com/yourfirm/consultation"
-      target="_blank"
-      rel="noopener"
-      style="padding:.75rem 1.5rem; background:#0366d6; color:#fff; border-radius:4px;"
-    >
-      Schedule Online
-    </a>
-  </div>
+  <!-- your page markup here -->
 </MainLayout>
