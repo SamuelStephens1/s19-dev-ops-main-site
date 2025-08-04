@@ -1,0 +1,13 @@
+---
+// src/layouts/BlogPost.astro
+// Wraps a single blog post in your MainLayout.
+
+import MainLayout from './MainLayout.astro';
+const { title, description } = Astro.props;
+---
+
+<MainLayout {title} {description}>
+  <article class="blog-post">
+    <slot />
+  </article>
+</MainLayout>

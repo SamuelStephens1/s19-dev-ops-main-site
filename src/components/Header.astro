@@ -1,16 +1,16 @@
 ---
-// Header.astro
+// src/components/Header.astro
 // Your branded site header with logo, nav links, and call/email CTAs.
 
 import HeaderLink from './HeaderLink.astro';
-const SITE_TITLE = 'YourFirmName';
+const SITE_TITLE = 'Signal Development Operations LLC';
 ---
 
 <header>
   <nav>
     <div class="logo">
       <a href="/">
-        <img src="/assets/logo.svg" alt="{SITE_TITLE} logo" />
+        <img src="/logo.png" alt={SITE_TITLE + ' logo'} />
       </a>
     </div>
 
@@ -24,7 +24,7 @@ const SITE_TITLE = 'YourFirmName';
 
     <div class="contact-ctas">
       <a href="tel:+16155550123" aria-label="Call us">📞</a>
-      <a href="mailto:info@yourfirm.com" aria-label="Email us">✉️</a>
+      <a href="mailto:info@signaldevops.com" aria-label="Email us">✉️</a>
     </div>
   </nav>
 </header>
@@ -35,22 +35,27 @@ const SITE_TITLE = 'YourFirmName';
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   nav {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 1rem;
+    gap: 1rem;
   }
   .logo img {
     height: 40px;
+    display: block;
   }
   .internal-links {
     display: flex;
     gap: 1rem;
   }
+  .contact-ctas {
+    display: flex;
+    gap: 0.75rem;
+  }
   .contact-ctas a {
-    margin-left: 1rem;
     font-size: 1.25rem;
     text-decoration: none;
   }
