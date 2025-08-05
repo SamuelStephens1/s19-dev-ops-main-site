@@ -7,40 +7,44 @@
 
 /* 2) CSS Variables — update only here for brand theming */
 :root {
-  /* Brand colors */
-  --color-primary:    #001E41;  /* Navy (text, headings, footer bg) */
-  --color-accent:     #D7BC23;  /* Gold (buttons, highlights) */
-  --color-accent-dark:#C0A820;  /* Slightly darker gold on hover */
-  --color-secondary:  #85181B;  /* Red (links, error, badges) */
-  --color-bg:         #FFFFFF;  /* Page background */
-  --color-text:       #001E41;  /* Body text */
-  --color-muted:      #666666;  /* Secondary text */
+  /* Brand colors (from your logo) */
+  --color-primary:     #001E41;  /* Navy (header & footer) */
+  --color-secondary:   #85181B;  /* Maroon (body background) */
+  --color-accent:      #D7BC23;  /* Gold (buttons, highlights) */
+  --color-accent-dark: #C0A820;  /* Darker gold on hover */
+  --color-bg:          #FFFFFF;  /* Card & section backgrounds */
+  --color-text:        #001E41;  /* Body text */
+  --color-muted:       #666666;  /* Secondary text */
 
   /* Typography */
-  --font-sans:        'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:         'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Spacing scale */
-  --space-xs:         0.25rem;
-  --space-sm:         0.5rem;
-  --space-md:         1rem;
-  --space-lg:         2rem;
-  --space-xl:         4rem;
+  --space-xs:          0.25rem;
+  --space-sm:          0.5rem;
+  --space-md:          1rem;
+  --space-lg:          2rem;
+  --space-xl:          4rem;
 
   /* Layout */
-  --page-max-width:   1024px;
+  --page-max-width:    1024px;
 }
 
-/* 3) Base reset & typography */
+/* ——————————————————————————————————————————
+   Base reset & typography
+   —————————————————————————————————————————— */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 html {
   scroll-behavior: smooth;
 }
+
+/* 3) Body background (maroon) */
 body {
   margin: 0;
   padding: 0;
-  background: var(--color-bg);
+  background-color: var(--color-secondary);
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.6;
@@ -49,11 +53,11 @@ body {
 
 /* Links */
 a {
-  color: var(--color-secondary);
+  color: var(--color-accent);
   text-decoration: none;
 }
 a:hover {
-  color: var(--color-primary);
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 
@@ -115,178 +119,126 @@ p, ul, ol {
   color: #fff;
 }
 
-/* 6) Hero section */
-.hero {
-  background: url('/assets/hero-bg.jpg') center/cover no-repeat;
-  padding: var(--space-xl) 0;
-  color: #fff;
-}
-.hero-content {
-  text-align: center;
-}
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-sm);
-}
-.hero-content p {
-  font-size: 1.125rem;
-  margin-bottom: var(--space-md);
-}
-.hero-cta a {
-  margin: var(--space-xs);
-}
-
-/* 7) Services grid */
-.services {
-  padding: var(--space-xl) 0;
-  text-align: center;
-}
-.services h2 {
-  font-size: 2rem;
-  margin-bottom: var(--space-lg);
-}
-.services-grid {
-  display: grid;
-  gap: var(--space-lg);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-.service-card {
-  background: #fff;
-  padding: var(--space-md);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.service-card .icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-}
-
-/* 8) Header & footer styling */
+/* 6) Header styling (nav bar in navy) */
 header {
-  background: var(--color-bg);
-  border-bottom: 1px solid #e5e5e5;
+  background-color: var(--color-primary);
+  color: #fff;
+  position: relative;
+  z-index: 2;
 }
 header nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
   padding: var(--space-md) 0;
 }
-footer {
-  background: var(--color-bg);
-  color: var(--color-muted);
-  text-align: center;
-  padding: var(--space-lg) 0;
-  font-size: 0.875rem;
-}
-
-/* 9) Mobile responsiveness */
-@media (max-width: 720px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-
-  /* Collapse nav links into a hamburger later, for now hide extras */
-  header nav .internal-links { display: none; }
-  .hero-content p { font-size: 1rem; }
-  .services-grid { grid-template-columns: 1fr; }
-}
-
-/* =========================
-   Homepage Professional Styles
-   ========================= */
-
-/* HERO: Professional look */
-.hero.professional {
-  background: var(--color-primary) url('/assets/hero-bg.jpg') no-repeat center/cover;
+header nav a {
   color: #fff;
+  margin: 0 var(--space-sm);
+}
+header nav a:hover {
+  color: var(--color-accent);
+}
+
+/* 7) Hero section (white card over maroon) */
+.hero {
   padding: var(--space-xl) 0;
 }
 .hero-content {
+  position: relative;
+  z-index: 1;
   max-width: 800px;
   margin: 0 auto;
+  padding: var(--space-lg);
+  background-color: var(--color-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 .hero-content h1 {
   font-size: 2.75rem;
   margin-bottom: var(--space-sm);
+  color: var(--color-primary);
 }
 .hero-content .tagline {
   font-size: 1.25rem;
   margin-bottom: var(--space-md);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  color: var(--color-text);
 }
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-sm);
-  margin-top: var(--space-md);
+}
+.hero-cta .button {
+  min-width: 160px;
 }
 
-/* EXPERTISE GRID */
-.expertise {
+/* 8) Services & Expertise grid sections */
+.services,
+.expertise,
+.why {
   padding: var(--space-xl) 0;
+  background-color: var(--color-bg);
   text-align: center;
 }
-.expertise h2 {
+.services h2,
+.expertise h2,
+.why h2 {
   font-size: 2rem;
   margin-bottom: var(--space-lg);
 }
+.services-grid,
 .expertise-grid {
   display: grid;
   gap: var(--space-lg);
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
+.service-card,
 .expertise-card {
   background: #fff;
-  border-radius: 8px;
   padding: var(--space-md);
+  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.expertise-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
+.service-card .icon,
 .expertise-card .icon {
   font-size: 2rem;
   margin-bottom: var(--space-sm);
 }
 
-/* WHY CHOOSE US */
-.why {
-  padding: var(--space-xl) 0;
+/* 9) Footer styling (nav bar in navy) */
+footer {
+  background-color: var(--color-primary);
+  color: #fff;
   text-align: center;
-}
-.why h2 {
-  font-size: 2rem;
-  margin-bottom: var(--space-md);
-}
-.why-list {
-  list-style: none;
-  padding: 0;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.why-list li {
-  margin: var(--space-sm) 0;
-  font-size: 1.125rem;
+  padding: var(--space-lg) 0;
+  font-size: 0.875rem;
 }
 
-/* MOBILE ADJUSTMENTS */
+/* 10) Mobile responsiveness */
 @media (max-width: 720px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+
+  header nav .internal-links {
+    display: none;
+  }
   .hero-content h1 {
     font-size: 2rem;
   }
   .hero-content .tagline {
     font-size: 1rem;
   }
+  .hero-cta .button {
+    width: 100%;
+    max-width: 280px;
+  }
+  .services-grid,
   .expertise-grid {
     grid-template-columns: 1fr;
-  }
-  .hero-cta {
-    flex-direction: column;
   }
 }
