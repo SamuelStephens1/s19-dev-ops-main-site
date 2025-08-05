@@ -1,0 +1,89 @@
+/* Header.module.css */
+
+/* =========================
+   1) Mobile-first defaults
+   ========================= */
+.mainNav {
+  background-color: #0A2D60;  /* lighter navy */
+  color: #fff;
+}
+.mainNavContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo left, hamburger/CTA right */
+  padding: var(--space-sm) var(--space-md);
+  position: relative;
+}
+.logo img {
+  height: 60px;  /* smaller logo on mobile */
+  width: auto;
+}
+.links {
+  display: none; /* hide desktop links */
+}
+.hamburger {
+  display: block;
+  background: transparent;
+  border: none;
+  padding: var(--space-sm);
+  cursor: pointer;
+}
+.hamburger svg {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+/* Scroll-only CTA (mobile shows it, you can hide if desired) */
+.scrollCta {
+  position: fixed;
+  top: 0;
+  right: var(--space-sm);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1001;
+}
+.scrollCta.visible {
+  opacity: 1;
+  transform: translateY(var(--space-sm));
+}
+.scrollCta a {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: #fff;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* =========================
+   2) Desktop overrides
+   ========================= */
+@media (min-width: 721px) {
+  .mainNavContainer {
+    justify-content: center;       /* center the links */
+    padding: var(--space-lg) 0;     /* more vertical breathing room */
+  }
+  .logo {
+    position: absolute;
+    left: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .logo img {
+    height: 100px;                  /* larger logo on desktop */
+  }
+  .links {
+    display: flex;
+    gap: var(--space-lg);
+  }
+  .hamburger {
+    display: none;                  /* hide mobile menu icon */
+  }
+  /* Optionally pin the CTA to the far right on desktop too: */
+  .scrollCta {
+    right: var(--space-md);
+  }
+}

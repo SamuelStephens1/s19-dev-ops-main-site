@@ -1,244 +1,37 @@
-/* ==========================================================================
-   global.css — Signal DevOps Brand Styles
-   ========================================================================== */
-
-/* 1) Import your font(s) */
+/* src/styles/global.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* 2) CSS Variables — update only here for brand theming */
 :root {
-  /* Brand colors (from your logo) */
-  --color-primary:     #001E41;  /* Navy (header & footer) */
-  --color-secondary:   #85181B;  /* Maroon (body background) */
-  --color-accent:      #D7BC23;  /* Gold (buttons, highlights) */
-  --color-accent-dark: #C0A820;  /* Darker gold on hover */
-  --color-bg:          #FFFFFF;  /* Card & section backgrounds */
-  --color-text:        #001E41;  /* Body text */
-  --color-muted:       #666666;  /* Secondary text */
-
-  /* Typography */
-  --font-sans:         'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-  /* Spacing scale */
-  --space-xs:          0.25rem;
-  --space-sm:          0.5rem;
-  --space-md:          1rem;
-  --space-lg:          2rem;
-  --space-xl:          4rem;
-
-  /* Layout */
-  --page-max-width:    1024px;
+  --color-primary:    #001E41;
+  --color-secondary:  #85181B;
+  --color-accent:     #D7BC23;
+  --color-accent-dark:#C0A820;
+  --color-bg:         #FFFFFF;
+  --color-text:       #001E41;
+  --font-sans:        'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --space-sm:         0.5rem;
+  --space-md:         1rem;
+  --space-lg:         2rem;
+  --space-xl:         4rem;
+  --page-max-width:   1024px;
 }
 
-/* ——————————————————————————————————————————
-   Base reset & typography
-   —————————————————————————————————————————— */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-html {
-  scroll-behavior: smooth;
-}
-
-/* 3) Body background (maroon) */
+/* Reset & base typography */
+*, *::before, *::after { box-sizing: border-box; }
 body {
   margin: 0;
   padding: 0;
+  font-family: var(--font-sans);
   background-color: var(--color-secondary);
   color: var(--color-text);
-  font-family: var(--font-sans);
   line-height: 1.6;
-  font-size: 1rem;
 }
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { color: var(--color-accent-dark); text-decoration: underline; }
 
-/* Links */
-a {
-  color: var(--color-accent);
-  text-decoration: none;
-}
-a:hover {
-  color: var(--color-accent-dark);
-  text-decoration: underline;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5 {
-  font-family: var(--font-sans);
-  color: var(--color-primary);
-  margin-top: var(--space-lg);
-  margin-bottom: var(--space-sm);
-  line-height: 1.2;
-}
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-
-/* Paragraphs & lists */
-p, ul, ol {
-  margin-top: 0;
-  margin-bottom: var(--space-md);
-}
-
-/* 4) Utility container */
+/* Utility container */
 .container {
   max-width: var(--page-max-width);
   margin: 0 auto;
   padding: 0 var(--space-md);
-}
-
-/* 5) Buttons & CTAs */
-.button,
-.cta a {
-  display: inline-block;
-  font-weight: 600;
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.button.primary,
-.cta a.primary {
-  background-color: var(--color-accent);
-  color: #fff;
-}
-.button.primary:hover,
-.cta a.primary:hover {
-  background-color: var(--color-accent-dark);
-}
-
-.button.outline,
-.cta a.outline {
-  background-color: transparent;
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
-}
-.button.outline:hover,
-.cta a.outline:hover {
-  background-color: var(--color-accent);
-  color: #fff;
-}
-
-/* 6) Header styling (nav bar in navy) */
-header {
-  background-color: var(--color-primary);
-  color: #fff;
-  position: relative;
-  z-index: 2;
-}
-header nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: var(--space-md) 0;
-}
-header nav a {
-  color: #fff;
-  margin: 0 var(--space-sm);
-}
-header nav a:hover {
-  color: var(--color-accent);
-}
-
-/* 7) Hero section (white card over maroon) */
-.hero {
-  padding: var(--space-xl) 0;
-}
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--space-lg);
-  background-color: var(--color-bg);
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-.hero-content h1 {
-  font-size: 2.75rem;
-  margin-bottom: var(--space-sm);
-  color: var(--color-primary);
-}
-.hero-content .tagline {
-  font-size: 1.25rem;
-  margin-bottom: var(--space-md);
-  color: var(--color-text);
-}
-.hero-cta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-sm);
-}
-.hero-cta .button {
-  min-width: 160px;
-}
-
-/* 8) Services & Expertise grid sections */
-.services,
-.expertise,
-.why {
-  padding: var(--space-xl) 0;
-  background-color: var(--color-bg);
-  text-align: center;
-}
-.services h2,
-.expertise h2,
-.why h2 {
-  font-size: 2rem;
-  margin-bottom: var(--space-lg);
-}
-.services-grid,
-.expertise-grid {
-  display: grid;
-  gap: var(--space-lg);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-.service-card,
-.expertise-card {
-  background: #fff;
-  padding: var(--space-md);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.service-card .icon,
-.expertise-card .icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-}
-
-/* 9) Footer styling (nav bar in navy) */
-footer {
-  background-color: var(--color-primary);
-  color: #fff;
-  text-align: center;
-  padding: var(--space-lg) 0;
-  font-size: 0.875rem;
-}
-
-/* 10) Mobile responsiveness */
-@media (max-width: 720px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-
-  header nav .internal-links {
-    display: none;
-  }
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-  .hero-content .tagline {
-    font-size: 1rem;
-  }
-  .hero-cta .button {
-    width: 100%;
-    max-width: 280px;
-  }
-  .services-grid,
-  .expertise-grid {
-    grid-template-columns: 1fr;
-  }
 }
