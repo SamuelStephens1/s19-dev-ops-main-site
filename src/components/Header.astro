@@ -5,14 +5,13 @@ import HeaderLink from './HeaderLink.astro';
 const SITE_TITLE = 'Signal Development Operations LLC';
 ---
 
-<!-- Mobile-first header -->
-<header class={styles.mainNav}>
+<header class={styles.mainNav} data-role="main-nav" data-expanded="false">
   <div class={`container ${styles.mainNavContainer}`}>
     <div class={styles.logo}>
       <a href="/"><img src="/logo.png" alt={`${SITE_TITLE} logo`} /></a>
     </div>
 
-    <!-- Desktop links (hidden on mobile by CSS) -->
+    <!-- Desktop nav (hidden on mobile) -->
     <nav class={styles.links} aria-label="Primary">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/services">Services</HeaderLink>
@@ -21,21 +20,28 @@ const SITE_TITLE = 'Signal Development Operations LLC';
       <HeaderLink href="/blog">Blog</HeaderLink>
     </nav>
 
-    <!-- Mobile hamburger -->
-    <button
-      data-el="menu-btn"
-      class={styles.menuButton}
-      aria-label="Open menu"
-      aria-controls="mobile-menu"
-      aria-expanded="false"
-      type="button"
-    >
-      <svg class={styles.menuIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6"  x2="21" y2="6" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="3" y1="18" x2="21" y2="18" />
-      </svg>
-    </button>
+    <!-- MOBILE right stack -->
+    <div class={styles.rightStack}>
+      <button
+        data-el="menu-btn"
+        class={styles.menuButton}
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        type="button"
+      >
+        <svg class={styles.menuIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6"  x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <!-- CTA appears under hamburger only after scroll (mobile) -->
+      <div data-el="scroll-cta" class={styles.scrollCta} data-visible="false">
+        <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
+      </div>
+    </div>
 
     <!-- Mobile dropdown -->
     <nav
@@ -54,25 +60,20 @@ const SITE_TITLE = 'Signal Development Operations LLC';
   </div>
 </header>
 
-<!-- Scroll-only CTA -->
-<div data-el="scroll-cta" class={styles.scrollCta}>
-  <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
-</div>
-
 <script client:load>
-  // Select via data-attributes to avoid CSS-module hashing issues
-  const btn  = document.querySelector('[data-el="menu-btn"]');
-  const menu = document.querySelector('[data-el="mobile-menu"]');
-  const cta  = document.querySelector('[data-el="scroll-cta"]');
+  const header = document.querySelector('[data-role="main-nav"]');
+  const btn    = document.querySelector('[data-el="menu-btn"]');
+  const menu   = document.querySelector('[data-el="mobile-menu"]');
+  const cta    = document.querySelector('[data-el="scroll-cta"]');
 
-  // Toggle mobile menu
+  // Hamburger toggle (mobile)
   btn?.addEventListener('click', () => {
     const open = menu?.dataset.open === 'true';
     if (menu) menu.dataset.open = (!open).toString();
-    btn.setAttribute('aria-expanded', (!open).toString());
+    btn?.setAttribute('aria-expanded', (!open).toString());
   });
 
-  // Close menu on resize up to desktop
+  // Close mobile menu on resize up to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 721 && menu) {
       menu.dataset.open = 'false';
@@ -88,10 +89,18 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     }
   });
 
-  // Scroll CTA visibility
+  // Scroll: mobile-only expansion + CTA
   const onScroll = () => {
-    if (!cta) return;
-    cta.dataset.visible = (window.scrollY > 50).toString();
+    const scrolled = window.scrollY > 50;
+
+    if (window.innerWidth <= 720) {
+      header?.setAttribute('data-expanded', scrolled ? 'true' : 'false');
+      cta?.setAttribute('data-visible', scrolled ? 'true' : 'false');
+    } else {
+      // ensure mobile state isn't leaking into desktop
+      header?.setAttribute('data-expanded', 'false');
+      cta?.setAttribute('data-visible', 'false');
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

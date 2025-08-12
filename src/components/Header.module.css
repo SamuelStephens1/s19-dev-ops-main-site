@@ -1,6 +1,6 @@
-/* Header.module.css — mobile-first */
+/* Header.module.css — mobile-first, desktop preserved */
 
-/* ====== Mobile defaults ====== */
+/* shared */
 .mainNav {
   background-color: #0A2D60; /* slightly lighter than logo navy */
   color: #fff;
@@ -9,96 +9,114 @@
   z-index: 999;
 }
 
-.mainNavContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* logo left, menu right */
-  padding: var(--space-sm) var(--space-md);
-  position: relative; /* anchor dropdown */
+/* ====== MOBILE (≤720px) ====== */
+@media (max-width: 720px) {
+  .mainNavContainer {
+    display: flex;
+    align-items: center;                 /* centers hamburger vertically (collapsed) */
+    justify-content: space-between;      /* logo left, right stack right */
+    padding: 6px var(--space-md);        /* skinny header by default */
+    position: relative;
+  }
+
+  .logo img {
+    height: 40px;                        /* small logo when collapsed */
+    width: auto;
+  }
+
+  .links { display: none; }              /* hide desktop links on mobile */
+
+  .rightStack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;                            /* spacing between hamburger and CTA */
+    position: static;                    /* remains in normal flow */
+  }
+
+  .menuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+  }
+  .menuButton:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .menuIcon { width: 24px; height: 24px; }
+
+  .mobileMenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #0A2D60;
+    border-top: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 6px 16px rgba(0,0,0,.2);
+    z-index: 1000;
+    padding: var(--space-sm) var(--space-md);
+  }
+  .mobileMenu[data-open="true"] { display: block; }
+  .mobileMenu a {
+    display: block;
+    padding: var(--space-sm) 0;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .mobileMenu a:last-child { border-bottom: none; }
+
+  /* CTA under hamburger — takes no layout space when hidden */
+  .scrollCta {
+    display: none;                       /* hidden = no space */
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .25s ease, transform .25s ease;
+    align-self: flex-end;                /* keep it under the hamburger */
+  }
+  .scrollCta[data-visible="true"] {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .scrollCta a {
+    display: inline-block;               /* fit to text */
+    white-space: nowrap;                 /* one-line pill */
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    line-height: 1.2;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+  }
+  .scrollCta a:hover { background-color: var(--color-accent-dark); }
+
+  /* Expanded state after scroll (mobile only) — keep stack IN FLOW so header grows */
+  .mainNav[data-expanded="true"] .mainNavContainer {
+    align-items: flex-start;             /* pin items to top */
+    padding: 10px var(--space-md) 14px;  /* taller header to fully contain CTA */
+  }
+  .mainNav[data-expanded="true"] .logo img {
+    height: 48px;                        /* small bump for balance */
+  }
 }
 
-.logo img {
-  height: 56px;
-  width: auto;
-}
-
-/* desktop links are hidden on mobile */
-.links { display: none; }
-
-/* hamburger */
-.menuButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-}
-.menuButton:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-.menuIcon {
-  width: 24px;
-  height: 24px;
-}
-
-/* mobile dropdown */
-.mobileMenu {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  background: #0A2D60;
-  border-top: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 6px 16px rgba(0,0,0,.2);
-  z-index: 1000;
-  padding: var(--space-sm) var(--space-md);
-}
-.mobileMenu[data-open="true"] { display: block; }
-.mobileMenu a {
-  display: block;
-  padding: var(--space-sm) 0;
-  color: #fff;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-.mobileMenu a:last-child { border-bottom: none; }
-
-/* scroll-only CTA */
-.scrollCta {
-  position: fixed;
-  top: calc(env(safe-area-inset-top) + 8px);
-  right: 8px;
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity .25s ease, transform .25s ease;
-  z-index: 1001;
-}
-.scrollCta[data-visible="true"] {
-  opacity: 1;
-  transform: translateY(0);
-}
-.scrollCta a {
-  display: inline-block;
-  background-color: var(--color-accent);
-  color: #fff;
-  padding: var(--space-xs) var(--space-md);
-  border-radius: 4px;
-  font-weight: 600;
-  text-decoration: none;
-}
-.scrollCta a:hover { background-color: var(--color-accent-dark); }
-
-/* ====== Desktop (≥721px) ====== */
+/* ====== DESKTOP (≥721px) ====== */
 @media (min-width: 721px) {
   .mainNavContainer {
-    justify-content: center;       /* center links */
-    padding: var(--space-lg) 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;             /* centered links */
+    padding: var(--space-lg) 0;          /* original desktop spacing */
+    position: relative;
   }
 
   .logo {
@@ -120,8 +138,9 @@
   }
   .links a:hover { color: var(--color-accent); }
 
-  .menuButton { display: none; }          /* no hamburger on desktop */
-  .mobileMenu { display: none !important; }
-
-  .scrollCta { right: var(--space-md); }  /* shift CTA in a bit */
+  /* Hide mobile-only chrome on desktop */
+  .menuButton,
+  .mobileMenu,
+  .scrollCta,
+  .rightStack { display: none !important; }
 }
