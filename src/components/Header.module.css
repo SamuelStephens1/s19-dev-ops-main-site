@@ -9,6 +9,9 @@
   z-index: 999;
 }
 
+/* Hide desktop CTA by default (prevents stray text on mobile) */
+.desktopCta { display: none; }
+
 /* ====== MOBILE (≤720px) ====== */
 @media (max-width: 720px) {
   .mainNavContainer {
@@ -31,7 +34,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;                            /* spacing between hamburger and CTA */
-    position: static;                    /* remains in normal flow */
+    position: static;                    /* remains in normal flow so header grows */
   }
 
   .menuButton {
@@ -107,6 +110,9 @@
   .mainNav[data-expanded="true"] .logo img {
     height: 48px;                        /* small bump for balance */
   }
+
+  /* Ensure desktop CTA never shows on mobile */
+  .desktopCta { display: none !important; }
 }
 
 /* ====== DESKTOP (≥721px) ====== */
@@ -138,9 +144,33 @@
   }
   .links a:hover { color: var(--color-accent); }
 
+  /* Desktop scroll CTA appears on the right on scroll */
+  .desktopCta {
+    display: none;
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .desktopCta[data-visible="true"] { display: block; }
+  .desktopCta a {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    background-color: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+  }
+  .desktopCta a:hover { background-color: var(--color-accent-dark); }
+
   /* Hide mobile-only chrome on desktop */
   .menuButton,
   .mobileMenu,
-  .scrollCta,
-  .rightStack { display: none !important; }
+  .rightStack,
+  .scrollCta { display: none !important; }
 }
