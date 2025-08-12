@@ -16,25 +16,22 @@
 @media (max-width: 720px) {
   .mainNavContainer {
     display: flex;
-    align-items: center;                 /* centers hamburger vertically (collapsed) */
-    justify-content: space-between;      /* logo left, right stack right */
-    padding: 6px var(--space-md);        /* skinny header by default */
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px var(--space-md);
     position: relative;
   }
 
-  .logo img {
-    height: 40px;                        /* small logo when collapsed */
-    width: auto;
-  }
+  .logo img { height: 40px; width: auto; }
 
-  .links { display: none; }              /* hide desktop links on mobile */
+  .links { display: none; }
 
   .rightStack {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 8px;                            /* spacing between hamburger and CTA */
-    position: static;                    /* remains in normal flow so header grows */
+    gap: 8px;
+    position: static;
   }
 
   .menuButton {
@@ -54,9 +51,7 @@
   .mobileMenu {
     display: none;
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
+    left: 0; right: 0; top: 100%;
     background: #0A2D60;
     border-top: 1px solid rgba(255,255,255,.12);
     box-shadow: 0 6px 16px rgba(0,0,0,.2);
@@ -64,6 +59,7 @@
     padding: var(--space-sm) var(--space-md);
   }
   .mobileMenu[data-open="true"] { display: block; }
+
   .mobileMenu a {
     display: block;
     padding: var(--space-sm) 0;
@@ -73,13 +69,21 @@
   }
   .mobileMenu a:last-child { border-bottom: none; }
 
-  /* CTA under hamburger — takes no layout space when hidden */
+  /* >>> ACTIVE STATE (current page = brand gold) <<< */
+  .mobileMenu a:global(.active),
+  .mobileMenu a[aria-current="page"] {
+    color: #D7BC23 !important;   /* force brand gold */
+    font-weight: 700;
+    border-bottom-color: rgba(215,188,35,.35);
+  }
+
+  /* Scroll CTA under hamburger */
   .scrollCta {
-    display: none;                       /* hidden = no space */
+    display: none;
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity .25s ease, transform .25s ease;
-    align-self: flex-end;                /* keep it under the hamburger */
+    align-self: flex-end;
   }
   .scrollCta[data-visible="true"] {
     display: block;
@@ -87,8 +91,8 @@
     transform: translateY(0);
   }
   .scrollCta a {
-    display: inline-block;               /* fit to text */
-    white-space: nowrap;                 /* one-line pill */
+    display: inline-block;
+    white-space: nowrap;
     text-align: center;
     padding: 8px 12px;
     border-radius: 999px;
@@ -102,16 +106,12 @@
   }
   .scrollCta a:hover { background-color: var(--color-accent-dark); }
 
-  /* Expanded state after scroll (mobile only) — keep stack IN FLOW so header grows */
   .mainNav[data-expanded="true"] .mainNavContainer {
-    align-items: flex-start;             /* pin items to top */
-    padding: 10px var(--space-md) 14px;  /* taller header to fully contain CTA */
+    align-items: flex-start;
+    padding: 10px var(--space-md) 14px;
   }
-  .mainNav[data-expanded="true"] .logo img {
-    height: 48px;                        /* small bump for balance */
-  }
+  .mainNav[data-expanded="true"] .logo img { height: 48px; }
 
-  /* Ensure desktop CTA never shows on mobile */
   .desktopCta { display: none !important; }
 }
 
@@ -120,8 +120,8 @@
   .mainNavContainer {
     display: flex;
     align-items: center;
-    justify-content: center;             /* centered links */
-    padding: var(--space-lg) 0;          /* original desktop spacing */
+    justify-content: center;
+    padding: var(--space-lg) 0;
     position: relative;
   }
 
@@ -144,7 +144,15 @@
   }
   .links a:hover { color: var(--color-accent); }
 
-  /* Desktop scroll CTA appears on the right on scroll */
+  /* Desktop: also support global active class if you want a color change there too */
+  .links a:global(.active),
+  .links a[aria-current="page"] {
+    /* optional: uncomment if you want gold in desktop too
+    color: #D7BC23;
+    */
+    font-weight: 700;
+  }
+
   .desktopCta {
     display: none;
     position: absolute;
@@ -168,7 +176,6 @@
   }
   .desktopCta a:hover { background-color: var(--color-accent-dark); }
 
-  /* Hide mobile-only chrome on desktop */
   .menuButton,
   .mobileMenu,
   .rightStack,
