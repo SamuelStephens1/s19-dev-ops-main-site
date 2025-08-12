@@ -1,52 +1,87 @@
-/* Header.module.css */
+/* Header.module.css — mobile-first */
 
-/* =========================
-   1) Mobile-first defaults
-   ========================= */
+/* ====== Mobile defaults ====== */
 .mainNav {
-  background-color: #0A2D60;  /* lighter navy */
+  background-color: #0A2D60; /* slightly lighter than logo navy */
   color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
+
 .mainNavContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo left, hamburger/CTA right */
+  justify-content: space-between; /* logo left, menu right */
   padding: var(--space-sm) var(--space-md);
-  position: relative;
-}
-.logo img {
-  height: 60px;  /* smaller logo on mobile */
-  width: auto;
-}
-.links {
-  display: none; /* hide desktop links */
-}
-.hamburger {
-  display: block;
-  background: transparent;
-  border: none;
-  padding: var(--space-sm);
-  cursor: pointer;
-}
-.hamburger svg {
-  width: 24px;
-  height: 24px;
-  color: #fff;
+  position: relative; /* anchor dropdown */
 }
 
-/* Scroll-only CTA (mobile shows it, you can hide if desired) */
+.logo img {
+  height: 56px;
+  width: auto;
+}
+
+/* desktop links are hidden on mobile */
+.links { display: none; }
+
+/* hamburger */
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+}
+.menuButton:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.menuIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* mobile dropdown */
+.mobileMenu {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #0A2D60;
+  border-top: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 6px 16px rgba(0,0,0,.2);
+  z-index: 1000;
+  padding: var(--space-sm) var(--space-md);
+}
+.mobileMenu[data-open="true"] { display: block; }
+.mobileMenu a {
+  display: block;
+  padding: var(--space-sm) 0;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.mobileMenu a:last-child { border-bottom: none; }
+
+/* scroll-only CTA */
 .scrollCta {
   position: fixed;
-  top: 0;
-  right: var(--space-sm);
+  top: calc(env(safe-area-inset-top) + 8px);
+  right: 8px;
   opacity: 0;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(-8px);
+  transition: opacity .25s ease, transform .25s ease;
   z-index: 1001;
 }
-.scrollCta.visible {
+.scrollCta[data-visible="true"] {
   opacity: 1;
-  transform: translateY(var(--space-sm));
+  transform: translateY(0);
 }
 .scrollCta a {
   display: inline-block;
@@ -57,33 +92,36 @@
   font-weight: 600;
   text-decoration: none;
 }
+.scrollCta a:hover { background-color: var(--color-accent-dark); }
 
-/* =========================
-   2) Desktop overrides
-   ========================= */
+/* ====== Desktop (≥721px) ====== */
 @media (min-width: 721px) {
   .mainNavContainer {
-    justify-content: center;       /* center the links */
-    padding: var(--space-lg) 0;     /* more vertical breathing room */
+    justify-content: center;       /* center links */
+    padding: var(--space-lg) 0;
   }
+
   .logo {
     position: absolute;
     left: var(--space-md);
     top: 50%;
     transform: translateY(-50%);
   }
-  .logo img {
-    height: 100px;                  /* larger logo on desktop */
-  }
+  .logo img { height: 100px; }
+
   .links {
     display: flex;
     gap: var(--space-lg);
   }
-  .hamburger {
-    display: none;                  /* hide mobile menu icon */
+  .links a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
   }
-  /* Optionally pin the CTA to the far right on desktop too: */
-  .scrollCta {
-    right: var(--space-md);
-  }
+  .links a:hover { color: var(--color-accent); }
+
+  .menuButton { display: none; }          /* no hamburger on desktop */
+  .mobileMenu { display: none !important; }
+
+  .scrollCta { right: var(--space-md); }  /* shift CTA in a bit */
 }

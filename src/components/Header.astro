@@ -1,21 +1,50 @@
 ---
 import styles from './Header.module.css';
 import HeaderLink from './HeaderLink.astro';
-const SITE_TITLE = 'Signal Development Operations LLC';
 
-// Grab the CSS module class name for use in runtime script
-const scrollCtaClass = styles.scrollCta;
+const SITE_TITLE = 'Signal Development Operations LLC';
 ---
 
-<!-- MAIN NAV -->
+<!-- Mobile-first header -->
 <header class={styles.mainNav}>
-  <div class={`${styles.mainNavContainer} container`}>
+  <div class={`container ${styles.mainNavContainer}`}>
     <div class={styles.logo}>
-      <a href="/">
-        <img src="/logo.png" alt={`${SITE_TITLE} logo`} />
-      </a>
+      <a href="/"><img src="/logo.png" alt={`${SITE_TITLE} logo`} /></a>
     </div>
-    <nav class={styles.links}>
+
+    <!-- Desktop links (hidden on mobile by CSS) -->
+    <nav class={styles.links} aria-label="Primary">
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/services">Services</HeaderLink>
+      <HeaderLink href="/resources">Resources</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      data-el="menu-btn"
+      class={styles.menuButton}
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      type="button"
+    >
+      <svg class={styles.menuIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6"  x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <!-- Mobile dropdown -->
+    <nav
+      id="mobile-menu"
+      data-el="mobile-menu"
+      class={styles.mobileMenu}
+      aria-label="Mobile primary"
+      data-open="false"
+    >
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/services">Services</HeaderLink>
       <HeaderLink href="/resources">Resources</HeaderLink>
@@ -25,24 +54,45 @@ const scrollCtaClass = styles.scrollCta;
   </div>
 </header>
 
-<!-- SCROLL-ONLY CTA -->
-<div class={scrollCtaClass}>
-  <a href="https://calendly.com/signaldevops/consultation">
-    Schedule a Consultation
-  </a>
+<!-- Scroll-only CTA -->
+<div data-el="scroll-cta" class={styles.scrollCta}>
+  <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
 </div>
 
-<!-- show/hide CTA on scroll -->
 <script client:load>
-  // Note: scrollCtaClass is injected above
-  const cta = document.querySelector('.' + scrollCtaClass);
-  function toggleCTA() {
-    if (window.scrollY > 50) {
-      cta.classList.add('visible');
-    } else {
-      cta.classList.remove('visible');
+  // Select via data-attributes to avoid CSS-module hashing issues
+  const btn  = document.querySelector('[data-el="menu-btn"]');
+  const menu = document.querySelector('[data-el="mobile-menu"]');
+  const cta  = document.querySelector('[data-el="scroll-cta"]');
+
+  // Toggle mobile menu
+  btn?.addEventListener('click', () => {
+    const open = menu?.dataset.open === 'true';
+    if (menu) menu.dataset.open = (!open).toString();
+    btn.setAttribute('aria-expanded', (!open).toString());
+  });
+
+  // Close menu on resize up to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 721 && menu) {
+      menu.dataset.open = 'false';
+      btn?.setAttribute('aria-expanded', 'false');
     }
-  }
-  window.addEventListener('scroll', toggleCTA);
-  toggleCTA();
+  });
+
+  // Close with Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu) {
+      menu.dataset.open = 'false';
+      btn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Scroll CTA visibility
+  const onScroll = () => {
+    if (!cta) return;
+    cta.dataset.visible = (window.scrollY > 50).toString();
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 </script>
