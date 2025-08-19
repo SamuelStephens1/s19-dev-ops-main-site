@@ -1,22 +1,77 @@
-<section
-  style="
-    padding: 6rem 1rem;
-    background: url('/images/testimonials-bg.png') center/cover no-repeat;
-    color: white;
-    text-align: center;
-  "
+---
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// register Swiper web components
+import { register } from 'swiper/element/bundle';
+register();
+---
+
+<section 
+  style="padding: 6rem 1rem; background: url('/images/testimonials-bg.png') center/cover no-repeat; color: white; text-align: center;"
 >
-  <div style="max-width: 960px; margin: auto;">
-    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 2rem;">Client Testimonials</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-      <div>
-        <blockquote style="font-style: italic;">"Signal DevOps transformed our cloud infrastructure in weeks, not months."</blockquote>
-        <p>— Federal Agency Lead Engineer</p>
-      </div>
-      <div>
-        <blockquote style="font-style: italic;">"Their team built a hardened AI pipeline that passed compliance out of the box."</blockquote>
-        <p>— Research Institute CTO</p>
-      </div>
-    </div>
+  <div style="max-width: 900px; margin: auto;">
+    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 3rem;">Client Testimonials</h2>
+
+    <swiper-container
+      slides-per-view="1"
+      navigation="true"
+      pagination="true"
+      autoplay-delay="8000"
+      loop="true"
+      style="padding-bottom: 2rem;"
+    >
+      <!-- Real Upwork Testimonial -->
+      <swiper-slide>
+        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
+          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
+            "Signal Development Operations does amazing work. I was very impressed by their advanced skills. They went beyond my expectations in timeliness and ability."
+          </blockquote>
+          <p>— Upwork Client</p>
+        </div>
+      </swiper-slide>
+
+      <!-- Federal Agency -->
+      <swiper-slide>
+        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
+          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
+            "Signal DevOps transformed our cloud infrastructure in weeks, not months."
+          </blockquote>
+          <p>— Federal Agency Lead Engineer</p>
+        </div>
+      </swiper-slide>
+
+      <!-- Research -->
+      <swiper-slide>
+        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
+          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
+            "Their team built a hardened AI pipeline that passed compliance out of the box."
+          </blockquote>
+          <p>— Research Institute CTO</p>
+        </div>
+      </swiper-slide>
+
+      <!-- Enterprise -->
+      <swiper-slide>
+        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
+          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
+            "From planning through delivery, Signal DevOps exceeded expectations at every step."
+          </blockquote>
+          <p>— Enterprise CIO</p>
+        </div>
+      </swiper-slide>
+
+      <!-- SMB -->
+      <swiper-slide>
+        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
+          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
+            "They gave us the reliability and automation we needed to scale without extra overhead."
+          </blockquote>
+          <p>— Small Business Owner</p>
+        </div>
+      </swiper-slide>
+
+    </swiper-container>
   </div>
 </section>
