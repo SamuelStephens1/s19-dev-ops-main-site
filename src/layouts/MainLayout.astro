@@ -1,29 +1,21 @@
 ---
-/**
- * MainLayout wraps every page with head/meta (via BaseHead),
- * your site header, main content, and footer.
- *
- * @param {string} title       – page <title> and OpenGraph title
- * @param {string} description – meta description and OG description
- */
+// src/layouts/MainLayout.astro
 import BaseHead from '../components/BaseHead.astro';
-import Header     from '../components/Header.astro';
-import Footer     from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 const { title, description } = Astro.props;
 ---
-<!-- inject head/meta -->
+
 <BaseHead {title} {description} />
 
-<body>
-  <!-- site nav -->
+<body class="bg-white text-gray-900 antialiased">
   <Header />
 
-  <!-- page-specific content -->
-  <main class="container" style="max-width:800px; margin:2rem auto; padding:0 1rem;">
+  <!-- 👇 Remove fixed container here -->
+  <main>
     <slot />
   </main>
 
-  <!-- site footer -->
   <Footer />
 </body>

@@ -1,16 +1,132 @@
 ---
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import About from '../components/About.astro';
-import Differentiators from '../components/Differentiators.astro';
-import CTASection from '../components/CTASection.astro';
-import Layout from '../layouts/MainLayout.astro'; // Adjust if your layout differs
+import MainLayout from '../layouts/MainLayout.astro';
+
+const title = 'Signal DevOps | AI-Powered IT Consulting';
+const description = 'AI/ML, cloud, DevOps, and secure IT solutions for federal, defense, and private sector missions — built by veterans.';
 ---
 
-<Layout title="Signal Development Operations | AI-Driven IT Consulting">
-  <Hero />
-  <About />
-  <Services />
-  <Differentiators />
-  <CTASection />
-</Layout>
+<MainLayout {title} {description}>
+
+  <!-- HERO SECTION -->
+  <section
+    style="
+      background-image: url('/images/hero-bg.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 8rem 1rem;
+      text-align: center;
+    "
+  >
+    <div style="max-width: 960px; margin: 0 auto;">
+      <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1.5rem;">
+        AI-Powered IT Solutions
+      </h1>
+      <p style="font-size: 1.25rem; margin-bottom: 2.5rem;">
+        Built by veterans. Secure, scalable, and government-ready.
+      </p>
+      <a
+        href="https://calendly.com/signaldevops/consultation"
+        style="
+          display: inline-block;
+          background-color: #D7BC23;
+          color: #001E41;
+          font-weight: bold;
+          padding: 0.85rem 1.75rem;
+          border-radius: 9999px;
+          font-size: 1rem;
+          text-decoration: none;
+          transition: background 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#C0A820'"
+        onmouseout="this.style.backgroundColor='#D7BC23'"
+      >
+        Schedule a Consultation
+      </a>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section style="padding: 6rem 1rem; background-color: white; color: #001E41;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 3rem; text-align: center;">Our Core Services</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">AI & Machine Learning</h3>
+          <p>LLM integration, custom models, MLOps, insights at scale.</p>
+        </div>
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">Cloud Infrastructure</h3>
+          <p>Secure, hybrid, and compliant deployments on AWS, Azure, GCP.</p>
+        </div>
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">Cybersecurity</h3>
+          <p>Zero Trust architectures, FedRAMP, CMMC, SOC 2, and more.</p>
+        </div>
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">DevOps & Automation</h3>
+          <p>CI/CD pipelines, IaC, container orchestration, GitOps workflows.</p>
+        </div>
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">IT Modernization</h3>
+          <p>Legacy system migration, app modernization, and performance tuning.</p>
+        </div>
+        <div>
+          <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">24/7 Support</h3>
+          <p>Managed services with SLA-backed support and monitoring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATORS SECTION -->
+  <section style="padding: 6rem 1rem; background-color: #f4f6f8; color: #001E41;">
+    <div style="max-width: 960px; margin: 0 auto;">
+      <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+        Why Signal DevOps?
+      </h2>
+      <ul style="list-style: none; padding: 0; max-width: 700px; margin: 0 auto;">
+        <li style="margin-bottom: 1rem;">
+          <strong>Veteran-Owned:</strong> Technical leadership and mission-first discipline from military backgrounds.
+        </li>
+        <li style="margin-bottom: 1rem;">
+          <strong>Secure by Design:</strong> Zero-trust principles baked into every solution.
+        </li>
+        <li style="margin-bottom: 1rem;">
+          <strong>Government-Ready:</strong> SDVOSB-certified with cleared personnel and past performance.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section style="padding: 6rem 1rem; background-color: #001E41; color: white; text-align: center;">
+    <div style="max-width: 720px; margin: 0 auto;">
+      <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">
+        Ready to get started?
+      </h2>
+      <p style="font-size: 1.125rem; margin-bottom: 2rem;">
+        Book a free consultation with our team of expert engineers.
+      </p>
+      <a
+        href="https://calendly.com/signaldevops/consultation"
+        style="
+          display: inline-block;
+          background-color: #D7BC23;
+          color: #001E41;
+          font-weight: bold;
+          padding: 0.85rem 1.75rem;
+          border-radius: 9999px;
+          font-size: 1rem;
+          text-decoration: none;
+          transition: background 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#C0A820'"
+        onmouseout="this.style.backgroundColor='#D7BC23'"
+      >
+        Book a Consultation
+      </a>
+    </div>
+  </section>
+
+</MainLayout>
