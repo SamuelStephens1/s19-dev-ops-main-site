@@ -10,8 +10,8 @@
   display: none;
 }
 
-/* ====== MOBILE (≤720px) ====== */
-@media (max-width: 720px) {
+/* ====== MOBILE (≤1023px) ====== */
+@media (max-width: 1023px) {
   .mainNavContainer {
     display: flex;
     align-items: center;
