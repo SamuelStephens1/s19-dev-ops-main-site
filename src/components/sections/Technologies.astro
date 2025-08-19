@@ -1,13 +1,50 @@
-<section
-  style="
-    padding: 6rem 1rem;
-    background: url('/images/stack-bg.png') center/cover no-repeat;
-    color: white;
-    text-align: center;
-  "
->
-  <div style="max-width: 900px; margin: auto;">
-    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 2rem;">Technologies We Work With</h2>
-    <p>AWS, Azure, GCP, Kubernetes, Terraform, Ansible, Docker, GitLab CI, Jenkins, ArgoCD, MLflow, HuggingFace, PyTorch, Python, Go, Node.js</p>
+---
+const technologies = [
+  { name: 'AWS', icon: '/tech/aws.svg' },
+  { name: 'Azure', icon: '/tech/azure.svg' },
+  { name: 'GCP', icon: '/tech/gcp.svg' },
+  { name: 'Kubernetes', icon: '/tech/kubernetes.svg' },
+  { name: 'Terraform', icon: '/tech/terraform.svg' },
+  // Keep adding as many as you like
+];
+---
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script type="module">
+  import 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js';
+</script>
+
+<section style="padding: 6rem 1rem; background: url('/images/stack-bg.png') center/cover no-repeat; color: white;">
+  <div style="max-width: 1200px; margin: auto;">
+    <h2 style="text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 3rem;">
+      Technologies We Work With
+    </h2>
+
+    <swiper-container
+      slides-per-view="2"
+      space-between="30"
+      navigation="true"
+      loop="true"
+      style="padding: 1rem;"
+    >
+      {technologies.map((tech) => (
+        <swiper-slide>
+          <div style="
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 260px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+          ">
+            <img src={tech.icon} alt={tech.name} style="height: 64px; margin-bottom: 1rem;" />
+            <h3 style="font-size: 1.25rem; font-weight: bold;">{tech.name}</h3>
+          </div>
+        </swiper-slide>
+      ))}
+    </swiper-container>
   </div>
 </section>
