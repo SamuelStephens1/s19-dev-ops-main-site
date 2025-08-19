@@ -11,6 +11,11 @@ const SITE_TITLE = 'Signal Development Operations LLC';
       <a href="/"><img src="/logo.png" alt={`${SITE_TITLE} logo`} /></a>
     </div>
 
+    <!-- 👇 CTA (visible on scroll, mobile only) -->
+    <div data-el="mobile-cta" class={styles.mobileCta} data-visible="false">
+      <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
+    </div>
+
     <!-- Desktop nav (hidden on mobile) -->
     <nav class={styles.links} aria-label="Primary">
       <HeaderLink href="/">Home</HeaderLink>
@@ -20,7 +25,6 @@ const SITE_TITLE = 'Signal Development Operations LLC';
       <HeaderLink href="/blog">Blog</HeaderLink>
     </nav>
 
-    <!-- MOBILE right stack -->
     <div class={styles.rightStack}>
       <button
         data-el="menu-btn"
@@ -36,19 +40,12 @@ const SITE_TITLE = 'Signal Development Operations LLC';
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
       </button>
-
-      <!-- CTA appears under hamburger only after scroll (mobile) -->
-      <div data-el="scroll-cta" class={styles.scrollCta} data-visible="false">
-        <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
-      </div>
     </div>
 
-    <!-- Desktop scroll CTA (hidden by default, shows after scroll) -->
     <div class={styles.desktopCta} data-el="desktop-cta" data-visible="false">
       <a href="https://calendly.com/signaldevops/consultation">Schedule a Consultation</a>
     </div>
 
-    <!-- Mobile dropdown -->
     <nav
       id="mobile-menu"
       data-el="mobile-menu"
@@ -66,20 +63,18 @@ const SITE_TITLE = 'Signal Development Operations LLC';
 </header>
 
 <script client:load>
-  const header     = document.querySelector('[data-role="main-nav"]');
-  const btn        = document.querySelector('[data-el="menu-btn"]');
-  const menu       = document.querySelector('[data-el="mobile-menu"]');
-  const ctaMobile  = document.querySelector('[data-el="scroll-cta"]');
-  const ctaDesktop = document.querySelector('[data-el="desktop-cta"]');
+  const header      = document.querySelector('[data-role="main-nav"]');
+  const btn         = document.querySelector('[data-el="menu-btn"]');
+  const menu        = document.querySelector('[data-el="mobile-menu"]');
+  const ctaDesktop  = document.querySelector('[data-el="desktop-cta"]');
+  const ctaMobile   = document.querySelector('[data-el="mobile-cta"]');
 
-  // Hamburger toggle (mobile)
   btn?.addEventListener('click', () => {
     const open = menu?.dataset.open === 'true';
     if (menu) menu.dataset.open = (!open).toString();
     btn?.setAttribute('aria-expanded', (!open).toString());
   });
 
-  // Close mobile menu on resize up to desktop + re-evaluate CTA visibility
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 721 && menu) {
       menu.dataset.open = 'false';
@@ -88,7 +83,6 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     onScroll();
   });
 
-  // Close with Escape
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu) {
       menu.dataset.open = 'false';
@@ -96,16 +90,13 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     }
   });
 
-  // Scroll: mobile CTA below hamburger; desktop CTA on right
   const onScroll = () => {
     const scrolled = window.scrollY > 50;
 
     if (window.innerWidth <= 720) {
-      header?.setAttribute('data-expanded', scrolled ? 'true' : 'false');
       ctaMobile?.setAttribute('data-visible', scrolled ? 'true' : 'false');
       ctaDesktop?.setAttribute('data-visible', 'false');
     } else {
-      header?.setAttribute('data-expanded', 'false');       // desktop doesn't grow
       ctaMobile?.setAttribute('data-visible', 'false');
       ctaDesktop?.setAttribute('data-visible', scrolled ? 'true' : 'false');
     }

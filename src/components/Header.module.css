@@ -1,34 +1,67 @@
-/* Header.module.css — mobile-first, desktop preserved */
-
-/* shared */
 .mainNav {
-  background-color: #0A2D60; /* slightly lighter than logo navy */
+  background-color: #0A2D60;
   color: #fff;
   position: sticky;
   top: 0;
   z-index: 999;
 }
 
-/* Hide desktop CTA by default (prevents stray text on mobile) */
-.desktopCta { display: none; }
+.desktopCta {
+  display: none;
+}
 
 /* ====== MOBILE (≤720px) ====== */
 @media (max-width: 720px) {
   .mainNavContainer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 6px var(--space-md);
     position: relative;
   }
 
-  .logo img { height: 40px; width: auto; }
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
 
-  .links { display: none; }
+  .links {
+    display: none;
+  }
+
+  .mobileCta {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    margin-left: 12px;
+    margin-right: auto;
+  }
+
+  .mobileCta[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobileCta a {
+    display: inline-block;
+    white-space: nowrap;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    line-height: 1.2;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobileCta a:hover {
+    background-color: var(--color-accent-dark);
+  }
 
   .rightStack {
     display: flex;
-    flex-direction: column;
     align-items: flex-end;
     gap: 8px;
     position: static;
@@ -45,74 +78,65 @@
     color: #fff;
     cursor: pointer;
   }
-  .menuButton:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .menuIcon { width: 24px; height: 24px; }
+
+  .menuButton:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .menuIcon {
+    width: 24px;
+    height: 24px;
+  }
 
   .mobileMenu {
     display: none;
     position: absolute;
-    left: 0; right: 0; top: 100%;
+    left: 0;
+    right: 0;
+    top: 100%;
     background: #0A2D60;
-    border-top: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 6px 16px rgba(0,0,0,.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     padding: var(--space-sm) var(--space-md);
   }
-  .mobileMenu[data-open="true"] { display: block; }
+
+  .mobileMenu[data-open="true"] {
+    display: block;
+  }
 
   .mobileMenu a {
     display: block;
     padding: var(--space-sm) 0;
     color: #fff;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .mobileMenu a:last-child { border-bottom: none; }
 
-  /* >>> ACTIVE STATE (current page = brand gold) <<< */
+  .mobileMenu a:last-child {
+    border-bottom: none;
+  }
+
   .mobileMenu a:global(.active),
   .mobileMenu a[aria-current="page"] {
-    color: #D7BC23 !important;   /* force brand gold */
+    color: #D7BC23 !important;
     font-weight: 700;
-    border-bottom-color: rgba(215,188,35,.35);
+    border-bottom-color: rgba(215, 188, 35, 0.35);
   }
-
-  /* Scroll CTA under hamburger */
-  .scrollCta {
-    display: none;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: opacity .25s ease, transform .25s ease;
-    align-self: flex-end;
-  }
-  .scrollCta[data-visible="true"] {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .scrollCta a {
-    display: inline-block;
-    white-space: nowrap;
-    text-align: center;
-    padding: 8px 12px;
-    border-radius: 999px;
-    line-height: 1.2;
-    font-weight: 700;
-    font-size: 0.95rem;
-    background-color: var(--color-accent);
-    color: #fff;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,.2);
-  }
-  .scrollCta a:hover { background-color: var(--color-accent-dark); }
 
   .mainNav[data-expanded="true"] .mainNavContainer {
     align-items: flex-start;
     padding: 10px var(--space-md) 14px;
   }
-  .mainNav[data-expanded="true"] .logo img { height: 48px; }
 
-  .desktopCta { display: none !important; }
+  .mainNav[data-expanded="true"] .logo img {
+    height: 48px;
+  }
+
+  .desktopCta {
+    display: none !important;
+  }
 }
 
 /* ====== DESKTOP (≥721px) ====== */
@@ -131,25 +155,28 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  .logo img { height: 100px; }
+
+  .logo img {
+    height: 100px;
+  }
 
   .links {
     display: flex;
     gap: var(--space-lg);
   }
+
   .links a {
     color: #fff;
     font-weight: 600;
     text-decoration: none;
   }
-  .links a:hover { color: var(--color-accent); }
 
-  /* Desktop: also support global active class if you want a color change there too */
+  .links a:hover {
+    color: var(--color-accent);
+  }
+
   .links a:global(.active),
   .links a[aria-current="page"] {
-    /* optional: uncomment if you want gold in desktop too
-    color: #D7BC23;
-    */
     font-weight: 700;
   }
 
@@ -160,7 +187,11 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  .desktopCta[data-visible="true"] { display: block; }
+
+  .desktopCta[data-visible="true"] {
+    display: block;
+  }
+
   .desktopCta a {
     display: inline-block;
     white-space: nowrap;
@@ -172,12 +203,17 @@
     background-color: var(--color-accent);
     color: #fff;
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
-  .desktopCta a:hover { background-color: var(--color-accent-dark); }
+
+  .desktopCta a:hover {
+    background-color: var(--color-accent-dark);
+  }
 
   .menuButton,
   .mobileMenu,
   .rightStack,
-  .scrollCta { display: none !important; }
+  .mobileCta {
+    display: none !important;
+  }
 }
