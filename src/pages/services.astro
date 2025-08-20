@@ -1,9 +1,597 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-export const prerender = true;
-const title = '…';
-const description = '…';
+
+const title = 'Services | Signal DevOps';
+const description =
+  'Full-spectrum IT services: AI/ML, Cloud, Cybersecurity, DevOps, MSP, Procurement, Staffing, Web/UX, Software, Strategy, HCM, and more. Veteran-built. Secure by design.';
 ---
+
 <MainLayout {title} {description}>
-  <!-- your page markup here -->
+
+  <!-- HERO -->
+  <section
+    style="
+      background: linear-gradient(rgba(0,30,65,.75), rgba(0,30,65,.75)), url('/images/hero-bg.png') center/cover no-repeat;
+      color: #fff;
+      padding: 6rem 1rem;
+      text-align: center;
+    "
+  >
+    <div style="max-width: 980px; margin: 0 auto;">
+      <h1 style="font-size: 2.6rem; font-weight: 800; margin-bottom: .75rem;">Professional Services</h1>
+      <p style="font-size: 1.125rem; opacity:.95;">
+        AI/ML engineering, secure cloud platforms, MSP, staffing, procurement, and mission‑ready delivery—built by veterans.
+      </p>
+    </div>
+  </section>
+
+  <!-- QUICK NAV (collapsible) -->
+  <nav aria-label="Services quick links" style="padding: 1rem; background:#f7f9fb; border-bottom:1px solid #e8edf3;">
+    <div class="container">
+      <div class="chipsWrap" data-expanded="false">
+        <ul class="chips" id="chipsList">
+          <li><a href="#ai-ml">AI & ML</a></li>
+          <li><a href="#cloud">Cloud</a></li>
+          <li><a href="#security">Cybersecurity</a></li>
+          <li><a href="#devops">DevOps</a></li>
+          <li><a href="#modernization">Modernization</a></li>
+          <li><a href="#managed">24/7 Support (MSP)</a></li>
+          <li><a href="#smb-msp">Small Business MSP</a></li>
+          <li><a href="#procurement">Hardware & Licensing Procurement</a></li>
+          <li><a href="#advisement">Advisement & Architecture</a></li>
+          <li><a href="#staffing">Staff Augmentation & Recruiting</a></li>
+          <li><a href="#web">Web & UX</a></li>
+          <li><a href="#software">Software Development</a></li>
+          <li><a href="#data">Data & Analytics</a></li>
+          <li><a href="#strategy">Management Strategy</a></li>
+          <li><a href="#hcm">Human Capital & Training</a></li>
+          <li><a href="#governance">Governance & Compliance</a></li>
+          <li><a href="#networking">Networking & Zero‑Trust</a></li>
+          <li><a href="#bcdraas">Business Continuity & DR</a></li>
+        </ul>
+        <div class="chipsFade" aria-hidden="true"></div>
+      </div>
+
+      <button id="chipsToggle" class="chipsToggle" aria-expanded="false" type="button">
+        Show more
+      </button>
+    </div>
+  </nav>
+
+  <!-- CORE SET -->
+  <section id="ai-ml" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">AI & Machine Learning</h2>
+        <p>Production‑grade AI systems: LLM apps, RAG pipelines, secure training, and MLOps that scale.</p>
+        <ul class="bullets">
+          <li>LLM apps & RAG (guardrails, evals, vector stores)</li>
+          <li>Fine‑tuning, adapters (LoRA/QLoRA), distillation</li>
+          <li>MLOps (MLflow/W&B, model registry, feature stores)</li>
+          <li>GPU orchestration, autoscaling, cost controls</li>
+          <li>Data governance & compliant pipelines</li>
+        </ul>
+      </div>
+      <aside class="card">
+        <h3 class="h3">Deliverables</h3>
+        <ul class="checks">
+          <li>RAG prototype → prod rollout</li>
+          <li>Model registry + CI/CD for models</li>
+          <li>Prompt & model eval dashboards</li>
+          <li>GPU‑ready K8s stack</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="cloud" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Cloud Infrastructure</h2>
+        <p>Secure multi‑cloud foundations that scale with your mission on AWS, Azure, and GCP.</p>
+        <ul class="bullets">
+          <li>Landing zones, guardrails, policy‑as‑code</li>
+          <li>Identity & network architecture (Zero‑Trust ready)</li>
+          <li>HA/DR, resilience, cost‑optimized designs</li>
+          <li>Terraform/Pulumi with pipelines & review gates</li>
+          <li>Observability & runbooks</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Landing zone repo + controls</li><li>VPC/VNet & peering</li><li>SSO/IdP integration</li><li>IaC & pipelines</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="security" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Cybersecurity & Compliance</h2>
+        <p>Security embedded into delivery so audits pass without blocking velocity.</p>
+        <ul class="bullets">
+          <li>Baseline hardening (CIS/NIST), FedRAMP/CMMC/SOC2 readiness</li>
+          <li>Secrets mgmt (Vault/KMS), SBOM & supply‑chain security</li>
+          <li>Policy‑as‑code (OPA/Sentinel), pipeline enforcement</li>
+          <li>Runtime protection, vuln mgmt, evidence automation</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Hardened images & baselines</li><li>Signed artifacts & SBOM</li><li>Secrets & key mgmt</li><li>Control mapping pack</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="devops" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">DevOps & Automation</h2>
+        <p>Delivery engines, not just pipelines—CI/CD, GitOps, platform engineering.</p>
+        <ul class="bullets">
+          <li>CI/CD (GitHub Actions, GitLab CI, Jenkins)</li>
+          <li>GitOps (Argo CD/Flux), progressive delivery</li>
+          <li>Golden paths/templates, developer portals</li>
+          <li>Observability & SRE practices</li>
+          <li>Ephemeral envs, preview stacks</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Trunk‑based CI/CD with policies</li><li>GitOps repo/appsets</li><li>Golden pipelines</li><li>Runbooks & SLOs</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="modernization" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">IT Modernization</h2>
+        <p>Move from legacy to resilient, scalable platforms—without disrupting the mission.</p>
+        <ul class="bullets">
+          <li>Legacy assessment, migration roadmaps</li>
+          <li>Containerization & decomposition</li>
+          <li>Performance & cost optimization</li>
+          <li>Data modernization & secure integration</li>
+          <li>Change management & adoption</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Target architecture</li><li>Helm/k8s deployment</li><li>Perf/Cost report</li><li>Operational runbooks</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="managed" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">24/7 Managed Support</h2>
+        <p>SLA‑backed monitoring, incident response, lifecycle management.</p>
+        <ul class="bullets">
+          <li>24/7 monitoring & on‑call rotations</li>
+          <li>Incident mgmt & post‑incident reviews</li>
+          <li>Patch mgmt, backup, DR drills</li>
+          <li>Capacity, cost & posture reviews</li>
+          <li>Quarterly improvement plans</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>SLA metrics & reports</li><li>Escalations & runbooks</li><li>Evidence snapshots</li><li>Quarterly roadmap</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <!-- EXPANDED SET -->
+
+  <section id="smb-msp" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Small Business MSP</h2>
+        <p>All‑in‑one IT for SMBs—enterprise discipline at a small‑team price.</p>
+        <ul class="bullets">
+          <li>Endpoint mgmt (Windows/macOS), patching, antivirus/EDR</li>
+          <li>Microsoft 365/Google Workspace admin & security</li>
+          <li>Email security, spam filtering, phishing defense</li>
+          <li>Backup & DR for critical data and SaaS</li>
+          <li>Helpdesk, onboarding/offboarding, asset tracking</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>MSP playbook & SLAs</li><li>M365/GWS hardening</li><li>Endpoint baselines</li><li>Monthly health report</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="procurement" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Hardware & Licensing Procurement</h2>
+        <p>We source, license, and deliver—fast. Gov, enterprise, and SMB friendly.</p>
+        <ul class="bullets">
+          <li>Servers, laptops, network gear, storage</li>
+          <li>Cloud/SaaS licensing (AWS/Azure/GCP, security suites)</li>
+          <li>Fed/State & EDU programs, SDVOSB set‑aside support</li>
+          <li>Imaging, asset tagging, and logistics</li>
+          <li>Lifecycle mgmt & warranty coordination</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Bill of Materials & quotes</li><li>License plan & true‑up</li><li>Asset register</li><li>Receiving & imaging</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="advisement" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Advisement & Enterprise Architecture</h2>
+        <p>Trusted advisors for CTOs, CIOs, and program leads.</p>
+        <ul class="bullets">
+          <li>Architecture reviews & technical strategy</li>
+          <li>Cloud economics, FinOps, portfolio rationalization</li>
+          <li>Program rescue, due diligence & M&A tech reviews</li>
+          <li>Compliance road‑mapping & governance design</li>
+          <li>Executive reporting & board‑ready artifacts</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Architecture decision records</li><li>Roadmaps & KPIs</li><li>Risk register</li><li>Board deck</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="staffing" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Staff Augmentation & Recruiting</h2>
+        <p>Cleared and vetted talent—on demand.</p>
+        <ul class="bullets">
+          <li>Engineers (Cloud, DevOps, SecOps, Data, AI/ML)</li>
+          <li>Program/Project Managers, Scrum Masters</li>
+          <li>Fractional CTO/CISO/Architects</li>
+          <li>Embedded delivery pods (team‑as‑a‑service)</li>
+          <li>Clearance‑aware recruiting & backfills</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Role profiles & interview panels</li><li>Onboarding plan</li><li>Success metrics</li><li>Weekly cadence</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="web" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Web Design & UX</h2>
+        <p>Fast, accessible, conversion‑ready websites and portals.</p>
+        <ul class="bullets">
+          <li>Brand‑aligned design systems</li>
+          <li>Accessible, responsive layouts (WCAG)</li>
+          <li>Jamstack & SSR builds (Astro, Next, Remix)</li>
+          <li>Headless CMS integrations</li>
+          <li>Performance budgets & analytics</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Design kit & components</li><li>High‑perf build</li><li>CMS model & roles</li><li>SEO/Analytics wiring</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="software" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Software Development</h2>
+        <p>APIs, services, and applications with quality gates & CI/CD from day one.</p>
+        <ul class="bullets">
+          <li>API & service design (REST/gRPC)</li>
+          <li>Frontends (React/Vite), backends (Node/Go/Python)</li>
+          <li>Secure SDLC, code quality & testing practices</li>
+          <li>Containers, Helm, GitOps delivery</li>
+          <li>Observability & SLOs</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>API spec & reference</li><li>CI/CD with gates</li><li>Secure build chain</li><li>Run/Support docs</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="data" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Data & Analytics</h2>
+        <p>From raw to reliable—data platforms ready for analytics and AI.</p>
+        <ul class="bullets">
+          <li>Data lakes & warehouses (lakehouse patterns)</li>
+          <li>Ingestion, ETL/ELT, quality & lineage</li>
+          <li>BI & self‑service analytics</li>
+          <li>Privacy, governance, access controls</li>
+          <li>Enablement & adoption programs</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Data model & catalog</li><li>ETL/ELT pipelines</li><li>BI dashboards</li><li>Governance kit</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="strategy" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Management Strategy</h2>
+        <p>Align technology with outcomes—clear goals, measurable value.</p>
+        <ul class="bullets">
+          <li>OKRs, road‑mapping, value tracking</li>
+          <li>Portfolio mgmt & prioritization</li>
+          <li>Operating model & org design</li>
+          <li>Vendor strategy & contract optimization</li>
+          <li>Change mgmt & communications</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Strategy map & OKRs</li><li>Prioritized roadmap</li><li>Operating playbook</li><li>Quarterly business review</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="hcm" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Human Capital Management & Training</h2>
+        <p>Build capability: the right roles, skills, and rituals to sustain delivery.</p>
+        <ul class="bullets">
+          <li>Role frameworks & competency matrices</li>
+          <li>Career ladders & progression</li>
+          <li>Training programs (Cloud, DevOps, Sec, AI/ML)</li>
+          <li>Pairing, guilds, communities of practice</li>
+          <li>Leadership coaching & facilitation</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Role & level guide</li><li>Learning paths</li><li>Guild/Ritual charter</li><li>Coaching plan</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="governance" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Governance & Compliance</h2>
+        <p>Simple guardrails that keep teams fast and audits happy.</p>
+        <ul class="bullets">
+          <li>Controls library & mapping (NIST/CIS/SOC2/CMMC)</li>
+          <li>Policy‑as‑code, drift detection, evidence collection</li>
+          <li>Third‑party risk & vendor assessments</li>
+          <li>Data protection, DLP, retention</li>
+          <li>Attestation packs & continuous compliance</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Controls catalog</li><li>PAC pipelines</li><li>TPRM checklist</li><li>Audit‑ready packet</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="networking" class="section">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Networking & Zero‑Trust</h2>
+        <p>Identity‑centric networks that assume breach and limit blast radius.</p>
+        <ul class="bullets">
+          <li>Segmentation & micro‑segmentation</li>
+          <li>Private connectivity & peering</li>
+          <li>Secure remote access (ZTNA)</li>
+          <li>mTLS, policy engines, service mesh</li>
+          <li>Monitoring & incident playbooks</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>Zero‑Trust blueprint</li><li>Mesh/Policy config</li><li>Access patterns</li><li>Response runbooks</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <section id="bcdraas" class="section alt">
+    <div class="container grid">
+      <div>
+        <h2 class="h2">Business Continuity & DR</h2>
+        <p>Be resilient: plan, test, and prove recovery under pressure.</p>
+        <ul class="bullets">
+          <li>RTO/RPO objectives, risk analysis</li>
+          <li>Backup architecture & immutability</li>
+          <li>Failover orchestration & DR drills</li>
+          <li>Playbooks, comms trees, tabletop exercises</li>
+          <li>BC/DR attestation & reporting</li>
+        </ul>
+      </div>
+      <aside class="card"><h3 class="h3">Deliverables</h3><ul class="checks">
+        <li>BC/DR plan & runbooks</li><li>Drill evidence</li><li>Gap analysis</li><li>Improvement backlog</li>
+      </ul></aside>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section
+    style="
+      padding: 5rem 1rem;
+      text-align:center;
+      background:#0A2D60;
+      color:#fff;
+    "
+  >
+    <div style="max-width: 760px; margin: 0 auto;">
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: .75rem;">Ready to move fast—safely?</h2>
+      <p style="opacity:.95; margin-bottom: 1.5rem;">
+        Book a free consultation with our senior engineers. No sales scripts—just solutions.
+      </p>
+      <a
+        href="https://calendly.com/signaldevops/consultation"
+        style="
+          background:#D7BC23; color:#001E41; font-weight:700;
+          padding:.85rem 1.5rem; border-radius:9999px; text-decoration:none;
+          display:inline-block;
+        "
+      >
+        Schedule a Consultation
+      </a>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑ Top</button>
+
+  <!-- Collapsible chips + Back-to-top scripts -->
+  <script>
+    // Collapsible chips
+    const wrap   = document.querySelector('.chipsWrap');
+    const list   = document.getElementById('chipsList');
+    const toggle = document.getElementById('chipsToggle');
+
+    function setCollapsedHeight() {
+      if (!wrap || !list) return;
+      const items = Array.from(list.children);
+      if (items.length === 0) return;
+
+      // Height of first row (max of items in that row)
+      const firstRowTop = items[0].offsetTop;
+      const firstRowHeights = items
+        .filter(li => li.offsetTop === firstRowTop)
+        .map(li => li.getBoundingClientRect().height);
+
+      const rowHeight = Math.max(...firstRowHeights);
+      const extra = 12; // breathing room
+      wrap.style.maxHeight = (rowHeight + extra) + 'px';
+    }
+
+    function expand() {
+      wrap.dataset.expanded = 'true';
+      wrap.style.maxHeight = list.scrollHeight + 'px';
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.textContent = 'Show less';
+    }
+
+    function collapse() {
+      wrap.dataset.expanded = 'false';
+      setCollapsedHeight();
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = 'Show more';
+    }
+
+    toggle?.addEventListener('click', () => {
+      if (wrap?.dataset.expanded === 'true') collapse();
+      else expand();
+    });
+
+    const initChips = () => collapse();
+    window.addEventListener('load', initChips);
+    window.addEventListener('resize', () => {
+      if (!wrap || !list) return;
+      if (wrap.dataset.expanded === 'false') setCollapsedHeight();
+      else wrap.style.maxHeight = list.scrollHeight + 'px';
+    });
+
+    // Back to top
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) btn.classList.add('show');
+      else btn.classList.remove('show');
+    });
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <style>
+    /* Layout & spacing */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+
+    .section {
+      padding: 4rem 1rem;
+      background: #fff; color: #001E41;
+      border-top: 1px solid #edf2f7;
+      /* Prevent sticky header from clipping titles when jumping via anchors */
+      scroll-margin-top: 160px; /* adjust if your header height changes */
+    }
+    .section.alt { background: #f7f9fb; }
+
+    .grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+    .h2 { font-size: 1.75rem; font-weight: 800; margin: 0 0 .5rem 0; }
+    .h3 { font-size: 1.125rem; font-weight: 700; margin: 0 0 .5rem 0; }
+
+    .bullets { margin: 1rem 0 0 0; padding: 0 0 0 1.1rem; line-height: 1.6; }
+    .card {
+      background: #fff; border: 1px solid #e8edf3; border-radius: .75rem;
+      box-shadow: 0 8px 18px rgba(0,0,0,.04); padding: 1.25rem 1.25rem 1rem;
+      align-self: start;
+    }
+    .checks { list-style: none; padding: 0; margin: .5rem 0 0 0; }
+    .checks li { position: relative; padding-left: 1.35rem; margin: .5rem 0; line-height: 1.5; }
+    .checks li::before {
+      content: '✓'; color: #0A2D60; font-weight: 800; position: absolute; left: 0; top: 0;
+    }
+
+    /* Quick nav chips */
+    .chips {
+      display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0;
+    }
+    .chips a {
+      display: inline-block; background: #fff; border: 1px solid #e1e7ef;
+      color: #0A2D60; text-decoration: none; font-weight: 600;
+      padding: .4rem .7rem; border-radius: 9999px;
+    }
+    .chips a:hover { background: #0A2D60; color:#fff; border-color:#0A2D60; }
+
+    /* Collapsible chips wrapper + fade + toggle */
+    .chipsWrap {
+      position: relative;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+    .chipsFade {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(247,249,251,0), #f7f9fb);
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity .2s ease;
+    }
+    .chipsWrap[data-expanded="true"] .chipsFade { opacity: 0; }
+
+    .chipsToggle {
+      margin-top: .5rem;
+      background: #0A2D60;
+      color: #fff;
+      border: 0;
+      border-radius: 9999px;
+      padding: .45rem .9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .chipsToggle:hover { background: #D7BC23; color:#001E41; }
+
+    /* Back to Top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #D7BC23;   /* brand gold */
+      color: #001E41;        /* navy text */
+      border: none;
+      padding: .65rem 1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
+      transform: translateY(8px);
+      z-index: 999;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top:hover { background: #C0A820; }
+  </style>
 </MainLayout>
