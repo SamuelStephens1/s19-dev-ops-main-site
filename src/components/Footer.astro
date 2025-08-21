@@ -1,37 +1,120 @@
 ---
 const today = new Date();
+
+const COMPANY_NAME = "Signal Development Operations, LLC";
+const ADDRESS_TEXT = "335 N. Peachtree Ave, Cookeville, TN 38501";
+const PHONE_DISPLAY = "(931) 536-2227";
+const PHONE_TEL = "+19315362227";
+const EMAIL = "s19devops@outlook.com";
+
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_TEXT)}&output=embed`;
+const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ADDRESS_TEXT)}`;
 ---
 
-<footer>
-  <p>© {today.getFullYear()} Signal Development Operations, LLC. All rights reserved.</p>
+<footer class="footer">
+  <div class="wrap">
+    <div class="grid">
+      <!-- Contact -->
+      <section class="card">
+        <h3>Contact Us</h3>
+        <form method="POST" action="/api/contact" class="form">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Work email" required />
+          <textarea name="message" rows="4" placeholder="How can we help?" required></textarea>
+          <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" />
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </section>
 
-  <div class="social-links">
-    <a href="https://linkedin.com/company/yourfirm" target="_blank" rel="noopener">
-      LinkedIn
-    </a>
+      <!-- Info -->
+      <section class="card card--tight">
+        <h3>Our Info</h3>
+        <p><strong>{COMPANY_NAME}</strong></p>
+        <p>{ADDRESS_TEXT}</p>
+
+        <p class="muted"><strong>Hours</strong></p>
+        <ul class="hours">
+          <li>Mon–Fri: 9:00 AM – 6:00 PM</li>
+          <li>Sat: By appointment</li>
+          <li>Sun: Closed</li>
+        </ul>
+
+        <p><strong>Phone:</strong> <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a></p>
+        <p><strong>Email:</strong> <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      </section>
+
+      <!-- Map -->
+      <section class="card">
+        <h3>Find Us</h3>
+        <div class="map">
+          <iframe
+            src={mapSrc}
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Map"
+          ></iframe>
+        </div>
+        <a class="link" href={directionsHref} target="_blank" rel="noopener noreferrer">Get Directions</a>
+      </section>
+    </div>
+
+    <div class="bottom">
+      <p>© {today.getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
+      <div class="social">
+        <a href="https://linkedin.com/company/yourfirm" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
   </div>
 </footer>
 
 <style>
-  footer {
-    text-align: center;
-    padding: 0.75rem 1rem; /* smaller padding */
-    background: #f9f9f9;
-    color: #555;
-    font-size: 0.875rem; /* slightly smaller text */
+  .footer{background:#f9fafb;color:#334155}
+  .wrap{max-width:1200px;margin:0 auto;padding:2rem 1rem}
+
+  .grid{
+    display:grid;gap:1.25rem;
+    grid-template-columns:repeat(3,1fr);
   }
-  .social-links {
-    margin-top: 0.5rem; /* tighter spacing */
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem; /* closer links */
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+  .card{
+    background:#fff;border:1px solid #e5e7eb;border-radius:12px;
+    padding:1rem 1.25rem; box-shadow:0 2px 4px rgba(0,0,0,.05);
+    text-align:center; /* center everything */
   }
-  .social-links a {
-    text-decoration: none;
-    color: #555;
-    font-size: 0.875rem;
+  .card--tight p{ margin:.3rem 0; }              /* reduce vertical gaps */
+  .card h3{margin:.25rem 0 .6rem; font-size:1.1rem; color:#0f172a}
+
+  /* Contact form */
+  .form{display:flex;flex-direction:column;gap:.55rem; align-items:center}
+  .form input,.form textarea{
+    width:100%;border:1px solid #e5e7eb;border-radius:8px;
+    padding:.6rem;font-size:.95rem;
   }
-  .social-links a:hover {
-    text-decoration: underline;
+  .form .hp{display:none}
+  .btn{background:#1d4ed8;color:#fff;border:0;padding:.6rem .9rem;border-radius:8px;font-weight:700;cursor:pointer}
+  .btn:hover{background:#1e40af}
+
+  /* Hours list centered, tighter spacing */
+  .hours{
+    list-style-position:inside;
+    padding:0;margin:.25rem 0 .6rem;
   }
+  .hours li{margin:.15rem 0}
+
+  .link{color:#1d4ed8;text-decoration:none;margin-top:.4rem;display:inline-block}
+  .link:hover{text-decoration:underline}
+
+  .map{width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;margin-bottom:.4rem}
+  .map iframe{width:100%;height:100%;border:0}
+
+  .bottom{
+    margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e5e7eb;
+    display:flex;justify-content:space-between;align-items:center;font-size:.9rem;
+  }
+  @media (max-width:600px){ .bottom{flex-direction:column;text-align:center;gap:.5rem} }
+  .social{display:flex;gap:.75rem}
+  .social a{color:#334155;text-decoration:none}
+  .social a:hover{text-decoration:underline}
 </style>

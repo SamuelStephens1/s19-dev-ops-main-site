@@ -1,14 +1,54 @@
 import type { APIRoute } from "astro";
 
-const isProd = import.meta.env.MODE === "production"; // !import.meta.env.DEV also fine
+const isProd = import.meta.env.MODE === "production";
 
+// ----- Types -----
+interface QuizScores {
+  total: number;
+  pct: number;
+  byPillar: Record<string, number>;
+}
+
+interface QuizPayload {
+  name?: string;
+  email?: string;
+  company?: string;
+  phone?: string;
+  notes?: string;
+  scores?: QuizScores;
+  recommendations?: string[];
+}
+
+// Very light runtime guard to avoid crashing on bad input
+function isQuizPayload(x: unknown): x is QuizPayload {
+  if (typeof x !== "object" || x === null) return false;
+  const o = x as Record<string, unknown>;
+  const okStr = (k: string) => o[k] === undefined || typeof o[k] === "string";
+  const okArrStr =
+    o.recommendations === undefined ||
+    (Array.isArray(o.recommendations) && o.recommendations.every((v) => typeof v === "string"));
+  const okScores =
+    o.scores === undefined ||
+    (typeof o.scores === "object" &&
+      o.scores !== null &&
+      typeof (o.scores as any).pct === "number" &&
+      typeof (o.scores as any).total === "number");
+  return okStr("name") && okStr("email") && okStr("company") && okStr("phone") && okStr("notes") && okArrStr && okScores;
+}
+
+// ----- Handler -----
 export const POST: APIRoute = async ({ request }) => {
   try {
     // 1) Parse JSON safely
     if (!request.headers.get("content-type")?.includes("application/json")) {
       return new Response(JSON.stringify({ ok: false, error: "Expected application/json" }), { status: 400 });
     }
-    const body = await request.json();
+
+    const raw = (await request.json()) as unknown;
+    if (!isQuizPayload(raw)) {
+      return new Response(JSON.stringify({ ok: false, error: "Invalid payload" }), { status: 400 });
+    }
+    const body: QuizPayload = raw;
 
     // 2) Build email text (works for dev + prod)
     const subject = `Consulting Readiness Quiz — ${body.company || body.name || "New submission"}`;
@@ -18,10 +58,10 @@ export const POST: APIRoute = async ({ request }) => {
       `Company: ${body.company || ""}`,
       `Phone: ${body.phone || ""}`,
       "",
-      `Scores: ${JSON.stringify(body.scores, null, 2)}`,
+      `Scores: ${JSON.stringify(body.scores ?? {}, null, 2)}`,
       "",
       "Recommendations:",
-      ...(body.recommendations || []).map((r: string) => `- ${r}`),
+      ...((body.recommendations ?? []).map((r) => `- ${r}`)),
       "",
       `Notes: ${body.notes || ""}`,
       "",
@@ -63,8 +103,8 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (e: any) {
-    console.error("quiz-submit error:", e?.stack || e);
+  } catch (e: unknown) {
+    console.error("quiz-submit error:", e);
     return new Response(JSON.stringify({ ok: false, error: "Unhandled server error" }), { status: 500 });
   }
 };

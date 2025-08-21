@@ -4,11 +4,9 @@
 
 /// <reference types="@cloudflare/workers-types" />
 
-// Extra CF types (Vectorize/Hyperdrive/Ai) may not exist in older workers-types versions.
-// Fallback shims so TS doesn't error if your package doesn't include them.
-type VectorizeIndex = any;
-type Hyperdrive = any;
-type Ai = any;
+// Extra CF types may not exist in older workers-types versions.
+// We only add shims for ones not present (see skipTypes).
+
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
 
