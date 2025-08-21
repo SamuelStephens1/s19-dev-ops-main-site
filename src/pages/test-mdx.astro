@@ -1,0 +1,19 @@
+---
+import { getEntry } from 'astro:content';
+
+const post = await getEntry({ collection: 'blog', slug: 'ai-for-dev-ops' });
+
+if (!post) {
+  throw new Error('Post not found');
+}
+---
+
+<html lang="en">
+  <head>
+    <title>Test MDX</title>
+  </head>
+  <body>
+    <h1>Post Test</h1>
+    <post.Content />
+  </body>
+</html>

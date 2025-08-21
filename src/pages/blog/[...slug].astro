@@ -1,21 +1,24 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 
-export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+// For `[...slug].astro`, params.slug is string | string[]
+const param = Astro.params.slug;
+const id = Array.isArray(param) ? param.join('/') : param; // collection id
+
+if (!id) {
+  throw new Error('Missing slug');
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+const entry = await getEntry('blog', id);
+if (!entry) {
+  throw new Error(`Blog post not found for id: ${id}`);
+}
+
+// v5: use render(entry) to get <Content />
+const { Content } = await render(entry);
 ---
-
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<article>
+  <h1>{entry.data.title}</h1>
+  <p><em>{entry.data.description}</em></p>
+  <Content />
+</article>

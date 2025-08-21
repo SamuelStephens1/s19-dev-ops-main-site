@@ -6,106 +6,111 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      :root {
+        --card-radius: 14px;
+        --card-border: 1px solid rgba(0,0,0,.08);
+        --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
+        --shadow-lg: 0 10px 20px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.06);
+      }
+
+      main { max-width: 1150px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+      /* 3-wide grid on desktop, 2 on tablet, 1 on mobile */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      @media (max-width: 1024px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 640px)  { .cards { grid-template-columns: 1fr; } }
+
+      .card {
+        border: var(--card-border);
+        border-radius: var(--card-radius);
+        background: #fff;
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        transition: transform .15s ease, box-shadow .15s ease;
+        height: 100%;
+      }
+      .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+      .cardLink { display: grid; grid-template-rows: auto 1fr; color: inherit; text-decoration: none; height: 100%; }
+
+      /* Uniform media area */
+      .thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        background: #f2f4f7;
+      }
+
+      .body {
+        padding: 0.9rem 1rem 1.1rem;
+        display: grid;
+        align-content: start;
+        text-align: center;
+        gap: .35rem;
+      }
+
+      .title {
+        margin: 0;
+        font-weight: 800;
+        font-size: 1.05rem;
+        line-height: 1.25;
+        /* 2-line clamp to keep cards equal height */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: calc(1.25em * 2);
+      }
+
+      .date {
+        margin: 0;
+        color: #6b7280;
+        font-size: .9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section aria-labelledby="blog-heading">
+        <h1 id="blog-heading" class="sr-only">Blog</h1>
+
+        <ul class="cards">
+          {posts.map((post) => {
+            const href = `/blog/${post.id}/`;
+            const img = post.data.heroImage; // string path or URL
+            return (
+              <li class="card">
+                <a class="cardLink" href={href} aria-label={`Read ${post.data.title}`}>
+                  <img class="thumb" src={img ?? '/images/blog/placeholder.jpg'} alt="" loading="lazy" decoding="async" />
+                  <div class="body">
+                    <h3 class="title">{post.data.title}</h3>
+                    <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>
