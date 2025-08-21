@@ -1,9 +1,126 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-export const prerender = true;
-const title = '…';
-const description = '…';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "About Us — Signal Development Operations";
+const description =
+  "Our origin story and the leaders behind Signal Development Operations — a veteran-owned team helping organizations scale securely with AI and modern infrastructure.";
 ---
-<MainLayout {title} {description}>
-  <!-- your page markup here -->
-</MainLayout>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      :root {
+        --mx: 1100px; --ink:#0f172a; --muted:#64748b; --line:rgba(15,23,42,.12);
+        --accent:#1d4ed8; --soft:#f8fafc; --radius:16px;
+      }
+      main { max-width: var(--mx); margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+      /* Hero */
+      .hero {
+        background: linear-gradient(180deg,#f8fafc, #fff);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 2rem 1.25rem;
+        text-align: center;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        margin-bottom: 2rem;
+      }
+      .hero h1 { margin: 0 0 .5rem; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.1rem); color: var(--ink); }
+      .hero p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+
+      /* Sections */
+      .section { margin-top: 2.25rem; }
+      .section h2 { font-size: 1.6rem; margin: 0 0 .75rem; color: var(--ink); }
+      .lead { color: var(--muted); font-size: 1.05rem; margin: 0 0 1rem; }
+
+      /* Leadership cards */
+      .cards { display: grid; gap: 1.25rem; grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: 820px) { .cards { grid-template-columns: 1fr; } }
+
+      .card {
+        background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 1.25rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .avatar {
+        width: 120px; height: 120px; object-fit: cover; border-radius: 50%;
+        border: 3px solid var(--accent); margin-bottom: .75rem;
+      }
+      .card h3 { margin: 0; font-size: 1.25rem; color: var(--ink); }
+      .card h4 { margin: .25rem 0 .6rem; color: var(--muted); font-weight: 600; }
+      .card p { color: var(--muted); line-height: 1.55; margin: 0; }
+
+      /* Nice list for origin bullets */
+      .bullets { margin: .25rem 0 0 1.25rem; color: var(--muted); }
+      .bullets li { margin: .25rem 0; }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <h1>About Signal Development Operations</h1>
+        <p>Veteran-owned. Outcome-driven. We help organizations modernize securely and scale with confidence.</p>
+      </section>
+
+      <!-- Our Story -->
+      <section class="section">
+        <h2>Our Story</h2>
+        <p class="lead">
+          Signal Development Operations began in Cookeville, Tennessee, with a simple conviction:
+          the right mix of discipline, engineering rigor, and customer empathy can transform how
+          organizations adopt modern infrastructure and AI.
+        </p>
+        <p>
+          Founded as a Service-Disabled Veteran-Owned Small Business, Signal pairs mission-first
+          leadership with deep technical execution. We focus on practical wins: secure foundations,
+          measurable ROI, and step-by-step modernization that fits your budget and timeline.
+        </p>
+        <ul class="bullets">
+          <li><strong>Secure by design:</strong> Zero-Trust mindset, sensible controls, and clear runbooks.</li>
+          <li><strong>Cloud & AI, done right:</strong> Right-sized compute, data readiness, and automations that stick.</li>
+          <li><strong>Operational excellence:</strong> Documented workflows, dashboards that matter, and accountability.</li>
+        </ul>
+      </section>
+
+      <!-- Leadership -->
+      <section class="section">
+        <h2>Leadership</h2>
+        <div class="cards">
+          <!-- Peyton -->
+          <article class="card">
+            <img class="avatar" src="/images/peyton.png" alt="Peyton Anderson headshot" />
+            <h3>Peyton Anderson</h3>
+            <h4>Founder & Owner</h4>
+            <p>
+              Peyton is a U.S. veteran and the managing member of Signal Development Operations.
+              He leads company vision, partnerships, and growth—bringing mission-ready discipline to
+              every engagement. As owner, Peyton ensures Signal remains a trusted SDVOSB partner
+              for commercial and public-sector projects alike.
+            </p>
+          </article>
+
+          <!-- Samuel -->
+          <article class="card">
+            <img class="avatar" src="/images/samuel.png" alt="Samuel Stephens headshot" />
+            <h3>Samuel Stephens</h3>
+            <h4>Chief Operating Officer</h4>
+            <p>
+              Samuel is a full-stack and infrastructure engineer who oversees delivery and operations.
+              He specializes in cloud architecture, DevOps automation, and AI-ready platforms—translating
+              business goals into resilient, measurable systems that scale.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
