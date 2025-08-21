@@ -1,0 +1,304 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title = "Consulting Readiness Quiz";
+const description = "Assess your strategy, operations, data, security, and culture — then get tailored recommendations. (Takes ~4 minutes.)";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      :root {
+        --mx: 1100px; --ink:#0f172a; --muted:#64748b; --line:rgba(15,23,42,.12);
+        --accent:#1d4ed8; --bg:#fff; --soft:#f8fafc; --radius:14px;
+      }
+      main{max-width:var(--mx);margin:0 auto;padding:2rem 1rem 3rem;}
+      .lead{color:var(--muted);margin:.25rem 0 1.25rem}
+      .grid{display:grid;gap:1rem;grid-template-columns:2fr 1fr}
+      @media (max-width:960px){.grid{grid-template-columns:1fr}}
+      .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+      .panel h2{margin:0;padding:1rem;border-bottom:1px solid var(--line);font-size:1.1rem}
+      .body{padding:1rem 1.1rem 1.2rem}
+      fieldset{border:0;margin:0;padding:0}
+      .q{margin:.9rem 0;padding:.6rem .6rem .3rem;border-bottom:1px dashed var(--line)}
+      .q label{display:block;font-weight:700;margin-bottom:.35rem}
+      .scale{display:flex;gap:.6rem;flex-wrap:wrap}
+      .scale label{font-weight:600;color:#334155}
+      .scale input{margin-right:.25rem}
+      .req{color:#b91c1c;font-size:.85rem}
+      .two{display:grid;gap:.9rem;grid-template-columns:1fr 1fr}
+      @media (max-width:640px){.two{grid-template-columns:1fr}}
+      input,select,textarea{
+        width:100%;border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem;font-size:.95rem;background:#fff
+      }
+      textarea{min-height:90px}
+      .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+      button{background:var(--accent);color:#fff;border:0;padding:.6rem .9rem;border-radius:10px;font-weight:800;cursor:pointer}
+      .mutedBtn{background:#eef2ff;color:#1e40af}
+      .kpis{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+      @media (max-width:640px){.kpis{grid-template-columns:1fr}}
+      .kpi{border:1px dashed var(--line);border-radius:12px;padding:.9rem;background:var(--soft)}
+      .kpi h3{margin:0;font-size:.9rem;color:var(--muted)}
+      .kpi .num{margin-top:.35rem;font-size:1.6rem;font-weight:900;color:var(--ink)}
+      .rec{margin-top:1rem;padding:1rem;border-radius:12px;background:#f0f9ff;border:1px solid #dbeafe}
+      .success{margin-top:1rem;color:#065f46;background:#ecfdf5;border:1px solid #a7f3d0;padding:.75rem;border-radius:10px}
+      .error{margin-top:1rem;color:#991b1b;background:#fef2f2;border:1px solid #fecaca;padding:.75rem;border-radius:10px}
+
+      /* CTA button under results */
+      .cta{margin-top:1rem;text-align:center}
+      .consult-btn{
+        display:inline-block;background:#2563eb;color:#fff;font-weight:700;font-size:1rem;
+        padding:.75rem 1.25rem;border-radius:10px;text-decoration:none;transition:background .2s ease;
+        box-shadow:0 2px 6px rgba(0,0,0,.08)
+      }
+      .consult-btn:hover{background:#1e40af}
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1 style="margin:0;">{title}</h1>
+      <p class="lead">{description}</p>
+
+      <div class="grid">
+        <!-- Quiz -->
+        <section class="panel">
+          <h2>Assessment</h2>
+          <div class="body">
+            <form id="quizForm">
+              <!-- Contact -->
+              <fieldset class="two">
+                <div>
+                  <label for="name">Your name <span class="req">*</span></label>
+                  <input id="name" name="name" required />
+                </div>
+                <div>
+                  <label for="email">Work email <span class="req">*</span></label>
+                  <input id="email" name="email" type="email" required />
+                </div>
+                <div>
+                  <label for="company">Company</label>
+                  <input id="company" name="company" />
+                </div>
+                <div>
+                  <label for="phone">Phone (optional)</label>
+                  <input id="phone" name="phone" />
+                </div>
+              </fieldset>
+
+              <!-- Scales: 1 (No/Not yet) to 5 (Yes/We excel) -->
+              <p class="lead" style="margin-top:1rem">Rate your organization on each statement (1 = Not at all, 5 = Fully true).</p>
+
+              <!-- Strategy -->
+              <fieldset>
+                <div class="q">
+                  <label>We have a clear 12–18 month technology roadmap tied to business goals.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="s1" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+                <div class="q">
+                  <label>Leaders use data/analytics regularly to make decisions.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="s2" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Operations -->
+              <fieldset>
+                <div class="q">
+                  <label>Key processes (sales ops, support, fulfillment) are documented and measured.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="o1" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+                <div class="q">
+                  <label>We automate repetitive manual tasks where possible.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="o2" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Data -->
+              <fieldset>
+                <div class="q">
+                  <label>Our customer and revenue data is centralized and reasonably clean.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="d1" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+                <div class="q">
+                  <label>We can track a lead/opportunity from first touch to closed revenue.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="d2" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Security -->
+              <fieldset>
+                <div class="q">
+                  <label>We enforce MFA, device policies, and basic Zero Trust controls.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="sec1" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+                <div class="q">
+                  <label>We log security events and review alerts weekly.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="sec2" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Culture -->
+              <fieldset>
+                <div class="q">
+                  <label>Teams are trained to use AI and automation responsibly.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="c1" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+                <div class="q">
+                  <label>We run pilots/experiments and measure ROI before scaling.</label>
+                  <div class="scale">
+                    {Array.from({length:5}).map((_,i)=>(<label><input type="radio" name="c2" value={i+1} required />{i+1}</label>))}
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Notes -->
+              <div class="q">
+                <label for="notes">What prompted this assessment? (optional)</label>
+                <textarea id="notes" name="notes" placeholder="e.g., growth targets, rising costs, security requirements"></textarea>
+              </div>
+
+              <div class="actions">
+                <button type="button" id="submitBtn">See My Results</button>
+                <button type="reset" class="mutedBtn">Reset</button>
+              </div>
+            </form>
+
+            <div id="result"></div>
+          </div>
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="panel">
+          <h2>What You’ll Get</h2>
+          <div class="body">
+            <ul>
+              <li>A readiness score across 5 pillars</li>
+              <li>Targeted recommendations</li>
+              <li>Email copy of your results</li>
+              <li>Optional follow-up with Signal DevOps</li>
+            </ul>
+            <p class="lead">This assessment always shows where consulting can help — we tailor the guidance to your current maturity.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <Footer />
+
+    <script type="module">
+      const $ = (s, r = document) => r.querySelector(s);
+      const form = $("#quizForm");
+      const result = $("#result");
+      const btn = $("#submitBtn");
+
+      function scoreFrom(formData) {
+        const keys = ["s1","s2","o1","o2","d1","d2","sec1","sec2","c1","c2"];
+        let total = 0;
+        const byPillar = { Strategy:0, Operations:0, Data:0, Security:0, Culture:0 };
+        keys.forEach((k, i) => {
+          const v = Number(formData.get(k) || 0);
+          total += v;
+          if (i < 2) byPillar.Strategy += v;
+          else if (i < 4) byPillar.Operations += v;
+          else if (i < 6) byPillar.Data += v;
+          else if (i < 8) byPillar.Security += v;
+          else byPillar.Culture += v;
+        });
+        const max = keys.length * 5; // 50
+        const pct = Math.round((total / max) * 100);
+        return { total, pct, byPillar };
+      }
+
+      function recs(byPillar) {
+        const r = [];
+        if (byPillar.Strategy < 7) r.push("Define a 12–18 month technology roadmap tied to business outcomes; align KPIs with that roadmap.");
+        if (byPillar.Operations < 7) r.push("Document top workflows and automate repetitive steps to free up team capacity.");
+        if (byPillar.Data < 7) r.push("Centralize customer/revenue data and instrument lead→cash visibility.");
+        if (byPillar.Security < 7) r.push("Enforce MFA/SSO, baseline device policies, and weekly alert reviews (Zero Trust basics).");
+        if (byPillar.Culture < 7) r.push("Run small AI pilots with clear ROI metrics; train teams on responsible use.");
+        return r.length ? r : ["You’re trending strong — focus on scaling wins and continuous improvement."];
+      }
+
+      async function handleSubmit() {
+        if (!form.reportValidity()) return;
+        btn.disabled = true;
+
+        const fd = new FormData(form);
+        const s = scoreFrom(fd);
+        const recommendations = recs(s.byPillar);
+
+        // Render result for the user
+        result.innerHTML = `
+          <div class="kpis" style="margin-top:1rem">
+            <div class="kpi"><h3>Overall readiness</h3><div class="num">${s.pct}%</div></div>
+            <div class="kpi"><h3>Consulting fit</h3><div class="num">Yes — you’ll benefit</div></div>
+          </div>
+          <div class="rec"><strong>Next steps:</strong>
+            <ul>${recommendations.map(x => `<li>${x}</li>`).join("")}</ul>
+          </div>
+          <div class="cta">
+            <a
+              href="https://calendly.com/s19devops/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="consult-btn"
+            >
+              Schedule Your Free Consultation
+            </a>
+          </div>
+        `;
+
+        // Send to email API
+        try {
+          const payload = {
+            name: fd.get("name"),
+            email: fd.get("email"),
+            company: fd.get("company"),
+            phone: fd.get("phone"),
+            notes: fd.get("notes"),
+            scores: s,
+            recommendations
+          };
+          const res = await fetch("/api/quiz-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          const ok = res.ok;
+          result.insertAdjacentHTML("beforeend",
+            ok
+              ? `<div class="success">✅ We emailed your results and sent them to our team.</div>`
+              : `<div class="error">⚠️ We couldn’t email results. Your score is shown above.</div>`
+          );
+        } catch (e) {
+          result.insertAdjacentHTML("beforeend", `<div class="error">⚠️ Network error while emailing results.</div>`);
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      btn.addEventListener("click", handleSubmit);
+    </script>
+  </body>
+</html>

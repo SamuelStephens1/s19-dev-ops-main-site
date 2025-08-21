@@ -26,7 +26,6 @@ body {
   color: var(--color-text);
   line-height: 1.6;
 }
-
 a { color: var(--color-accent); text-decoration: none; }
 a:hover { color: var(--color-accent-dark); text-decoration: underline; }
 
@@ -35,4 +34,21 @@ a:hover { color: var(--color-accent-dark); text-decoration: underline; }
   max-width: var(--page-max-width);
   margin: 0 auto;
   padding: 0 var(--space-md);
+}
+
+.consult-btn {
+  display: inline-block;
+  background: #2563eb; /* blue */
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  text-decoration: none; /* removes underline */
+  transition: background .2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.consult-btn:hover {
+  background: #1e40af; /* darker on hover */
 }

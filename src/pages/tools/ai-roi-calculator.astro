@@ -1,0 +1,228 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title = "AI Integration ROI Calculator";
+const description = "Estimate revenue uplift, cost savings, and payback period from embedding AI into your workflows.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      :root {
+        --mx: 1100px;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --line: rgba(15,23,42,.12);
+        --accent: #1d4ed8;
+        --bg: #ffffff;
+        --soft: #f8fafc;
+        --radius: 14px;
+      }
+      main { max-width: var(--mx); margin: 0 auto; padding: 2rem 1rem 3rem; }
+      .wrap {
+        display: grid; gap: 1.25rem;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (max-width: 960px) { .wrap { grid-template-columns: 1fr; } }
+
+      .panel {
+        background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .panel h2 { margin: 0; padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); font-size: 1.1rem; }
+      .body { padding: 1rem 1.1rem 1.2rem; }
+
+      form { display: grid; gap: .9rem; }
+      .row { display: grid; gap: .6rem; grid-template-columns: 1fr 1fr; align-items: end; }
+      @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+
+      label { font-weight: 700; color: var(--ink); font-size: .95rem; }
+      .hint { color: var(--muted); font-size: .85rem; }
+      input {
+        width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: .6rem .7rem;
+        font-size: .95rem; background: #fff;
+      }
+
+      .actions { display: flex; gap: .6rem; }
+      button {
+        background: var(--accent); color: #fff; border: 0; padding: .6rem .9rem; border-radius: 10px; font-weight: 800;
+        cursor: pointer;
+      }
+      .mutedBtn { background: #eef2ff; color: #1e40af; }
+
+      .stats { display: grid; gap: .9rem; grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
+
+      .kpi {
+        border: 1px dashed var(--line); border-radius: 12px; padding: .9rem;
+        background: var(--soft);
+      }
+      .kpi h3 { margin: 0; font-size: .9rem; color: var(--muted); }
+      .kpi .num { margin-top: .35rem; font-size: 1.6rem; font-weight: 900; color: var(--ink); }
+
+      .note { margin-top: .8rem; color: var(--muted); font-size: .9rem; }
+
+      .disclaimer { margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <header style="margin-bottom:1rem">
+        <h1 style="margin:0">{title}</h1>
+        <p style="color:var(--muted)">{description}</p>
+      </header>
+
+      <div class="wrap">
+        <!-- Inputs -->
+        <section class="panel">
+          <h2>Inputs</h2>
+          <div class="body">
+            <form id="form">
+              <div class="row">
+                <div>
+                  <label for="leads">Leads per month</label>
+                  <input id="leads" type="number" inputmode="numeric" value="500" min="0" step="1" />
+                  <div class="hint">Total inbound opportunities/month</div>
+                </div>
+                <div>
+                  <label for="conv">Baseline conversion rate (%)</label>
+                  <input id="conv" type="number" inputmode="decimal" value="3" min="0" max="100" step="0.1" />
+                  <div class="hint">Current lead→sale conversion</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label for="uplift">Expected conversion uplift from AI (%)</label>
+                  <input id="uplift" type="number" inputmode="decimal" value="15" min="0" max="500" step="0.1" />
+                  <div class="hint">From personalization, faster follow-up, better targeting</div>
+                </div>
+                <div>
+                  <label for="aov">Average order value ($)</label>
+                  <input id="aov" type="number" inputmode="decimal" value="250" min="0" step="1" />
+                  <div class="hint">Or LTV for subscription businesses</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label for="hours">Hours saved per month via automation</label>
+                  <input id="hours" type="number" inputmode="decimal" value="60" min="0" step="1" />
+                  <div class="hint">Across the team</div>
+                </div>
+                <div>
+                  <label for="rate">Fully-loaded hourly cost ($)</label>
+                  <input id="rate" type="number" inputmode="decimal" value="45" min="0" step="1" />
+                  <div class="hint">Wages + overhead</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div>
+                  <label for="impl">One-time implementation cost ($)</label>
+                  <input id="impl" type="number" inputmode="decimal" value="5000" min="0" step="100" />
+                </div>
+                <div>
+                  <label for="tool">Monthly tool cost ($)</label>
+                  <input id="tool" type="number" inputmode="decimal" value="300" min="0" step="10" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button type="button" id="calc">Calculate</button>
+                <button type="button" id="reset" class="mutedBtn">Reset</button>
+              </div>
+            </form>
+
+            <p class="note">Tip: start conservative (lower uplift and hours saved), then revisit after a 60–90 day pilot.</p>
+          </div>
+        </section>
+
+        <!-- Outputs -->
+        <section class="panel">
+          <h2>Results</h2>
+          <div class="body">
+            <div class="stats">
+              <div class="kpi">
+                <h3>Monthly revenue uplift</h3>
+                <div id="rev" class="num">$0</div>
+              </div>
+              <div class="kpi">
+                <h3>Monthly cost savings</h3>
+                <div id="save" class="num">$0</div>
+              </div>
+              <div class="kpi">
+                <h3>Net monthly impact</h3>
+                <div id="net" class="num">$0</div>
+              </div>
+              <div class="kpi">
+                <h3>Payback period</h3>
+                <div id="payback" class="num">—</div>
+              </div>
+            </div>
+
+            <p class="disclaimer">
+              Calculation: <strong>Revenue uplift</strong> = leads × conversion × AOV × uplift%.  
+              <strong>Cost savings</strong> = hours saved × hourly cost.  
+              <strong>Net monthly impact</strong> = revenue uplift + cost savings − monthly tool cost.  
+              <strong>Payback</strong> = implementation cost ÷ max(net, 0).
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <Footer />
+
+    <script type="module">
+      const $ = (id) => document.getElementById(id);
+      const fmt = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+      function val(id) {
+        const n = parseFloat($(id).value);
+        return isFinite(n) ? n : 0;
+      }
+
+      function calc() {
+        const leads   = val('leads');
+        const conv    = val('conv') / 100;   // to decimal
+        const uplift  = val('uplift') / 100; // to decimal
+        const aov     = val('aov');
+        const hours   = val('hours');
+        const rate    = val('rate');
+        const impl    = val('impl');
+        const tool    = val('tool');
+
+        // Revenue uplift: leads × (conv × uplift) × AOV
+        const revenueUplift = leads * conv * uplift * aov;
+
+        // Savings: hours × rate
+        const savings = hours * rate;
+
+        // Net monthly impact
+        const net = revenueUplift + savings - tool;
+
+        // Payback months
+        const payback = net > 0 ? Math.ceil(impl / net) : Infinity;
+
+        $('rev').textContent   = fmt.format(revenueUplift);
+        $('save').textContent  = fmt.format(savings);
+        $('net').textContent   = fmt.format(net);
+        $('payback').textContent = (payback === Infinity) ? 'Not reached' : `${payback} month${payback === 1 ? '' : 's'}`;
+      }
+
+      $('calc').addEventListener('click', calc);
+      $('reset').addEventListener('click', () => {
+        ['leads','conv','uplift','aov','hours','rate','impl','tool'].forEach(id => $(id).value = $(id).defaultValue);
+        calc();
+      });
+
+      // Run once on load with defaults
+      calc();
+    </script>
+  </body>
+</html>

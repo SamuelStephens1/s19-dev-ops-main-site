@@ -1,0 +1,25 @@
+---
+import { getEntry, render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+const param = Astro.params.slug;               // string | string[]
+const id = Array.isArray(param) ? param.join('/') : param;
+if (!id) throw new Error('Missing resource id');
+
+const entry = await getEntry('resources', id);
+if (!entry) throw new Error(`Resource not found: ${id}`);
+
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<BlogPost
+  title={d.title}
+  description={d.description}
+  pubDate={d.pubDate}
+  author={d.author}
+  tags={d.tags}
+  heroImage={d.heroImage}
+>
+  <Content />
+</BlogPost>

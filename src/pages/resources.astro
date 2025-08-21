@@ -1,0 +1,105 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+
+const resources = (await getCollection('resources', ({ data }) => !data.draft))
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const pageTitle = `Resources • ${SITE_TITLE}`;
+const pageDescription = 'Guides, checklists, and tools to help your business succeed with AI, Cloud, and Security.';
+
+function hrefFor(r) {
+  const t = r.data.resourceType;
+  if (t === 'download') return r.data.downloadUrl ?? '#';
+  if (t === 'tool') return r.data.toolUrl ?? '#';
+  // article -> internal page
+  return `/resources/${r.id}/`;
+}
+
+function ctaFor(r) {
+  if (r.data.ctaLabel) return r.data.ctaLabel;
+  if (r.data.resourceType === 'download') return 'Download';
+  if (r.data.resourceType === 'tool') return 'Open Tool';
+  return 'Read';
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDescription} />
+    <style>
+      :root {
+        --card-radius: 14px;
+        --card-border: 1px solid rgba(0,0,0,.08);
+        --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
+        --shadow-lg: 0 10px 20px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.06);
+        --ink: #0f172a; --muted: #64748b; --accent: #1d4ed8;
+      }
+      main { max-width: 1150px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+      .lead { margin: .25rem 0 1.5rem; color: var(--muted); }
+
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+      @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 640px)  { .grid { grid-template-columns: 1fr; } }
+
+      .card { border: var(--card-border); border-radius: var(--card-radius); background: #fff; box-shadow: var(--shadow-sm);
+              overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
+      .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+      .thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #f2f4f7; }
+
+      .body { padding: 0.9rem 1rem 0.5rem; text-align: center; }
+      .title { margin: 0; font-weight: 800; font-size: 1.05rem; line-height: 1.25; }
+      .desc { margin: .45rem 0 0; color: var(--muted); font-size: .95rem; line-height: 1.5; min-height: 3rem; }
+      .meta { margin: .6rem 0 0; font-size: .85rem; color: var(--muted); }
+
+      .ctaWrap { padding: 0 1rem 1rem; display: grid; place-items: center; }
+      .cta { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .85rem; border-radius: 10px;
+             background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; transition: filter .15s ease; }
+      .cta:hover { filter: brightness(1.07); }
+      .cta[aria-disabled="true"] { pointer-events: none; opacity: .6; }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <header>
+        <h1>Resources</h1>
+        <p class="lead">Guides, checklists, and tools to help your business succeed with AI, Cloud, and Security.</p>
+      </header>
+
+      {resources.length === 0 ? (
+        <p class="lead">No resources published yet.</p>
+      ) : (
+        <ul class="grid">
+          {resources.map((r) => {
+            const href = hrefFor(r);
+            const disabled = href === '#';
+            const d = r.data;
+            const dateText = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(d.pubDate));
+            return (
+              <li class="card">
+                <img class="thumb" src={d.heroImage ?? '/images/resources/placeholder.jpg'} alt="" loading="lazy" decoding="async" />
+                <div class="body">
+                  <h3 class="title">{d.title}</h3>
+                  {d.description && <p class="desc">{d.description}</p>}
+                  <p class="meta">{dateText}</p>
+                </div>
+                <div class="ctaWrap">
+                  <a class="cta" href={href} target="_blank" rel="noopener noreferrer" aria-disabled={disabled ? 'true' : 'false'}>
+                    {ctaFor(r)}
+                  </a>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>

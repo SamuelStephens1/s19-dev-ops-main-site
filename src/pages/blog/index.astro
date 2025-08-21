@@ -7,7 +7,12 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+// Debug which one is a string
+for (const p of posts) {
+  console.log('pubDate type', p.id, typeof p.data.pubDate, p.data.pubDate);
+}
 ---
 
 <!doctype html>
@@ -24,7 +29,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
       main { max-width: 1150px; margin: 0 auto; padding: 2rem 1rem 3rem; }
 
-      /* 3-wide grid on desktop, 2 on tablet, 1 on mobile */
       .cards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -49,7 +53,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
       .cardLink { display: grid; grid-template-rows: auto 1fr; color: inherit; text-decoration: none; height: 100%; }
 
-      /* Uniform media area */
       .thumb {
         width: 100%;
         aspect-ratio: 16/9;
@@ -71,7 +74,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         font-weight: 800;
         font-size: 1.05rem;
         line-height: 1.25;
-        /* 2-line clamp to keep cards equal height */
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -95,14 +97,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         <ul class="cards">
           {posts.map((post) => {
             const href = `/blog/${post.id}/`;
-            const img = post.data.heroImage; // string path or URL
+            const img = post.data.heroImage;
             return (
               <li class="card">
                 <a class="cardLink" href={href} aria-label={`Read ${post.data.title}`}>
                   <img class="thumb" src={img ?? '/images/blog/placeholder.jpg'} alt="" loading="lazy" decoding="async" />
                   <div class="body">
                     <h3 class="title">{post.data.title}</h3>
-                    <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                    <p class="date"><FormattedDate date={new Date(post.data.pubDate)} /></p>
                   </div>
                 </a>
               </li>

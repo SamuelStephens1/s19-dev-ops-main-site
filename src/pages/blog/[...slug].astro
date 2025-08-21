@@ -2,8 +2,12 @@
 import { getEntry, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
-const param = Astro.params.slug;               // string | string[]
-const id = Array.isArray(param) ? param.join('/') : param;
+const slugParam = Astro.params.slug;                 // string | string[]
+let id = Array.isArray(slugParam) ? slugParam.join('/') : (slugParam ?? '');
+
+// Normalize: remove .md / .mdx if present
+id = id.replace(/\.mdx?$/i, '');
+
 if (!id) throw new Error('Missing blog id');
 
 const entry = await getEntry('blog', id);
