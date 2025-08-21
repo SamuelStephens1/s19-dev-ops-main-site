@@ -1,24 +1,25 @@
 ---
 import { getEntry, render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
 
-// For `[...slug].astro`, params.slug is string | string[]
-const param = Astro.params.slug;
-const id = Array.isArray(param) ? param.join('/') : param; // collection id
-
-if (!id) {
-  throw new Error('Missing slug');
-}
+const param = Astro.params.slug;               // string | string[]
+const id = Array.isArray(param) ? param.join('/') : param;
+if (!id) throw new Error('Missing blog id');
 
 const entry = await getEntry('blog', id);
-if (!entry) {
-  throw new Error(`Blog post not found for id: ${id}`);
-}
+if (!entry) throw new Error(`Blog post not found: ${id}`);
 
-// v5: use render(entry) to get <Content />
 const { Content } = await render(entry);
+const d = entry.data;
 ---
-<article>
-  <h1>{entry.data.title}</h1>
-  <p><em>{entry.data.description}</em></p>
+
+<BlogPost
+  title={d.title}
+  description={d.description}
+  pubDate={d.pubDate}
+  author={d.author}
+  tags={d.tags}
+  heroImage={d.heroImage}
+>
   <Content />
-</article>
+</BlogPost>

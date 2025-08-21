@@ -1,55 +1,179 @@
 ---
-import MainLayout from './MainLayout.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 
 interface Props {
   title: string;
-  description: string;
-  pubDate: Date | string;
-  heroImage?: string;
+  description?: string;
+  pubDate: Date;
   author?: string;
   tags?: string[];
+  heroImage?: string; // public path (/images/...) or full URL
 }
 
-const { title, description, pubDate, heroImage, author = 'Signal DevOps', tags = [] } = Astro.props;
+const { title, description, pubDate, author, tags = [], heroImage } = Astro.props;
+const pageTitle = `${title} • Signal DevOps`;
 ---
 
-<MainLayout {title} {description}>
-  <article>
-    <!-- Header -->
-    <header style="padding:3rem 1rem;background:#0A2D60;color:#fff;">
-      <div style="max-width:900px;margin:0 auto;">
-        <a href="/blog" style="color:#fff;text-decoration:underline;opacity:.9;">← Back to Blog</a>
-        <h1 style="margin:.5rem 0 0 0;font-weight:800;font-size:2.1rem;">{title}</h1>
-        <p style="opacity:.95;margin:.5rem 0 0 0;">{description}</p>
-        <div style="opacity:.85;margin-top:.75rem;font-size:.95rem;">
-          <time datetime={new Date(pubDate).toISOString()}>
-            {new Date(pubDate).toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' })}
-          </time>
-          {' · '}
-          <span>{author}</span>
-        </div>
-      </div>
-    </header>
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={description ?? ''} />
+    <style>
+      :root {
+        --mx: 1120px;
+        --pad: 24px;
+        --radius: 16px;
 
-    {heroImage && (
-      <div style="background:#0b1b36;">
-        <img src={heroImage} alt={title} style="width:100%;height:360px;object-fit:cover;display:block;" />
-      </div>
-    )}
+        --ink: #0f172a;           /* slate-900 */
+        --muted: #64748b;         /* slate-500 */
+        --line: rgba(15, 23, 42, .12);
+        --accent: #1d4ed8;        /* blue-700 */
+        --bg: #ffffff;
+        --bg-soft: #f8fafc;       /* slate-50 */
+      }
 
-    <!-- Content -->
-    <section style="padding:2rem 1rem;background:#fff;">
-      <div style="max-width:900px;margin:0 auto;">
-        <slot />
-        {tags.length ? (
-          <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem;">
-            {tags.map((t) => (
-              <span style="font-size:.8rem;background:#f1f5f9;border:1px solid #e2e8f0;color:#0A2D60;
-                           padding:.2rem .6rem;border-radius:9999px;">#{t}</span>
-            ))}
+      main { padding: 28px var(--pad) 56px; background: var(--bg-soft); }
+      .wrap { margin: 0 auto; max-width: var(--mx); }
+
+      /* Hero */
+      .hero {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 12px 24px rgba(0,0,0,.08);
+        background: #e5e7eb;
+      }
+      .hero img {
+        display: block; width: 100%;
+        aspect-ratio: 16/9; object-fit: cover;
+      }
+
+      /* Header */
+      .header {
+        margin: 22px auto 10px;
+        max-width: 800px; text-align: center;
+      }
+      .title {
+        margin: 0;
+        font-size: clamp(1.8rem, 2.4vw + 1rem, 2.6rem);
+        line-height: 1.15;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        font-weight: 800;
+      }
+      .dek {
+        margin: 10px auto 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 65ch;
+      }
+      .meta {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: .95rem;
+        display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      }
+      .dot::before { content: "•"; margin: 0 .4ch; color: var(--muted); }
+
+      .tags { margin-top: 14px; display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+      .tag {
+        font-size: .75rem; font-weight: 700;
+        padding: .25rem .6rem; border-radius: 999px;
+        border: 1px solid var(--line); color: #334155; background: #fff;
+      }
+
+      /* Body / “prose” */
+      article {
+        margin: 26px auto 0;
+        max-width: 800px;
+        padding: 22px 22px 28px;
+        border-radius: var(--radius);
+        background: var(--bg);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.06);
+      }
+
+      .prose { color: var(--ink); font-size: 1.05rem; line-height: 1.75; }
+      .prose :where(h2,h3,h4) { color: var(--ink); line-height: 1.25; margin: 1.8em 0 .6em; font-weight: 800; letter-spacing: -.01em; }
+      .prose h2 { font-size: 1.7rem; }
+      .prose h3 { font-size: 1.35rem; }
+      .prose h4 { font-size: 1.1rem; }
+
+      .prose p { margin: 1em 0; }
+      .prose strong { font-weight: 800; }
+      .prose em { font-style: italic; }
+      .prose a { color: var(--accent); text-underline-offset: 2px; }
+      .prose ul, .prose ol { padding-left: 1.25rem; margin: .75rem 0; }
+      .prose li { margin: .35rem 0; }
+      .prose blockquote {
+        margin: 1.2rem 0; padding: .9rem 1rem;
+        border-left: 4px solid var(--accent);
+        background: #eff6ff;
+        color: #1e3a8a;
+        border-radius: 8px;
+      }
+      .prose hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+      /* Images inside content */
+      .prose img { max-width: 100%; border-radius: 12px; display: block; margin: 1rem auto; }
+
+      /* Code */
+      .prose pre, .prose code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: .95rem;
+      }
+      .prose pre {
+        overflow: auto; padding: 1rem 1.1rem; border-radius: 12px;
+        background: #0b1020; color: #e5e7eb;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+        margin: 1rem 0;
+      }
+      .prose code { background: #f1f5f9; padding: .15rem .35rem; border-radius: 6px; }
+
+      /* Footer */
+      .post-end {
+        margin-top: 26px; padding-top: 18px;
+        border-top: 1px dashed var(--line);
+        color: var(--muted); font-size: .95rem; text-align: center;
+      }
+
+      @media (max-width: 640px) {
+        main { padding: 16px var(--pad) 40px; }
+        article { padding: 18px 16px 24px; }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="wrap">
+        {heroImage && (
+          <div class="hero">
+            <img src={heroImage} alt="" />
           </div>
-        ) : null}
+        )}
+
+        <header class="header">
+          <h1 class="title">{title}</h1>
+          {description && <p class="dek">{description}</p>}
+          <p class="meta">
+            <span><FormattedDate date={pubDate} /></span>
+            {author && <span class="dot">{author}</span>}
+          </p>
+          {tags.length > 0 && (
+            <div class="tags">
+              {tags.slice(0, 8).map((t) => <span class="tag">{t}</span>)}
+            </div>
+          )}
+        </header>
+
+        <article class="prose">
+          <slot />
+          <div class="post-end">Thanks for reading.</div>
+        </article>
       </div>
-    </section>
-  </article>
-</MainLayout>
+    </main>
+    <Footer />
+  </body>
+</html>
