@@ -1,14 +1,16 @@
 import type { APIRoute } from "astro";
 
-const isProd = import.meta.env.MODE === "production";
+type Env = {
+  SEND_EMAILS?: string;
+  QUIZ_TO_EMAIL?: string;
+  QUIZ_FROM_EMAIL?: string;
+};
 
-// ----- Types -----
 interface QuizScores {
   total: number;
   pct: number;
-  byPillar: Record<string, number>;
+  byPillar?: Record<string, number>;
 }
-
 interface QuizPayload {
   name?: string;
   email?: string;
@@ -19,7 +21,6 @@ interface QuizPayload {
   recommendations?: string[];
 }
 
-// Very light runtime guard to avoid crashing on bad input
 function isQuizPayload(x: unknown): x is QuizPayload {
   if (typeof x !== "object" || x === null) return false;
   const o = x as Record<string, unknown>;
@@ -36,21 +37,26 @@ function isQuizPayload(x: unknown): x is QuizPayload {
   return okStr("name") && okStr("email") && okStr("company") && okStr("phone") && okStr("notes") && okArrStr && okScores;
 }
 
-// ----- Handler -----
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (ctx) => {
   try {
-    // 1) Parse JSON safely
-    if (!request.headers.get("content-type")?.includes("application/json")) {
-      return new Response(JSON.stringify({ ok: false, error: "Expected application/json" }), { status: 400 });
+    const env = (ctx.locals.runtime?.env || {}) as Env;
+
+    if (!ctx.request.headers.get("content-type")?.includes("application/json")) {
+      return new Response(JSON.stringify({ ok: false, error: "Expected application/json" }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      });
     }
 
-    const raw = (await request.json()) as unknown;
+    const raw = (await ctx.request.json()) as unknown;
     if (!isQuizPayload(raw)) {
-      return new Response(JSON.stringify({ ok: false, error: "Invalid payload" }), { status: 400 });
+      return new Response(JSON.stringify({ ok: false, error: "Invalid payload" }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      });
     }
-    const body: QuizPayload = raw;
+    const body = raw as QuizPayload;
 
-    // 2) Build email text (works for dev + prod)
     const subject = `Consulting Readiness Quiz — ${body.company || body.name || "New submission"}`;
     const text = [
       `Name: ${body.name || ""}`,
@@ -68,18 +74,24 @@ export const POST: APIRoute = async ({ request }) => {
       "Source: Resources → Consulting Readiness Quiz",
     ].join("\n");
 
-    // 3) In development: don't send; log and return success so the UI is happy
-    if (!isProd) {
-      console.log("[DEV] Quiz submission (email not sent):\nSubject:", subject, "\n\n" + text);
-      return new Response(JSON.stringify({ ok: true, dev: true }), { status: 200 });
+    const sendEmails = (env.SEND_EMAILS || "").toLowerCase() === "true";
+    const to = (env.QUIZ_TO_EMAIL || "").trim();
+    const from = (env.QUIZ_FROM_EMAIL || "").trim();
+
+    if (!sendEmails) {
+      console.log("[QUIZ][DEV] Not sending (SEND_EMAILS=false)", { to, from, body });
+      return new Response(JSON.stringify({ ok: true, dev: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
     }
 
-    // 4) Production: send via MailChannels
-    const to = (import.meta.env.QUIZ_TO_EMAIL || "").trim();
-    const from = (import.meta.env.QUIZ_FROM_EMAIL || "").trim();
     if (!to || !from) {
-      console.error("QUIZ_* env missing", { to, fromPresent: Boolean(from) });
-      return new Response(JSON.stringify({ ok: false, error: "Email env not configured" }), { status: 500 });
+      console.error("[QUIZ] Missing env", { toPresent: !!to, fromPresent: !!from });
+      return new Response(JSON.stringify({ ok: false, error: "Email env not configured" }), {
+        status: 500,
+        headers: { "content-type": "application/json" },
+      });
     }
 
     const mcPayload = {
@@ -98,17 +110,28 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!resp.ok) {
       const errText = await resp.text();
-      console.error("MailChannels error:", resp.status, errText);
-      return new Response(JSON.stringify({ ok: false, error: "MailChannels error", status: resp.status }), { status: 500 });
+      console.error("[QUIZ] MailChannels error:", resp.status, errText);
+      return new Response(JSON.stringify({ ok: false, error: "MailChannels error", status: resp.status }), {
+        status: 502,
+        headers: { "content-type": "application/json" },
+      });
     }
 
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (e: unknown) {
-    console.error("quiz-submit error:", e);
-    return new Response(JSON.stringify({ ok: false, error: "Unhandled server error" }), { status: 500 });
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
+  } catch (e) {
+    console.error("[QUIZ] Unhandled error:", e);
+    return new Response(JSON.stringify({ ok: false, error: "Server error" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 };
 
-// Optional: respond 405 for non-POST
 export const GET: APIRoute = async () =>
-  new Response(JSON.stringify({ ok: false, error: "Use POST" }), { status: 405 });
+  new Response(JSON.stringify({ ok: false, error: "Use POST" }), {
+    status: 405,
+    headers: { "content-type": "application/json" },
+  });
