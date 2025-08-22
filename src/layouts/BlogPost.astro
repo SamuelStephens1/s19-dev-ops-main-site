@@ -1,107 +1,98 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
-interface Props {
+// Ensure global styles are bundled (adjust the path if yours differs)
+import "../styles/global.css";
+
+type Props = {
   title: string;
   description?: string;
-  pubDate: Date;
+  pubDate?: string | Date;
   author?: string;
   tags?: string[];
   heroImage?: string;
-}
+};
 
-const { title, description, pubDate, author, tags = [], heroImage } = Astro.props;
-const pageTitle = `${title} • Signal DevOps`;
+const { title, description, pubDate, author, tags = [], heroImage } =
+  Astro.props as Props;
+
+const dateStr =
+  pubDate ? new Date(pubDate).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }) : "";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={pageTitle} description={description ?? ''} />
+    <meta charset="utf-8" />
+    <BaseHead title={title} description={description} />
     <style>
       :root {
-        --ink: #0f172a;
-        --muted: #64748b;
-        --accent: #1d4ed8;
-        --line: rgba(15, 23, 42, .12);
-        --bg-soft: #f8fafc;
+        --container: 75ch;
+        --muted: #6b7280;
+        --border: #e5e7eb;
       }
-
-      main { padding: 28px 20px 56px; background: var(--bg-soft); }
-      .wrap { margin: 0 auto; max-width: 1120px; }
-
-      /* Back link */
-      .back {
-        display: inline-flex;
-        align-items: center;
-        gap: .4rem;
-        font-size: .9rem;
-        font-weight: 600;
-        color: var(--accent);
-        text-decoration: none;
-        padding: .4rem .7rem;
-        border-radius: 8px;
-        background: #fff;
-        border: 1px solid var(--line);
-        box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        transition: background .15s ease;
+      main { max-width: var(--container); margin: 0 auto; padding: 2rem 1rem 3rem; }
+      .meta { margin: .5rem 0 1.5rem; color: var(--muted); font-size: .95rem; }
+      .hero {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 12px;
+        background: #f3f4f6;
+        margin: 0 0 1.5rem;
       }
-      .back:hover { background: #f0f9ff; }
-
-      .hero { margin-top: 1rem; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 24px rgba(0,0,0,.08); }
-      .hero img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-
-      .header { margin: 22px auto 10px; max-width: 800px; text-align: center; }
-      .title { margin: 0; font-size: clamp(1.8rem, 2.4vw + 1rem, 2.6rem); font-weight: 800; color: var(--ink); }
-      .dek { margin: 10px auto 0; color: var(--muted); font-size: 1.05rem; max-width: 65ch; }
-      .meta { margin-top: 12px; color: var(--muted); font-size: .95rem; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-      .dot::before { content: "•"; margin: 0 .4ch; color: var(--muted); }
-      .tags { margin-top: 14px; display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
-      .tag { font-size: .75rem; font-weight: 700; padding: .25rem .6rem; border-radius: 999px; border: 1px solid var(--line); color: #334155; background: #fff; }
-
-      article { margin: 26px auto 0; max-width: 800px; padding: 22px 22px 28px; border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.06); }
-      .prose { font-size: 1.05rem; line-height: 1.75; color: var(--ink); }
-      .post-end { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .95rem; text-align: center; }
+      article { line-height: 1.75; font-size: 1.06rem; }
+      article h1, article h2, article h3, article h4 { margin-top: 1.8rem; margin-bottom: .8rem; }
+      article hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+      article ul, article ol { padding-left: 1.25rem; }
+      article blockquote {
+        border-left: 4px solid var(--border);
+        padding-left: 1rem;
+        color: #374151;
+        margin: 1rem 0;
+      }
+      .tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
+      .tag {
+        border:1px solid var(--border);
+        padding:.15rem .5rem;
+        border-radius:999px;
+        font-size:.8rem;
+        color:#374151;
+        background:#fff;
+      }
+      .back { display:inline-block; margin-bottom:1rem; color:#2563eb; text-decoration:none; }
+      .back:hover { text-decoration:underline; }
     </style>
   </head>
   <body>
     <Header />
+
     <main>
-      <div class="wrap">
-        <!-- Back button -->
-        <a href="/blog/" class="back" aria-label="Back to blog">
-          ← Back to Blog
-        </a>
+      <a class="back" href="/blog/">← Back to all posts</a>
 
-        {heroImage && (
-          <div class="hero">
-            <img src={heroImage} alt="" />
-          </div>
-        )}
+      <h1>{title}</h1>
+      { (author || dateStr) && (
+        <p class="meta">
+          {author && <span>By {author}</span>}{author && dateStr && " · "}
+          {dateStr && <time datetime={new Date(pubDate ?? "").toISOString()}>{dateStr}</time>}
+        </p>
+      )}
 
-        <header class="header">
-          <h1 class="title">{title}</h1>
-          {description && <p class="dek">{description}</p>}
-          <p class="meta">
-            <span><FormattedDate date={pubDate} /></span>
-            {author && <span class="dot">{author}</span>}
-          </p>
-          {tags.length > 0 && (
-            <div class="tags">
-              {tags.slice(0, 8).map((t) => <span class="tag">{t}</span>)}
-            </div>
-          )}
-        </header>
+      {heroImage && <img class="hero" src={heroImage} alt="" loading="lazy" decoding="async" />}
 
-        <article class="prose">
-          <slot />
-          <div class="post-end">Thanks for reading.</div>
-        </article>
-      </div>
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      )}
+
+      <article>
+        <slot />
+      </article>
     </main>
+
     <Footer />
   </body>
 </html>

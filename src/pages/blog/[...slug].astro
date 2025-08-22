@@ -1,35 +1,29 @@
 ---
-/** Render on request; do not prerender this dynamic route */
-export const prerender = false;
+import { getEntry } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
 
-/** slug can be "a/b/c" or ["a","b","c"] */
-const seg = Astro.params.slug;
-const slug = Array.isArray(seg) ? seg.join('/') : (seg ?? '');
+// Support /blog/my-post and deeper paths if you ever nest
+const slugParam = Array.isArray(Astro.params.slug)
+  ? Astro.params.slug.join("/")
+  : Astro.params.slug!;
 
-/** Eagerly import every MD/MDX file under src/content/blog */
-const files = import.meta.glob('../../content/blog/**/*.{md,mdx}', { eager: true });
+const post = await getEntry("blog", slugParam);
 
-/** Normalize slugs like "folder/post" from file paths */
-const entries = Object.entries(files).map(([path, mod]) => {
-  const norm = path
-    .replace(/\\/g, '/')                             // windows → forward slashes
-    .replace(/^.*\/content\/blog\//, '')             // strip leading dirs
-    .replace(/\.(md|mdx)$/, '');                     // drop extension
-  return { slug: norm, mod: mod as any };
-});
-
-const match = entries.find(e => e.slug === slug);
-
-if (!match) {
-  return new Response('Not found', { status: 404 });
+// 404 if the slug doesn't exist
+if (!post) {
+  return new Response("Not found", { status: 404 });
 }
 
-/** Astro MD/MDX modules expose { default: Content, frontmatter } */
-const { default: Content, frontmatter } = match.mod;
+const { Content } = await post.render();
 ---
 
-<article style="max-width: 800px; margin: 4rem auto; padding: 0 1rem;">
-  <h1>{frontmatter?.title ?? slug}</h1>
-  {frontmatter?.description && <p style="opacity:.7">{frontmatter.description}</p>}
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  author={post.data.author}
+  tags={post.data.tags}
+  heroImage={post.data.heroImage}
+>
   <Content />
-</article>
+</BlogPost>

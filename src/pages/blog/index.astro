@@ -96,7 +96,7 @@ for (const p of posts) {
 
         <ul class="cards">
           {posts.map((post) => {
-            const href = `/blog/${post.id}/`;
+            const href = `/blog/${post.slug}/`;
             const img = post.data.heroImage;
             return (
               <li class="card">
