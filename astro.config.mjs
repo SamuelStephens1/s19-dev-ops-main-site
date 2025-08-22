@@ -1,21 +1,20 @@
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
-import mdx from '@astrojs/mdx';          // ✅ add MDX
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
+import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  // Build for Cloudflare Workers
-  output: 'server',
-  adapter: cloudflare(),
-
-  // Used for absolute URLs in RSS/Sitemap/OpenGraph
-  site: 'https://s19devops.com',
-
-  // Enable MDX pages/posts
-  integrations: [mdx()],
-
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  site: "https://s19devops.com",
+  output: "server",
+  adapter: cloudflare({
+    // ✅ optimize images at build, not at runtime
+    imageService: "compile",
+    // keep local dev proxy
+    platformProxy: { enabled: true },
+  }),
+  integrations: [
+    mdx(),
+    sitemap({ changefreq: "weekly", priority: 0.7 }),
+  ],
 });

@@ -1,48 +1,33 @@
 {
-  "name": "s19-dev-ops-main-site",
-  "description": "Build a personal website, blog, or portfolio with Astro.",
-  "cloudflare": {
-    "label": "Astro Framework Starter",
-    "products": [
-      "Workers"
-    ],
-    "categories": [],
-    "icon_urls": [
-      "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/5ca0ca32-e897-4699-d4c1-6b680512f000/public"
-    ],
-    "preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/33bbbf02-eda2-4d3f-b244-c27a280f3900/public",
-    "publish": true
+  "name": "s19-dev-ops",
+  "version": "1.0.0",
+  "description": "Signal Development Operations main site",
+  "type": "module",
+  "scripts": {
+    "astro": "astro",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "npm run build && wrangler pages dev dist --compatibility-date=2025-08-22 --compatibility-flag=nodejs_compat",
+    "deploy": "wrangler pages deploy dist --project s19devops",
+    "check": "astro build && tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.0",
-    "@astrojs/mdx": "^4.3.0",
-    "@astrojs/rss": "4.0.11",
-    "@astrojs/sitemap": "3.4.1",
+    "@astrojs/cloudflare": "^12.6.4",
+    "@astrojs/mdx": "^4.3.4",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.1",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.2",
     "swiper": "^11.2.10",
-    "typescript": "5.8.3"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250821.0",
     "autoprefixer": "^10.4.21",
+    "cpx": "^1.2.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.12",
     "toml": "^3.0.0",
-    "wrangler": "4.21.x"
-  },
-
-  "scripts": {
-    "astro": "astro",
-    "cf-typegen": "wrangler types",
-    "check": "astro build && tsc && wrangler deploy --dry-run",
-    "deploy": "wrangler deploy",
-    "preview": "astro build && wrangler dev",
-    "gen:envtypes": "node scripts/gen-env-types.mjs",
-    "postinstall": "npm run gen:envtypes",
-    "dev": "npm run gen:envtypes && astro dev",
-    "build": "npm run gen:envtypes && astro build"
-  },
-  "type": "module"
+    "wrangler": "^4.32.0"
+  }
 }
-

@@ -1,9 +1,12 @@
 ---
+import { Swiper, SwiperSlide } from 'swiper/astro';
+
+// ✅ Swiper v11 CSS (use exported paths)
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-// register Swiper web components
+// ✅ Register Swiper web components (needed for <swiper-*> tags)
 import { register } from 'swiper/element/bundle';
 register();
 ---

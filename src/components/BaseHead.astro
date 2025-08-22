@@ -1,42 +1,224 @@
 ---
-// BaseHead.astro
-// Injects your global CSS, meta tags, OpenGraph, and Twitter cards.
+import "../styles/global.css";
 
-import '../styles/global.css';
-
+/** ============================
+ *  PROPS (page-level controls)
+ *  ============================
+ *  Minimal required: title, description.
+ *  Optional:
+ *    - type: "website" | "article" (default "website")
+ *    - image: OG image (absolute or /public path) – default "/logo.png"
+ *    - imageAlt: Accessible alt for og/twitter
+ *    - noindex: boolean (true => add robots noindex,nofollow)
+ *    - keywords: string[] (optional)
+ *    - author: string (for articles)
+ *    - publishDate / modifiedDate: string | Date (for articles)
+ *    - breadcrumbs: { name: string; url: string }[] (optional override)
+ */
 interface Props {
   title: string;
   description: string;
+  type?: "website" | "article";
   image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  keywords?: string[];
+  author?: string;
+  publishDate?: string | Date;
+  modifiedDate?: string | Date;
+  breadcrumbs?: { name: string; url: string }[];
 }
 
-const { title, description, image = 'public\logo.png' } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const {
+  title,
+  description,
+  type = "website",
+  image = "/logo.png",
+  imageAlt = "Signal Development Operations",
+  noindex = false,
+  keywords = [],
+  author,
+  publishDate,
+  modifiedDate,
+  breadcrumbs
+} = Astro.props as Props;
+
+// Canonical & OG image absolute URLs (requires `site` in astro.config.mjs)
+const hasSite = Boolean(Astro.site);
+const canonicalURL = hasSite ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const ogImageURL = hasSite ? new URL(image, Astro.site) : new URL(image, "http://localhost");
+
+// Locale (customize if you localize later)
+const locale = "en_US";
+
+// Build default breadcrumbs from the current path if none provided
+function autoBreadcrumbs() {
+  const parts = Astro.url.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
+  const crumbs: {name:string; url:string}[] = [{ name: "Home", url: hasSite ? new URL("/", Astro.site).href : "/" }];
+  let acc = "";
+  for (const p of parts) {
+    acc += `/${p}`;
+    const label = p.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+    crumbs.push({ name: label, url: hasSite ? new URL(acc + "/", Astro.site).href : acc + "/" });
+  }
+  return crumbs;
+}
+const crumbList = (breadcrumbs && breadcrumbs.length) ? breadcrumbs : autoBreadcrumbs();
+
+// Normalize dates for Article schema
+const published = publishDate ? new Date(publishDate).toISOString() : undefined;
+const modified  = modifiedDate ? new Date(modifiedDate).toISOString() : (published ?? undefined);
+
+// Site constants (edit to your real URLs once live)
+const SITE_NAME = "Signal Development Operations";
+const SITE_URL  = hasSite ? Astro.site!.toString().replace(/\/+$/,"") : "http://localhost:4321";
+const LOGO_URL  = `${SITE_URL}/logo.png`;
+
+// Local business / org details (kept here so every page carries the business graph)
+const BUSINESS = {
+  legalName: "Signal Development Operations, LLC",
+  phone: "+1-931-536-2227",
+  email: "s19devops@outlook.com",
+  street: "335 N. Peachtree Ave.",
+  city: "Cookeville",
+  region: "TN",
+  postal: "38501",
+  country: "US",
+  sameAs: [
+    "https://linkedin.com/company/yourfirm"
+    // add GitHub, X, etc. as needed
+  ]
+};
+
+// Build JSON-LD blocks
+const ldLocalBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": BUSINESS.legalName,
+  "url": SITE_URL,
+  "image": `${SITE_URL}/logo.png`,
+  "telephone": BUSINESS.phone,
+  "email": BUSINESS.email,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": BUSINESS.street,
+    "addressLocality": BUSINESS.city,
+    "addressRegion": BUSINESS.region,
+    "postalCode": BUSINESS.postal,
+    "addressCountry": BUSINESS.country
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "description": "By appointment" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "closes": "Closed" }
+  ],
+  "sameAs": BUSINESS.sameAs,
+  "priceRange": "$$",
+  "description": "Signal Development Operations provides IT consulting, AI infrastructure, and compliance-driven contracting solutions to help clients scale faster, safer, and smarter."
+};
+
+const ldOrganization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": SITE_NAME,
+  "url": SITE_URL,
+  "logo": LOGO_URL,
+  "sameAs": BUSINESS.sameAs,
+  "founder": [
+    { "@type": "Person", "name": "Peyton Anderson", "jobTitle": "Founder & Owner" },
+    { "@type": "Person", "name": "Samuel Stephens", "jobTitle": "Chief Operating Officer" }
+  ]
+};
+
+const ldWebsite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": SITE_NAME,
+  "url": SITE_URL,
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${SITE_URL}/search?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const ldBreadcrumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": crumbList.map((c, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": c.name,
+    "item": c.url
+  }))
+};
+
+// Article schema only when page type indicates an article/post
+const ldArticle = (type === "article") ? {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "image": ogImageURL.href,
+  "author": author ? { "@type": "Person", "name": author } : undefined,
+  "publisher": {
+    "@type": "Organization",
+    "name": SITE_NAME,
+    "logo": { "@type": "ImageObject", "url": LOGO_URL }
+  },
+  "datePublished": published,
+  "dateModified": modified ?? published,
+  "mainEntityOfPage": canonicalURL.href
+} : undefined;
+
+// Robots policy
+const robots = noindex ? "noindex, nofollow, noarchive" : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
 ---
 
-<!–– Global Metadata ––>
+<!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#ffffff" />
 
-<!–– Canonical URL ––>
+<!-- Canonical & Hreflang -->
 <link rel="canonical" href={canonicalURL.href} />
+<link rel="alternate" hrefLang="en" href={canonicalURL.href} />
 
-<!–– Primary Meta Tags ––>
+<!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="robots" content={robots} />
+{keywords.length ? <meta name="keywords" content={keywords.join(", ")} /> : null}
 
-<!–– Open Graph / Facebook ––>
-<meta property="og:type" content="website" />
+<!-- Open Graph -->
+<meta property="og:locale" content={locale} />
+<meta property="og:type" content={type === "article" ? "article" : "website"} />
+<meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:url" content={canonicalURL.href} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site).href} />
+<meta property="og:image" content={ogImageURL.href} />
+<meta property="og:image:alt" content={imageAlt} />
 
-<!–– Twitter ––>
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL.href} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.site).href} />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL.href} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL.href} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- Preconnects (tune if you load web fonts/CDNs) -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+
+<!-- Structured Data -->
+<script type="application/ld+json">{JSON.stringify(ldLocalBusiness)}</script>
+<script type="application/ld+json">{JSON.stringify(ldOrganization)}</script>
+<script type="application/ld+json">{JSON.stringify(ldWebsite)}</script>
+<script type="application/ld+json">{JSON.stringify(ldBreadcrumbs)}</script>
+{ldArticle ? <script type="application/ld+json">{JSON.stringify(ldArticle)}</script> : null}

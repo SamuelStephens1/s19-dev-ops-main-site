@@ -12,8 +12,11 @@ type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
 
 // Generated from wrangler.toml
 interface Env {
-  // (no bindings declared in wrangler.toml)
-
+  SESSION: KVNamespace;
+  QUIZ_TO_EMAIL: string;
+  QUIZ_FROM_EMAIL: string;
+  CONTACT_TO_EMAIL: string;
+  CONTACT_FROM_EMAIL: string;
 }
 
 declare namespace App {

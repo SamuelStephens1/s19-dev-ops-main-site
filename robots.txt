@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://s19devops.com/sitemap-index.xml
