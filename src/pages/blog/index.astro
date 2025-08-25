@@ -101,7 +101,7 @@ for (const p of posts) {
             return (
               <li class="card">
                 <a class="cardLink" href={href} aria-label={`Read ${post.data.title}`}>
-                  <img class="thumb" src={img ?? '/images/blog/placeholder.jpg'} alt="" loading="lazy" decoding="async" />
+                  <img class="thumb" src={img ?? '/images/blog/placeholder.webp'} alt="" loading="lazy" decoding="async" />
                   <div class="body">
                     <h3 class="title">{post.data.title}</h3>
                     <p class="date"><FormattedDate date={new Date(post.data.pubDate)} /></p>

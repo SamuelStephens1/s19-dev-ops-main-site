@@ -5,7 +5,7 @@ pubDate: "2025-08-24"
 draft: false
 author: "Signal DevOps Team"
 tags: ["AI", "Future of Work", "Business", "Innovation"]
-heroImage: "/images/blog/ai-asset-not-threat.jpg"
+heroImage: "/images/blog/ai-asset-not-threat.webp"
 ---
 
 ## Introduction

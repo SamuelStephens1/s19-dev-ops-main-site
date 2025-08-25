@@ -5,7 +5,7 @@ pubDate: "2025-08-23"
 draft: false
 author: "Signal DevOps Team"
 tags: ["Security", "Zero Trust", "SMB", "Cybersecurity"]
-heroImage: "/images/blog/zero-trust-smb.jpg"
+heroImage: "/images/blog/zero-trust-smb.webp"
 ---
 
 ## Introduction

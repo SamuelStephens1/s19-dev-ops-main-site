@@ -5,7 +5,7 @@ pubDate: "2025-08-28"
 draft: false
 author: "Signal DevOps Team"
 tags: ["AI", "ROI", "Automation", "Tool"]
-heroImage: "/images/resources/ai-roi-calculator.jpg"
+heroImage: "/images/resources/ai-roi-calculator.webp"
 
 resourceType: "tool"
 ctaLabel: "Open Calculator"

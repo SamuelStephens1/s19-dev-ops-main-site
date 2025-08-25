@@ -5,7 +5,7 @@ pubDate: "2025-08-28"
 draft: false
 author: "Signal DevOps Team"
 tags: ["Security", "Zero Trust", "Checklist"]
-heroImage: "/images/resources/zero-trust-checklist.jpg"
+heroImage: "/images/resources/zero-trust-checklist.webp"
 
 resourceType: "download"
 ctaLabel: "Get Checklist"

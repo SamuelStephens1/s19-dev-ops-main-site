@@ -83,7 +83,7 @@ function ctaFor(r) {
             const dateText = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(d.pubDate));
             return (
               <li class="card">
-                <img class="thumb" src={d.heroImage ?? '/images/resources/placeholder.jpg'} alt="" loading="lazy" decoding="async" />
+                <img class="thumb" src={d.heroImage ?? '/images/resources/placeholder.webp'} alt="" loading="lazy" decoding="async" />
                 <div class="body">
                   <h3 class="title">{d.title}</h3>
                   {d.description && <p class="desc">{d.description}</p>}

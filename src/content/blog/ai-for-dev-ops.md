@@ -5,7 +5,7 @@ pubDate: "2025-08-21"
 draft: false
 author: "Signal DevOps Team"
 tags: ["AI", "DevOps", "Automation", "Machine Learning"]
-heroImage: "/images/blog/ai-devops.jpg"
+heroImage: "/images/blog/ai-devops.webp"
 ---
 
 ## Introduction

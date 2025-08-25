@@ -5,7 +5,7 @@ pubDate: "2025-08-22"
 draft: false
 author: "Signal DevOps Team"
 tags: ["Cloud", "FinOps", "Cost Optimization", "Governance"]
-heroImage: "/images/blog/cloud-finops.jpg"
+heroImage: "/images/blog/cloud-finops.webp"
 ---
 
 ## Introduction

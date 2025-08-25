@@ -5,7 +5,7 @@ pubDate: "2025-08-28"
 draft: false
 author: "Signal DevOps Team"
 tags: ["Assessment", "Consulting", "SMB", "Strategy"]
-heroImage: "/images/resources/consulting-readiness-quiz.jpg"
+heroImage: "/images/resources/consulting-readiness-quiz.webp"
 
 resourceType: "tool"
 ctaLabel: "Take the Quiz"

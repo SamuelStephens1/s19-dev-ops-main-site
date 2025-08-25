@@ -5,7 +5,7 @@ pubDate: "2025-08-25"
 draft: false
 author: "Signal DevOps Team"
 tags: ["AI", "Consulting", "SMB", "IT Strategy", "Digital Transformation"]
-heroImage: "/images/blog/ai-it-consulting-for-smbs.jpg"
+heroImage: "/images/blog/ai-it-consulting-for-smbs.webp"
 ---
 
 ## Introduction

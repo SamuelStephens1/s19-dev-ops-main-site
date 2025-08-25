@@ -1,14 +1,11 @@
-// src/pages/api/contact.ts
 import type { APIRoute } from "astro";
 
 type Env = {
   SEND_EMAILS?: string;
-  CONTACT_TO_EMAIL?: string;    // your inbox
-  CONTACT_FROM_EMAIL?: string;  // must be @s19devops.com
-  MC_API_KEY?: string;          // MailChannels HTTP API key (Secret)
+  CONTACT_TO_EMAIL?: string;
+  CONTACT_FROM_EMAIL?: string;
 };
 
-/* CORS (allow your origins) */
 const ALLOWED_ORIGINS = [
   "https://staging.s19devops.com",
   "https://s19devops.com",
@@ -32,38 +29,34 @@ export const POST: APIRoute = async (ctx) => {
   try {
     const env = (ctx.locals.runtime?.env || {}) as Env;
 
-    // Parse JSON or form-data
-    const ct = (ctx.request.headers.get("content-type") || "").toLowerCase();
     let name = "Anonymous", email = "", message = "";
-    if (!ct || ct.startsWith("application/json")) {
-      const b = (await ctx.request.json().catch(() => ({}))) as Record<string, unknown>;
-      if (typeof b.name === "string") name = b.name;
-      if (typeof b.email === "string") email = b.email;
-      if (typeof b.message === "string") message = b.message;
-    } else if (ct.startsWith("multipart/form-data") || ct.startsWith("application/x-www-form-urlencoded")) {
-      const f = await ctx.request.formData();
-      name = (f.get("name")?.toString() || "Anonymous");
-      email = (f.get("email")?.toString() || "");
-      message = (f.get("message")?.toString() || "");
+
+    const contentType = ctx.request.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const b = await ctx.request.json() as { name?: string; email?: string; message?: string };
+    }else if (contentType.includes("form-data") || contentType.includes("x-www-form-urlencoded")) {
+      const form = await ctx.request.formData();
+      name = form.get("name")?.toString() || "Anonymous";
+      email = form.get("email")?.toString() || "";
+      message = form.get("message")?.toString() || "";
     } else {
-      return new Response(JSON.stringify({ ok:false, error:"unsupported_content_type" }), {
-        status: 415, headers: { ...hdrs, "content-type":"application/json" }
+      return new Response(JSON.stringify({ ok: false, error: "unsupported_content_type" }), {
+        status: 415, headers: { ...hdrs, "content-type": "application/json" },
       });
     }
 
-    const to = (env.CONTACT_TO_EMAIL || "").trim();
-    const from = (env.CONTACT_FROM_EMAIL || "").trim();
-    const send = (env.SEND_EMAILS || "").toLowerCase() === "true";
-    const apiKey = (env.MC_API_KEY || "").trim();
+    const to = env.CONTACT_TO_EMAIL?.trim() || "";
+    const from = env.CONTACT_FROM_EMAIL?.trim() || "";
+    const send = env.SEND_EMAILS?.toLowerCase() === "true";
 
     if (!to || !from) {
-      return new Response(JSON.stringify({ ok:false, error:"email_env_not_configured" }), {
-        status: 500, headers: { ...hdrs, "content-type":"application/json" }
+      return new Response(JSON.stringify({ ok: false, error: "email_env_not_configured" }), {
+        status: 500, headers: { ...hdrs, "content-type": "application/json" },
       });
     }
     if (!message.trim()) {
-      return new Response(JSON.stringify({ ok:false, error:"empty_message" }), {
-        status: 400, headers: { ...hdrs, "content-type":"application/json" }
+      return new Response(JSON.stringify({ ok: false, error: "empty_message" }), {
+        status: 400, headers: { ...hdrs, "content-type": "application/json" },
       });
     }
 
@@ -71,54 +64,43 @@ export const POST: APIRoute = async (ctx) => {
     const text = `Name: ${name}\nEmail: ${email || "(not provided)"}\n\nMessage:\n${message}`;
 
     if (!send) {
-      return new Response(JSON.stringify({ ok:true, dev:true }), {
-        status: 200, headers: { ...hdrs, "content-type":"application/json" }
-      });
-    }
-    if (!apiKey) {
-      return new Response(JSON.stringify({ ok:false, error:"missing_mc_api_key" }), {
-        status: 500, headers: { ...hdrs, "content-type":"application/json" }
+      return new Response(JSON.stringify({ ok: true, dev: true }), {
+        status: 200, headers: { ...hdrs, "content-type": "application/json" },
       });
     }
 
-    // MailChannels payload (exact minimal shape you provided)
-    const mcPayload = {
-      personalizations: [
-        { to: [{ email: to }] }
-      ],
-      from: { email: from, name: "Signal DevOps Website" },
-      subject,
-      content: [{ type: "text/plain", value: text }]
-    };
-
-    const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const resp = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
-        "X-Api-Key": apiKey
+        "Content-Type": "application/json",
+        Authorization: "Bearer re_TQusYxKA_4VBcYeuX4TEcQGjETJVVK8Vc",
       },
-      body: JSON.stringify(mcPayload)
+      body: JSON.stringify({
+        from,
+        to,
+        subject,
+        text,
+      }),
     });
 
-    const respBody = await resp.text();
+    const respText = await resp.text();
     if (!resp.ok) {
-      return new Response(JSON.stringify({ ok:false, error:"mailchannels", status: resp.status, body: respBody }), {
-        status: resp.status, headers: { ...hdrs, "content-type":"application/json" }
+      return new Response(JSON.stringify({ ok: false, error: "resend", status: resp.status, body: respText }), {
+        status: resp.status, headers: { ...hdrs, "content-type": "application/json" },
       });
     }
 
-    return new Response(JSON.stringify({ ok:true }), {
-      status: 200, headers: { ...hdrs, "content-type":"application/json" }
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200, headers: { ...hdrs, "content-type": "application/json" },
     });
   } catch (e: any) {
-    return new Response(JSON.stringify({ ok:false, error:"server_error", message:String(e?.message ?? e) }), {
-      status: 500, headers: { ...hdrs, "content-type":"application/json" }
+    return new Response(JSON.stringify({ ok: false, error: "server_error", message: String(e?.message ?? e) }), {
+      status: 500, headers: { ...hdrs, "content-type": "application/json" },
     });
   }
 };
 
-// (optional)
 export const GET: APIRoute = async () =>
-  new Response(JSON.stringify({ ok:false, error:"Use POST" }), {
-    status: 405, headers: { "content-type":"application/json" }
+  new Response(JSON.stringify({ ok: false, error: "Use POST" }), {
+    status: 405, headers: { "content-type": "application/json" },
   });

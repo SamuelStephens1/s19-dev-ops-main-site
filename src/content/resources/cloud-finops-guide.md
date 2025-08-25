@@ -5,7 +5,7 @@ pubDate: "2025-08-28"
 draft: false
 author: "Signal DevOps Team"
 tags: ["Cloud", "FinOps", "Cost Optimization", "Guide"]
-heroImage: "/images/resources/cloud-finops-guide.jpg"
+heroImage: "/images/resources/cloud-finops-guide.webp"
 
 resourceType: "download"           # "download" | "tool" | "article"
 ctaLabel: "Download PDF"

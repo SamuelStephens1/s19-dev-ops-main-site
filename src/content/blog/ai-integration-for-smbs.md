@@ -5,7 +5,7 @@ pubDate: "2025-08-26"
 draft: false
 author: "Signal DevOps Team"
 tags: ["AI", "SMB", "Automation", "Business Growth", "Digital Transformation"]
-heroImage: "/images/blog/ai-integration-for-smbs.jpg"
+heroImage: "/images/blog/ai-integration-for-smbs.webp"
 ---
 
 ## Introduction
