@@ -7,7 +7,7 @@ import "../styles/global.css";
  *  Minimal required: title, description.
  *  Optional:
  *    - type: "website" | "article" (default "website")
- *    - image: OG image (absolute or /public path) – default "/logo.png"
+ *    - image: OG image (absolute or /public path) – default "/logo.webp"
  *    - imageAlt: Accessible alt for og/twitter
  *    - noindex: boolean (true => add robots noindex,nofollow)
  *    - keywords: string[] (optional)
@@ -33,7 +33,7 @@ const {
   title,
   description,
   type = "website",
-  image = "/logo.png",
+  image = "/logo.webp",
   imageAlt = "Signal Development Operations",
   noindex = false,
   keywords = [],
@@ -72,7 +72,7 @@ const modified  = modifiedDate ? new Date(modifiedDate).toISOString() : (publish
 // Site constants (edit to your real URLs once live)
 const SITE_NAME = "Signal Development Operations";
 const SITE_URL  = hasSite ? Astro.site!.toString().replace(/\/+$/,"") : "http://localhost:4321";
-const LOGO_URL  = `${SITE_URL}/logo.png`;
+const LOGO_URL  = `${SITE_URL}/logo.webp`;
 
 // Local business / org details (kept here so every page carries the business graph)
 const BUSINESS = {
@@ -96,7 +96,7 @@ const ldLocalBusiness = {
   "@type": "LocalBusiness",
   "name": BUSINESS.legalName,
   "url": SITE_URL,
-  "image": `${SITE_URL}/logo.png`,
+  "image": `${SITE_URL}/logo.webp`,
   "telephone": BUSINESS.phone,
   "email": BUSINESS.email,
   "address": {
@@ -178,8 +178,8 @@ const robots = noindex ? "noindex, nofollow, noarchive" : "index, follow, max-sn
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" type="image/png" href="/favicon.png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" href="/favicon.webp" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.webp" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#ffffff" />
 
