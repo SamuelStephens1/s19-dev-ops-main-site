@@ -2,17 +2,12 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
-
-// Debug which one is a string
-for (const p of posts) {
-  console.log('pubDate type', p.id, typeof p.data.pubDate, p.data.pubDate);
-}
 ---
 
 <!doctype html>
@@ -51,7 +46,13 @@ for (const p of posts) {
       }
       .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-      .cardLink { display: grid; grid-template-rows: auto 1fr; color: inherit; text-decoration: none; height: 100%; }
+      .cardLink {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        color: inherit;
+        text-decoration: none;
+        height: 100%;
+      }
 
       .thumb {
         width: 100%;
@@ -90,21 +91,25 @@ for (const p of posts) {
   </head>
   <body>
     <Header />
+
     <main>
       <section aria-labelledby="blog-heading">
         <h1 id="blog-heading" class="sr-only">Blog</h1>
 
         <ul class="cards">
-          {posts.map((post) => {
-            const href = `/blog/${post.slug}/`;
-            const img = post.data.heroImage;
+          {posts.map(({ slug, data }) => {
+            const href = `/blog/${slug}/`;
+            const img = data.heroImage || '/images/blog/placeholder.webp';
+            const titleId = `post-${slug.replace(/[^a-z0-9]/gi, "-")}`;
             return (
               <li class="card">
-                <a class="cardLink" href={href} aria-label={`Read ${post.data.title}`}>
-                  <img class="thumb" src={img ?? '/images/blog/placeholder.webp'} alt="" loading="lazy" decoding="async" />
+                <a class="cardLink" href={href} aria-labelledby={titleId}>
+                  <img class="thumb" src={img} alt="" loading="lazy" decoding="async" />
                   <div class="body">
-                    <h3 class="title">{post.data.title}</h3>
-                    <p class="date"><FormattedDate date={new Date(post.data.pubDate)} /></p>
+                    <h3 class="title" id={titleId}>{data.title}</h3>
+                    <p class="date">
+                      <FormattedDate date={new Date(data.pubDate)} />
+                    </p>
                   </div>
                 </a>
               </li>
@@ -113,6 +118,7 @@ for (const p of posts) {
         </ul>
       </section>
     </main>
+
     <Footer />
   </body>
 </html>

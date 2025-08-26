@@ -2,18 +2,20 @@
 import { getEntry } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
 
-// Support /blog/my-post and deeper paths if you ever nest
-const slugParam = Array.isArray(Astro.params.slug)
+// Normalize slug from dynamic route
+const slug = Array.isArray(Astro.params.slug)
   ? Astro.params.slug.join("/")
   : Astro.params.slug!;
 
-const post = await getEntry("blog", slugParam);
+// Fetch content entry by slug
+const post = await getEntry("blog", slug);
 
-// 404 if the slug doesn't exist
+// Return 404 if not found
 if (!post) {
   return new Response("Not found", { status: 404 });
 }
 
+// Render Markdown or MDX
 const { Content } = await post.render();
 ---
 
