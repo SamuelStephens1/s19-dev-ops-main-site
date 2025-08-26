@@ -1,16 +1,24 @@
----
-// Hero section
----
-
 <section
   style="
+    position: relative;
     background: url('/images/hero-bg.webp') center/cover no-repeat;
     color: white;
     padding: 8rem 1rem;
     text-align: center;
   "
 >
-  <div style="max-width: 960px; margin: auto;">
+  <!-- 👇 Hidden img for LCP tracking + preload compatibility -->
+  <img
+    src="/images/hero-bg.webp"
+    width="1920"
+    height="1080"
+    alt=""
+    aria-hidden="true"
+    fetchpriority="high"
+    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
+  />
+
+  <div style="max-width: 960px; margin: auto; position: relative; z-index: 1;">
     <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1.5rem;">
       AI-Powered IT Solutions
     </h1>
