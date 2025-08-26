@@ -57,8 +57,12 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
             src={mapSrc}
             allowfullscreen
             loading="lazy"
+            decoding="async"
+            width="400"
+            height="400"
             referrerpolicy="no-referrer-when-downgrade"
             title="Map"
+            fetchpriority="low"
           ></iframe>
         </div>
         <a class="link" href={directionsHref} target="_blank" rel="noopener noreferrer">Get Directions</a>

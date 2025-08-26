@@ -8,7 +8,17 @@ const SITE_TITLE = 'Signal Development Operations LLC';
 <header class={styles.mainNav} data-role="main-nav" data-expanded="false">
   <div class={`container ${styles.mainNavContainer}`}>
     <div class={styles.logo}>
-      <a href="/"><img src="/logo.webp" alt={`${SITE_TITLE} logo`} /></a>
+      <a href="/">
+        <img
+          src="/logo.webp"
+          alt={`${SITE_TITLE} logo`}
+          width="120"
+          height="170"
+          decoding="async"
+          fetchpriority="high"
+          loading="eager"
+        />
+      </a>
     </div>
 
     <!-- 👇 CTA (visible on scroll, mobile only) -->
@@ -34,8 +44,15 @@ const SITE_TITLE = 'Signal Development Operations LLC';
         aria-expanded="false"
         type="button"
       >
-        <svg class={styles.menuIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="3" y1="6"  x2="21" y2="6" />
+        <svg
+          class={styles.menuIcon}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <line x1="3" y1="6" x2="21" y2="6" />
           <line x1="3" y1="12" x2="21" y2="12" />
           <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
@@ -63,44 +80,41 @@ const SITE_TITLE = 'Signal Development Operations LLC';
 </header>
 
 <script client:load>
-  const header      = document.querySelector('[data-role="main-nav"]');
-  const btn         = document.querySelector('[data-el="menu-btn"]');
-  const menu        = document.querySelector('[data-el="mobile-menu"]');
-  const ctaDesktop  = document.querySelector('[data-el="desktop-cta"]');
-  const ctaMobile   = document.querySelector('[data-el="mobile-cta"]');
+  const header = document.querySelector('[data-role="main-nav"]');
+  const btn = document.querySelector('[data-el="menu-btn"]');
+  const menu = document.querySelector('[data-el="mobile-menu"]');
+  const ctaDesktop = document.querySelector('[data-el="desktop-cta"]');
+  const ctaMobile = document.querySelector('[data-el="mobile-cta"]');
 
-  btn?.addEventListener('click', () => {
-    const open = menu?.dataset.open === 'true';
-    if (menu) menu.dataset.open = (!open).toString();
-    btn?.setAttribute('aria-expanded', (!open).toString());
-  });
+  const toggleMenu = () => {
+    const isOpen = menu?.dataset.open === 'true';
+    menu.dataset.open = (!isOpen).toString();
+    btn.setAttribute('aria-expanded', (!isOpen).toString());
+  };
 
+  const closeMenu = () => {
+    menu.dataset.open = 'false';
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  const updateCTAs = () => {
+    const isScrolled = window.scrollY > 50;
+    const isMobile = window.innerWidth <= 720;
+
+    ctaMobile.dataset.visible = isMobile && isScrolled ? 'true' : 'false';
+    ctaDesktop.dataset.visible = !isMobile && isScrolled ? 'true' : 'false';
+  };
+
+  btn?.addEventListener('click', toggleMenu);
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 721 && menu) {
-      menu.dataset.open = 'false';
-      btn?.setAttribute('aria-expanded', 'false');
-    }
-    onScroll();
+    if (window.innerWidth >= 721) closeMenu();
+    updateCTAs();
   });
 
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menu) {
-      menu.dataset.open = 'false';
-      btn?.setAttribute('aria-expanded', 'false');
-    }
+    if (e.key === 'Escape') closeMenu();
   });
 
-  const onScroll = () => {
-    const scrolled = window.scrollY > 50;
-
-    if (window.innerWidth <= 720) {
-      ctaMobile?.setAttribute('data-visible', scrolled ? 'true' : 'false');
-      ctaDesktop?.setAttribute('data-visible', 'false');
-    } else {
-      ctaMobile?.setAttribute('data-visible', 'false');
-      ctaDesktop?.setAttribute('data-visible', scrolled ? 'true' : 'false');
-    }
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  window.addEventListener('scroll', updateCTAs, { passive: true });
+  updateCTAs();
 </script>
