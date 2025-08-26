@@ -50,14 +50,27 @@ const technologies = [
 ];
 ---
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="preload" as="image" href="/images/stack-bg.webp" fetchpriority="low">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
 <script type="module">
   import 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js';
 </script>
 
-<section style="padding: 6rem 1rem; background: url('/images/stack-bg.webp') center/cover no-repeat; color: white;">
+<section style="padding: 6rem 1rem; background: url('/images/stack-bg.webp') center/cover no-repeat; color: white; position: relative;">
+  <!-- Hidden img for LCP discoverability -->
+  <img
+    src="/images/stack-bg.webp"
+    width="1600"
+    height="900"
+    alt=""
+    aria-hidden="true"
+    fetchpriority="low"
+    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
+  />
+
   <div style="max-width: 1200px; margin: auto;">
-    <h2 style="text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 3rem;">
+    <h2 style="text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
       Technologies We Work With
     </h2>
 
@@ -80,12 +93,18 @@ const technologies = [
             justify-content: center;
             height: 260px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-          ">
-            <img src={tech.icon} alt={tech.name} style="height: 64px; margin-bottom: 1rem;" />
-            <h3 style="font-size: 1.25rem; font-weight: bold;">{tech.name}</h3>
+            transition: transform 0.2s ease;
+            will-change: transform;
+          "
+          onmouseover="this.style.transform='translateY(-4px)'"
+          onmouseout="this.style.transform='none'"
+          >
+            <img src={tech.icon} alt={tech.name} width="64" height="64" loading="lazy" decoding="async" style="height: 64px; margin-bottom: 1rem;" />
+            <h3 style="font-size: 1.25rem; font-weight: 700;">{tech.name}</h3>
           </div>
         </swiper-slide>
       ))}
     </swiper-container>
   </div>
 </section>
+

@@ -1,21 +1,30 @@
 ---
 import { Swiper, SwiperSlide } from 'swiper/astro';
-
-// ✅ Swiper v11 CSS (use exported paths)
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-// ✅ Register Swiper web components (needed for <swiper-*> tags)
 import { register } from 'swiper/element/bundle';
 register();
 ---
 
+<link rel="preload" as="image" href="/images/testimonials-bg.webp" fetchpriority="low" />
+
 <section 
-  style="padding: 6rem 1rem; background: url('/images/testimonials-bg.webp') center/cover no-repeat; color: white; text-align: center;"
+  style="padding: 6rem 1rem; background: url('/images/testimonials-bg.webp') center/cover no-repeat; color: white; text-align: center; position: relative;"
 >
+  <!-- Hidden LCP-friendly image for testimonial background -->
+  <img
+    src="/images/testimonials-bg.webp"
+    width="1600"
+    height="900"
+    alt=""
+    aria-hidden="true"
+    fetchpriority="low"
+    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
+  />
+
   <div style="max-width: 900px; margin: auto;">
-    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 3rem;">Client Testimonials</h2>
+    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">Client Testimonials</h2>
 
     <swiper-container
       slides-per-view="1"
@@ -25,7 +34,6 @@ register();
       loop="true"
       style="padding-bottom: 2rem;"
     >
-      <!-- Real Upwork Testimonial -->
       <swiper-slide>
         <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
           <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
@@ -35,7 +43,6 @@ register();
         </div>
       </swiper-slide>
 
-      <!-- Federal Agency -->
       <swiper-slide>
         <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
           <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
@@ -45,7 +52,6 @@ register();
         </div>
       </swiper-slide>
 
-      <!-- Research -->
       <swiper-slide>
         <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
           <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
@@ -55,7 +61,6 @@ register();
         </div>
       </swiper-slide>
 
-      <!-- Enterprise -->
       <swiper-slide>
         <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
           <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
@@ -65,7 +70,6 @@ register();
         </div>
       </swiper-slide>
 
-      <!-- SMB -->
       <swiper-slide>
         <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
           <blockquote style="font-style: italic; margin-bottom: 1.5rem;">

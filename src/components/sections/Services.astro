@@ -1,93 +1,104 @@
 <section style="padding: 6rem 1rem; background-color: white; color: #001E41;">
   <div style="max-width: 1100px; margin: auto;">
-    <h2 style="font-size: 2.25rem; font-weight: bold; text-align: center; margin-bottom: 3rem;">
+    <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 3rem;">
       Our Core Services
     </h2>
 
-    <div
-      style="
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-      "
-    >
-      <!-- AI & ML -->
-      <a href="/services#ai-ml" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #F4F6F8; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #0A2D60; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+      <!-- Each service card -->
+      <!-- All cards updated with CSS hover instead of inline onmouseover/onmouseout -->
+      <!-- Only semantic and loading performance changes, no design change -->
+
+      <a href="/services#ai-ml" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #F4F6F8;">
+          <div class="service-icon" style="background: #0A2D60;">
             <span style="color: white; font-size: 1.5rem;">🤖</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">AI & ML</h3>
-          <p style="font-size: 0.95rem;">LLM integration, model training, MLOps pipelines, and insights at scale.</p>
+          <h3 class="service-title">AI & ML</h3>
+          <p class="service-desc">LLM integration, model training, MLOps pipelines, and insights at scale.</p>
         </div>
       </a>
 
-      <!-- Cloud Infrastructure -->
-      <a href="/services#cloud" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #EAF1FA; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #D7BC23; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+      <a href="/services#cloud" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #EAF1FA;">
+          <div class="service-icon" style="background: #D7BC23;">
             <span style="color: #001E41; font-size: 1.5rem;">☁️</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">Cloud Infrastructure</h3>
-          <p style="font-size: 0.95rem;">Secure, hybrid, and multi-cloud deployments across AWS, Azure, GCP.</p>
+          <h3 class="service-title">Cloud Infrastructure</h3>
+          <p class="service-desc">Secure, hybrid, and multi-cloud deployments across AWS, Azure, GCP.</p>
         </div>
       </a>
 
-      <!-- Cybersecurity -->
-      <a href="/services#security" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #FDF2F3; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #0A2D60; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+      <a href="/services#security" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #FDF2F3;">
+          <div class="service-icon" style="background: #0A2D60;">
             <span style="color: white; font-size: 1.5rem;">🛡️</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">Cybersecurity</h3>
-          <p style="font-size: 0.95rem;">FedRAMP, CMMC, Zero Trust, hardened containers, and audit compliance.</p>
+          <h3 class="service-title">Cybersecurity</h3>
+          <p class="service-desc">FedRAMP, CMMC, Zero Trust, hardened containers, and audit compliance.</p>
         </div>
       </a>
 
-      <!-- DevOps & Automation -->
-      <a href="/services#devops" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #F0F5F3; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #D7BC23; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+      <a href="/services#devops" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #F0F5F3;">
+          <div class="service-icon" style="background: #D7BC23;">
             <span style="color: #001E41; font-size: 1.5rem;">⚙️</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">DevOps & Automation</h3>
-          <p style="font-size: 0.95rem;">CI/CD, infrastructure as code, GitOps workflows, platform engineering.</p>
+          <h3 class="service-title">DevOps & Automation</h3>
+          <p class="service-desc">CI/CD, infrastructure as code, GitOps workflows, platform engineering.</p>
         </div>
       </a>
 
-      <!-- IT Modernization -->
-      <a href="/services#modernization" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #FFF8E1; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #0A2D60; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+      <a href="/services#modernization" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #FFF8E1;">
+          <div class="service-icon" style="background: #0A2D60;">
             <span style="color: white; font-size: 1.5rem;">🔄</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">IT Modernization</h3>
-          <p style="font-size: 0.95rem;">Legacy-to-cloud migration, optimization, and app modernization.</p>
+          <h3 class="service-title">IT Modernization</h3>
+          <p class="service-desc">Legacy-to-cloud migration, optimization, and app modernization.</p>
         </div>
       </a>
 
-      <!-- 24/7 Support -->
-      <a href="/services#managed" style="text-decoration:none; color:inherit; display:block;">
-        <div style="background: #EFF7FF; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-          onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 16px rgba(0,0,0,0.05)';">
-          <div style="background: #D7BC23; width: 48px; height: 48px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+      <a href="/services#managed" style="text-decoration: none; color: inherit; display: block;">
+        <div class="service-card" style="background: #EFF7FF;">
+          <div class="service-icon" style="background: #D7BC23;">
             <span style="color: #001E41; font-size: 1.5rem;">📞</span>
           </div>
-          <h3 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.75rem;">24/7 Support</h3>
-          <p style="font-size: 0.95rem;">Monitoring, alerting, SLAs, and on-call response for critical environments.</p>
+          <h3 class="service-title">24/7 Support</h3>
+          <p class="service-desc">Monitoring, alerting, SLAs, and on-call response for critical environments.</p>
         </div>
       </a>
     </div>
   </div>
 </section>
+
+<style>
+  .service-card {
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform, box-shadow;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .service-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .service-desc {
+    font-size: 0.95rem;
+  }
+</style>
