@@ -109,69 +109,80 @@ export const OPTIONS: APIRoute = async ({ request }) =>
   new Response(null, { status: 204, headers: cors(request.headers.get("Origin")) });
 
 export const POST: APIRoute = async (ctx) => {
-  const headers = cors(ctx.request.headers.get("Origin"));
+  const headers = {
+    ...cors(ctx.request.headers.get("Origin")),
+    "Content-Type": "application/json",
+  };
 
   try {
     const env = (ctx.locals.runtime?.env || {}) as Env;
-
-    if (!ctx.request.headers.get("content-type")?.toLowerCase().includes("application/json")) {
-      return new Response(JSON.stringify({ ok: false, error: "expected_json" }), {
-        status: 400,
-        headers: { ...headers, "content-type": "application/json" },
-      });
-    }
-
-    const raw = await ctx.request.json().catch(() => ({}));
-    if (!isQuizPayload(raw)) {
-      return new Response(JSON.stringify({ ok: false, error: "invalid_payload" }), {
-        status: 400,
-        headers: { ...headers, "content-type": "application/json" },
-      });
-    }
-
-    const body = raw as QuizPayload;
-    const send = (env.SEND_EMAILS || "").toLowerCase() === "true";
+    const sendEmails = (env.SEND_EMAILS || "").toLowerCase() === "true";
     const to = (env.QUIZ_TO_EMAIL || "").trim();
     const from = (env.QUIZ_FROM_EMAIL || "").trim();
 
+    // Validate JSON payload
+    const contentType = ctx.request.headers.get("content-type")?.toLowerCase() || "";
+    if (!contentType.includes("application/json")) {
+      return new Response(JSON.stringify({ ok: false, error: "expected_json" }), {
+        status: 400,
+        headers,
+      });
+    }
+
+    const body = await ctx.request.json().catch(() => null);
+    if (!isQuizPayload(body)) {
+      return new Response(JSON.stringify({ ok: false, error: "invalid_payload" }), {
+        status: 400,
+        headers,
+      });
+    }
+
+    // Basic email env check
     if (!to || !from) {
       return new Response(JSON.stringify({ ok: false, error: "email_env_not_configured" }), {
         status: 500,
-        headers: { ...headers, "content-type": "application/json" },
+        headers,
       });
     }
 
-    if (!send) {
-      return new Response(JSON.stringify({ ok: true, dev: true }), {
-        status: 200,
-        headers: { ...headers, "content-type": "application/json" },
-      });
-    }
-
+    // Render content
     const text = formatResultsEmail(body);
     const subject = `Consulting Readiness Quiz — ${body.company || body.name || "New submission"}`;
 
-    const payload = {
-      from,
-      subject,
-      text,
-    };
+    if (!sendEmails) {
+      console.log("[dev] Skipping email send. Message body:\n", text);
+      return new Response(JSON.stringify({ ok: true, dev: true }), {
+        status: 200,
+        headers,
+      });
+    }
 
     // === Send to internal team ===
-    const res1 = await fetch("https://api.resend.com/emails", {
+    const internalRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer re_TQusYxKA_4VBcYeuX4TEcQGjETJVVK8Vc",
       },
-      body: JSON.stringify({ ...payload, to }),
+      body: JSON.stringify({
+        from,
+        to,
+        subject,
+        text,
+        reply_to: body.email || undefined,
+      }),
     });
 
-    if (!res1.ok) {
-      const bodyText = await res1.text();
-      return new Response(JSON.stringify({ ok: false, error: "resend", status: res1.status, body: bodyText }), {
+    if (!internalRes.ok) {
+      const bodyText = await internalRes.text();
+      return new Response(JSON.stringify({
+        ok: false,
+        error: "resend_error",
+        status: internalRes.status,
+        body: bodyText,
+      }), {
         status: 400,
-        headers: { ...headers, "content-type": "application/json" },
+        headers,
       });
     }
 
@@ -194,15 +205,18 @@ export const POST: APIRoute = async (ctx) => {
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
-      headers: { ...headers, "content-type": "application/json" },
+      headers,
     });
+
   } catch (e: any) {
-    return new Response(
-      JSON.stringify({ ok: false, error: "server_error", message: String(e?.message ?? e) }),
-      {
-        status: 500,
-        headers: { ...headers, "content-type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({
+      ok: false,
+      error: "server_error",
+      message: String(e?.message ?? e),
+    }), {
+      status: 500,
+      headers,
+    });
   }
 };
+
