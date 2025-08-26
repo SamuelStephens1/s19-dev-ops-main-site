@@ -6,12 +6,50 @@ import Footer from "../components/Footer.astro";
 const title = "About Us — Signal Development Operations";
 const description =
   "Our origin story and the leaders behind Signal Development Operations — a veteran-owned team helping organizations scale securely with AI and modern infrastructure.";
+const canonical = "https://s19devops.com/about";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} canonical={canonical} />
+
+    <!-- Robots & preview controls (safe even if BaseHead sets defaults) -->
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+    <link rel="alternate" href={canonical} hreflang="en" />
+
+    <!-- Structured data: WebPage + Breadcrumb + Organization (no guessing) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "About Us — Signal Development Operations",
+        "url": "https://s19devops.com/about",
+        "description": "Our origin story and the leaders behind Signal Development Operations — a veteran-owned team helping organizations scale securely with AI and modern infrastructure.",
+        "isPartOf": { "@type": "WebSite", "name": "Signal Development Operations", "url": "https://s19devops.com" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://s19devops.com/" },
+            { "@type": "ListItem", "position": 2, "name": "About", "item": "https://s19devops.com/about" }
+          ]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Signal Development Operations",
+        "url": "https://s19devops.com",
+        "founder": [
+          { "@type": "Person", "name": "Peyton Anderson" },
+          { "@type": "Person", "name": "Samuel Stephens" }
+        ],
+        "address": { "@type": "PostalAddress", "addressLocality": "Cookeville", "addressRegion": "TN", "addressCountry": "US" }
+      }
+    </script>
+
     <style>
       :root {
         --mx: 1100px; --ink:#0f172a; --muted:#64748b; --line:rgba(15,23,42,.12);
@@ -56,21 +94,31 @@ const description =
       /* Nice list for origin bullets */
       .bullets { margin: .25rem 0 0 1.25rem; color: var(--muted); }
       .bullets li { margin: .25rem 0; }
+
+      /* Visually hidden utility (for a11y/SEO without visual change) */
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+        clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+      }
     </style>
   </head>
   <body>
+    <!-- Skip link for accessibility; invisible due to .visually-hidden -->
+    <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
     <Header />
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Hero -->
-      <section class="hero">
-        <h1>About Signal Development Operations</h1>
+      <section class="hero" aria-labelledby="about-h1">
+        <h1 id="about-h1">About Signal Development Operations</h1>
         <p>Veteran-owned. Outcome-driven. We help organizations modernize securely and scale with confidence.</p>
       </section>
 
       <!-- Our Story -->
-      <section class="section">
-        <h2>Our Story</h2>
+      <section class="section" aria-labelledby="our-story">
+        <h2 id="our-story">Our Story</h2>
         <p class="lead">
           Signal Development Operations began in Cookeville, Tennessee, with a simple conviction:
           the right mix of discipline, engineering rigor, and customer empathy can transform how
@@ -89,15 +137,21 @@ const description =
       </section>
 
       <!-- Leadership -->
-      <section class="section">
-        <h2>Leadership</h2>
-        <div class="cards">
+      <section class="section" aria-labelledby="leadership">
+        <h2 id="leadership">Leadership</h2>
+        <div class="cards" role="list">
           <!-- Peyton -->
-          <article class="card">
-            <img class="avatar" src="/images/peyton.webp" alt="Peyton Anderson headshot" />
-            <h3>Peyton Anderson</h3>
-            <h4>Founder & Owner</h4>
-            <p>
+          <article class="card" role="listitem" itemscope itemtype="https://schema.org/Person">
+            <img
+              class="avatar"
+              src="/images/peyton.webp"
+              alt="Peyton Anderson headshot"
+              width="120" height="120"
+              loading="lazy" decoding="async" fetchpriority="low"
+            />
+            <h3 itemprop="name">Peyton Anderson</h3>
+            <h4 itemprop="jobTitle">Founder &amp; Owner</h4>
+            <p itemprop="description">
               Peyton is a U.S. veteran and the managing member of Signal Development Operations.
               He leads company vision, partnerships, and growth—bringing mission-ready discipline to
               every engagement. As owner, Peyton ensures Signal remains a trusted SDVOSB partner
@@ -106,11 +160,17 @@ const description =
           </article>
 
           <!-- Samuel -->
-          <article class="card">
-            <img class="avatar" src="/images/samuel.webp" alt="Samuel Stephens headshot" />
-            <h3>Samuel Stephens</h3>
-            <h4>Director of Operations</h4>
-            <p>
+          <article class="card" role="listitem" itemscope itemtype="https://schema.org/Person">
+            <img
+              class="avatar"
+              src="/images/samuel.webp"
+              alt="Samuel Stephens headshot"
+              width="120" height="120"
+              loading="lazy" decoding="async" fetchpriority="low"
+            />
+            <h3 itemprop="name">Samuel Stephens</h3>
+            <h4 itemprop="jobTitle">Director of Operations</h4>
+            <p itemprop="description">
               Samuel is a full-stack and infrastructure engineer who oversees delivery and operations.
               He specializes in cloud architecture, DevOps automation, and AI-ready platforms—translating
               business goals into resilient, measurable systems that scale.
@@ -123,4 +183,3 @@ const description =
     <Footer />
   </body>
 </html>
-
