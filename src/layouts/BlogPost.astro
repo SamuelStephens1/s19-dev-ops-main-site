@@ -2,8 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
-// Ensure global styles are bundled (adjust the path if yours differs)
 import "../styles/global.css";
 
 type Props = {
@@ -15,11 +13,17 @@ type Props = {
   heroImage?: string;
 };
 
-const { title, description, pubDate, author, tags = [], heroImage } =
-  Astro.props as Props;
+const { title, description, pubDate, author, tags = [], heroImage } = Astro.props as Props;
 
-const dateStr =
-  pubDate ? new Date(pubDate).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }) : "";
+const dateStr = pubDate
+  ? new Date(pubDate).toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  : "";
+
+const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
 ---
 
 <!doctype html>
@@ -33,58 +37,122 @@ const dateStr =
         --muted: #6b7280;
         --border: #e5e7eb;
       }
-      main { max-width: var(--container); margin: 0 auto; padding: 2rem 1rem 3rem; }
-      .meta { margin: .5rem 0 1.5rem; color: var(--muted); font-size: .95rem; }
+
+      main {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 2rem 1rem 3rem;
+      }
+
+      .meta {
+        margin: 0.5rem 0 1.5rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
       .hero {
+        display: block;
         width: 100%;
+        max-height: 480px;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 12px;
         background: #f3f4f6;
-        margin: 0 0 1.5rem;
+        margin-bottom: 1.5rem;
       }
-      article { line-height: 1.75; font-size: 1.06rem; }
-      article h1, article h2, article h3, article h4 { margin-top: 1.8rem; margin-bottom: .8rem; }
-      article hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-      article ul, article ol { padding-left: 1.25rem; }
+
+      article {
+        line-height: 1.75;
+        font-size: 1.06rem;
+      }
+
+      article h1,
+      article h2,
+      article h3,
+      article h4 {
+        margin-top: 1.8rem;
+        margin-bottom: 0.8rem;
+      }
+
+      article hr {
+        border: 0;
+        border-top: 1px solid var(--border);
+        margin: 1.5rem 0;
+      }
+
+      article ul,
+      article ol {
+        padding-left: 1.25rem;
+      }
+
       article blockquote {
         border-left: 4px solid var(--border);
         padding-left: 1rem;
         color: #374151;
         margin: 1rem 0;
       }
-      .tags { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
-      .tag {
-        border:1px solid var(--border);
-        padding:.15rem .5rem;
-        border-radius:999px;
-        font-size:.8rem;
-        color:#374151;
-        background:#fff;
+
+      .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
       }
-      .back { display:inline-block; margin-bottom:1rem; color:#2563eb; text-decoration:none; }
-      .back:hover { text-decoration:underline; }
+
+      .tag {
+        border: 1px solid var(--border);
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        color: #374151;
+        background: #fff;
+      }
+
+      .back {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      .back:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
     <Header />
 
-    <main>
+    <main role="main">
       <a class="back" href="/blog/">← Back to all posts</a>
 
       <h1>{title}</h1>
-      { (author || dateStr) && (
+
+      {(author || dateStr) && (
         <p class="meta">
-          {author && <span>By {author}</span>}{author && dateStr && " · "}
-          {dateStr && <time datetime={new Date(pubDate ?? "").toISOString()}>{dateStr}</time>}
+          {author && <span>By {author}</span>}
+          {author && dateStr && " · "}
+          {dateStr && <time datetime={isoDate}>{dateStr}</time>}
         </p>
       )}
 
-      {heroImage && <img class="hero" src={heroImage} alt="" loading="lazy" decoding="async" />}
+      {heroImage && (
+        <img
+          class="hero"
+          src={heroImage}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+          width="1280"
+          height="720"
+        />
+      )}
 
       {tags.length > 0 && (
         <div class="tags">
-          {tags.map((t) => <span class="tag">{t}</span>)}
+          {tags.map((t) => (
+            <span class="tag">{t}</span>
+          ))}
         </div>
       )}
 
