@@ -10,6 +10,7 @@ const resources = (await getCollection('resources', ({ data }) => !data.draft))
 
 const pageTitle = `Resources • ${SITE_TITLE}`;
 const pageDescription = 'Guides, checklists, and tools to help your business succeed with AI, Cloud, and Security.';
+const canonical = 'https://s19devops.com/resources';
 
 function hrefFor(r) {
   const t = r.data.resourceType;
@@ -25,12 +26,50 @@ function ctaFor(r) {
   if (r.data.resourceType === 'tool') return 'Open Tool';
   return 'Read';
 }
+
+// JSON-LD for CollectionPage + Breadcrumb + ItemList
+const itemList = resources.map((r, i) => {
+  const href = hrefFor(r);
+  return {
+    '@type': 'ListItem',
+    position: i + 1,
+    url: href
+  };
+});
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={pageTitle} description={pageDescription} />
+    <BaseHead title={pageTitle} description={pageDescription} canonical={canonical} />
+
+    <!-- Robots & language (safe even if BaseHead sets defaults) -->
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+    <link rel="alternate" href={canonical} hreflang="en" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": {pageTitle},
+        "description": {pageDescription},
+        "url": {canonical},
+        "isPartOf": { "@type": "WebSite", "name": {SITE_TITLE}, "url": "https://s19devops.com" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://s19devops.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Resources", "item": {canonical} }
+          ]
+        },
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": {itemList}
+        }
+      }
+    </script>
+
     <style>
       :root {
         --card-radius: 14px;
@@ -62,11 +101,21 @@ function ctaFor(r) {
              background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; transition: filter .15s ease; }
       .cta:hover { filter: brightness(1.07); }
       .cta[aria-disabled="true"] { pointer-events: none; opacity: .6; }
+
+      /* Visually hidden utility for a11y only (no visual change) */
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+        clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+      }
     </style>
   </head>
   <body>
+    <!-- Hidden skip link (improves a11y & SEO semantics; invisible) -->
+    <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
     <Header />
-    <main>
+    <main id="main-content" role="main">
       <header>
         <h1>Resources</h1>
         <p class="lead">Guides, checklists, and tools to help your business succeed with AI, Cloud, and Security.</p>
@@ -75,22 +124,40 @@ function ctaFor(r) {
       {resources.length === 0 ? (
         <p class="lead">No resources published yet.</p>
       ) : (
-        <ul class="grid">
-          {resources.map((r) => {
+        <ul class="grid" role="list" aria-label="Resource list">
+          {resources.map((r, i) => {
             const href = hrefFor(r);
             const disabled = href === '#';
             const d = r.data;
             const dateText = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(d.pubDate));
+            // Favor LCP for first card's image only (no visual change)
+            const fetchpriority = i === 0 ? 'high' : 'low';
+            // Follow external links; add nofollow to disabled placeholder
+            const rel = disabled ? 'nofollow noopener noreferrer' : 'noopener noreferrer';
             return (
-              <li class="card">
-                <img class="thumb" src={d.heroImage ?? '/images/resources/placeholder.webp'} alt="" loading="lazy" decoding="async" />
+              <li class="card" role="listitem">
+                <img
+                  class="thumb"
+                  src={d.heroImage ?? '/images/resources/placeholder.webp'}
+                  alt={d.heroAlt ?? ''}
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority={fetchpriority}
+                />
                 <div class="body">
                   <h3 class="title">{d.title}</h3>
                   {d.description && <p class="desc">{d.description}</p>}
                   <p class="meta">{dateText}</p>
                 </div>
                 <div class="ctaWrap">
-                  <a class="cta" href={href} target="_blank" rel="noopener noreferrer" aria-disabled={disabled ? 'true' : 'false'}>
+                  <a
+                    class="cta"
+                    href={href}
+                    target="_blank"
+                    rel={rel}
+                    aria-disabled={disabled ? 'true' : 'false'}
+                    aria-label={`${ctaFor(r)}: ${d.title}`}
+                  >
                     {ctaFor(r)}
                   </a>
                 </div>
