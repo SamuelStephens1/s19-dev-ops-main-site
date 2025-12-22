@@ -15,6 +15,18 @@ import "../styles/global.css";
  *    - publishDate / modifiedDate: string | Date (for articles)
  *    - breadcrumbs: { name: string; url: string }[] (optional override)
  */
+
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KM1YQE77ED">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KM1YQE77ED');
+</script>
+
 interface Props {
   title: string;
   description: string;
