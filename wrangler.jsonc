@@ -1,5 +1,6 @@
 {
-  "name": "s19-dev-ops-staging",
+  // wrangler.jsonc
+  "name": "s19-dev-ops-main-site-2",
   "main": "dist/_worker.js",
   "compatibility_date": "2025-08-22",
   "compatibility_flags": ["nodejs_compat"],
