@@ -7,7 +7,6 @@
     text-align: center;
   "
 >
-  <!-- 👇 Hidden img for LCP tracking + preload compatibility -->
   <img
     src="/images/hero-bg.webp"
     width="1920"
@@ -19,53 +18,56 @@
   />
 
   <div style="max-width: 960px; margin: auto; position: relative; z-index: 1;">
-    <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1.5rem;">
+    <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.25rem; letter-spacing: -0.02em;">
       AI-Powered IT Solutions
     </h1>
-    <p style="font-size: 1.25rem; margin-bottom: 2.5rem;">
+
+    <p style="font-size: 1.25rem; margin: 0 auto 2.25rem; max-width: 52ch; opacity: .95;">
       Federal, commercial, and research missions — secure, scalable, and veteran-built.
     </p>
 
-    <div style="display:flex; gap: 0.85rem; justify-content:center; flex-wrap:wrap;">
-      <a
-        href="https://calendly.com/s19devops/30min"
-        style="
-          background: #D7BC23;
-          color: #001E41;
-          padding: 0.85rem 1.75rem;
-          font-weight: bold;
-          border-radius: 9999px;
-          text-decoration: none;
-          font-size: 1rem;
-          display: inline-block;
-        "
-      >
-        Schedule a Consultation
-      </a>
+    <!-- Primary CTA -->
+    <a
+      href="https://calendly.com/s19devops/30min"
+      style="
+        background: #D7BC23;
+        color: #001E41;
+        padding: 0.9rem 1.9rem;
+        font-weight: 800;
+        border-radius: 9999px;
+        text-decoration: none;
+        font-size: 1rem;
+        display: inline-block;
+        box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      "
+    >
+      Schedule a Consultation
+    </a>
+
+    <!-- Secondary CTA block -->
+    <div style="margin-top: 1.25rem;">
+      <div style="font-size: .98rem; opacity: .92; margin-bottom: .7rem;">
+        Considering us for a Federal or State contract?
+      </div>
 
       <a
         href="https://s19devops.fedgovadv.info/"
         target="_blank"
         rel="noopener noreferrer"
         style="
-          background: rgba(255, 255, 255, 0.14);
-          color: #ffffff;
-          padding: 0.85rem 1.5rem;
-          font-weight: bold;
+          display: inline-block;
+          padding: 0.65rem 1.1rem;
           border-radius: 9999px;
           text-decoration: none;
-          font-size: 1rem;
-          display: inline-block;
-          border: 1px solid rgba(255, 255, 255, 0.35);
-          backdrop-filter: blur(6px);
+          font-weight: 800;
+          font-size: .95rem;
+          color: rgba(255,255,255,.95);
+          border: 1px solid rgba(255,255,255,.45);
+          background: rgba(0,0,0,.18);
         "
       >
-        Prime Contracting Info
+        Prime/Sub Contracting Info →
       </a>
-    </div>
-
-    <div style="margin-top: 1.25rem; font-size: 1rem; color: rgba(255,255,255,0.92);">
-      Are you considering for a Federal or State contract?
     </div>
   </div>
 </section>
