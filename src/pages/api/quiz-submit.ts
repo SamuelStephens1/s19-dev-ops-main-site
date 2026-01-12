@@ -4,6 +4,7 @@ type Env = {
   SEND_EMAILS?: string;
   QUIZ_TO_EMAIL?: string;
   QUIZ_FROM_EMAIL?: string;
+  RESEND_API_KEY?: string;
 };
 
 interface QuizScores {
@@ -64,6 +65,11 @@ function formatAnswers(answers: Record<string, number>): string {
 function formatResultsEmail(body: QuizPayload): string {
   const { name, email, company, phone, notes, scores, recommendations, answers } = body;
 
+  const answersBlock =
+    answers && Object.keys(answers).length
+      ? `\nAnswers:\n${formatAnswers(answers)}\n`
+      : "";
+
   return `Hi ${name || "there"},
 
 Thanks for completing the Consulting Readiness Quiz. Here's a copy of your responses:
@@ -85,7 +91,7 @@ Scores:
 
 Recommendations:
 ${(recommendations || []).map((r) => `- ${r}`).join("\n")}
-
+${answersBlock}
 ${notes ? `Additional Notes:\n${notes}` : ""}
 `;
 }
@@ -116,9 +122,11 @@ export const POST: APIRoute = async (ctx) => {
 
   try {
     const env = (ctx.locals.runtime?.env || {}) as Env;
+
     const sendEmails = (env.SEND_EMAILS || "").toLowerCase() === "true";
     const to = (env.QUIZ_TO_EMAIL || "").trim();
     const from = (env.QUIZ_FROM_EMAIL || "").trim();
+    const resendKey = (env.RESEND_API_KEY || "").trim();
 
     // Validate JSON payload
     const contentType = ctx.request.headers.get("content-type")?.toLowerCase() || "";
@@ -157,13 +165,22 @@ export const POST: APIRoute = async (ctx) => {
       });
     }
 
+    if (!resendKey) {
+      return new Response(JSON.stringify({ ok: false, error: "missing_resend_key" }), {
+        status: 500,
+        headers,
+      });
+    }
+
+    const resendHeaders = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${resendKey}`,
+    };
+
     // === Send to internal team ===
     const internalRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer re_TQusYxKA_4VBcYeuX4TEcQGjETJVVK8Vc",
-      },
+      headers: resendHeaders,
       body: JSON.stringify({
         from,
         to,
@@ -175,25 +192,25 @@ export const POST: APIRoute = async (ctx) => {
 
     if (!internalRes.ok) {
       const bodyText = await internalRes.text();
-      return new Response(JSON.stringify({
-        ok: false,
-        error: "resend_error",
-        status: internalRes.status,
-        body: bodyText,
-      }), {
-        status: 400,
-        headers,
-      });
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          error: "resend_error",
+          status: internalRes.status,
+          body: bodyText,
+        }),
+        {
+          status: 400,
+          headers,
+        }
+      );
     }
 
     // === Send copy to user ===
     if (body.email) {
-      await fetch("https://api.resend.com/emails", {
+      const userRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer re_TQusYxKA_4VBcYeuX4TEcQGjETJVVK8Vc",
-        },
+        headers: resendHeaders,
         body: JSON.stringify({
           from,
           to: body.email,
@@ -201,22 +218,29 @@ export const POST: APIRoute = async (ctx) => {
           text,
         }),
       });
+
+      if (!userRes.ok) {
+        // Don't fail the entire request if internal succeeded; log for debugging
+        const bodyText = await userRes.text().catch(() => "");
+        console.log("[warn] Failed sending user copy:", userRes.status, bodyText);
+      }
     }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers,
     });
-
   } catch (e: any) {
-    return new Response(JSON.stringify({
-      ok: false,
-      error: "server_error",
-      message: String(e?.message ?? e),
-    }), {
-      status: 500,
-      headers,
-    });
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: "server_error",
+        message: String(e?.message ?? e),
+      }),
+      {
+        status: 500,
+        headers,
+      }
+    );
   }
 };
-
