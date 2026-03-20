@@ -162,12 +162,13 @@
 
   .links {
     display: flex;
-    gap: var(--space-lg);
+    gap: clamp(0.85rem, 1.8vw, var(--space-lg));
   }
 
   .links a {
     color: #fff;
     font-weight: 600;
+    font-size: 0.95rem;
     text-decoration: none;
   }
 

@@ -30,6 +30,7 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     <nav class={styles.links} aria-label="Primary">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/services">Services</HeaderLink>
+      <HeaderLink href="/agency-partners">Agency Partners</HeaderLink>
       <HeaderLink href="/resources">Resources</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
@@ -72,6 +73,7 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     >
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/services">Services</HeaderLink>
+      <HeaderLink href="/agency-partners">Agency Partners</HeaderLink>
       <HeaderLink href="/resources">Resources</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
@@ -89,11 +91,13 @@ const SITE_TITLE = 'Signal Development Operations LLC';
   const toggleMenu = () => {
     const isOpen = menu?.dataset.open === 'true';
     menu.dataset.open = (!isOpen).toString();
+    header.dataset.expanded = (!isOpen).toString();
     btn.setAttribute('aria-expanded', (!isOpen).toString());
   };
 
   const closeMenu = () => {
     menu.dataset.open = 'false';
+    header.dataset.expanded = 'false';
     btn.setAttribute('aria-expanded', 'false');
   };
 

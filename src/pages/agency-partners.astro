@@ -1,0 +1,558 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import AgencyCTA from '../components/AgencyCTA.astro';
+
+const title = 'Agency Partnerships | Signal DevOps';
+const description =
+  'White-label development partnerships for agencies that need reliable website, backend, automation, and DevOps delivery under their brand.';
+
+const services = [
+  {
+    title: 'Website Development',
+    description: 'Next.js, WordPress',
+    icon: 'website',
+  },
+  {
+    title: 'Backend & Database Systems',
+    description: 'Supabase, APIs',
+    icon: 'database',
+  },
+  {
+    title: 'Automation & Internal Tools',
+    description: 'Ops workflows, portals, dashboards',
+    icon: 'automation',
+  },
+  {
+    title: 'Hosting / DevOps / Cloudflare',
+    description: 'Deployments, environments, performance',
+    icon: 'cloud',
+  },
+];
+
+const reasons = [
+  'No hiring needed',
+  'Fast turnaround (1-3 weeks typical)',
+  'US-based communication',
+  'Fully white-label (we stay behind your brand)',
+  'Handles overflow + ongoing work',
+];
+
+const steps = [
+  'You close the client',
+  'We build and deliver under your brand',
+  'You keep the relationship',
+  'We support ongoing work if needed',
+];
+---
+
+<MainLayout {title} {description}>
+  <section class="agency-hero">
+    <img
+      src="/images/hero-bg.webp"
+      width="1920"
+      height="1080"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+      class="agency-hero__preload"
+    />
+
+    <div class="container agency-hero__content">
+      <p class="agency-hero__eyebrow">Agency Partnerships</p>
+      <h1>White-Label Development for Agencies</h1>
+      <p class="agency-hero__subtitle">
+        We handle your dev, backend, and automation - you keep the client.
+      </p>
+      <a class="agency-hero__button" href="https://calendly.com/s19devops/30min" target="_blank" rel="noopener noreferrer">
+        Schedule a Partnership Call
+      </a>
+      <p class="agency-hero__secondary">Reliable. Invisible. Fast.</p>
+    </div>
+  </section>
+
+  <section class="agency-section agency-section--dark">
+    <div class="container">
+      <div class="agency-heading">
+        <p class="agency-heading__eyebrow">What We Do</p>
+        <h2>Built to help agencies scale delivery without growing overhead.</h2>
+      </div>
+
+      <div class="agency-grid">
+        {services.map((service) => (
+          <article class="agency-card">
+            <div class="agency-card__icon" aria-hidden="true" data-icon={service.icon}>
+              {service.icon === 'website' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3.5" y="4.5" width="17" height="12" rx="2" />
+                  <path d="M3.5 8.5h17" />
+                  <path d="M9 19.5h6" />
+                </svg>
+              )}
+              {service.icon === 'database' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="6" rx="7.5" ry="3" />
+                  <path d="M4.5 6v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3V6" />
+                  <path d="M4.5 12v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6" />
+                </svg>
+              )}
+              {service.icon === 'automation' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3.2" />
+                  <path d="M12 2.8v2.6" />
+                  <path d="M12 18.6v2.6" />
+                  <path d="M21.2 12h-2.6" />
+                  <path d="M5.4 12H2.8" />
+                  <path d="m18.5 5.5-1.8 1.8" />
+                  <path d="m7.3 16.7-1.8 1.8" />
+                  <path d="m18.5 18.5-1.8-1.8" />
+                  <path d="m7.3 7.3-1.8-1.8" />
+                </svg>
+              )}
+              {service.icon === 'cloud' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7.5 19h9.2a4.3 4.3 0 0 0 .4-8.58 5.9 5.9 0 0 0-11.5 1.52A3.6 3.6 0 0 0 7.5 19Z" />
+                </svg>
+              )}
+            </div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="agency-section agency-section--light">
+    <div class="container agency-columns">
+      <div>
+        <div class="agency-heading agency-heading--left">
+          <p class="agency-heading__eyebrow agency-heading__eyebrow--dark">Why Agencies Work With Us</p>
+          <h2>A delivery partner that stays invisible and keeps projects moving.</h2>
+          <p class="agency-copy">
+            We slot in when your team is at capacity, when a client needs a technical build you do not want to hire for,
+            or when you need dependable backend and automation support behind the scenes.
+          </p>
+        </div>
+
+        <ul class="agency-checks">
+          {reasons.map((reason) => (
+            <li>{reason}</li>
+          ))}
+        </ul>
+      </div>
+
+      <aside class="agency-aside">
+        <p class="agency-aside__label">Best fit</p>
+        <h3>Launches, overflow work, retainers, and long-term client support.</h3>
+        <p>
+          Your agency leads strategy, creative, and client communication. We handle the build work in a way that is clean,
+          fast, and easy for your team to present as your own.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="agency-section agency-section--navy">
+    <div class="container">
+      <div class="agency-heading">
+        <p class="agency-heading__eyebrow">How It Works</p>
+        <h2>A simple white-label workflow that protects your client relationship.</h2>
+      </div>
+
+      <div class="agency-steps">
+        {steps.map((step, index) => (
+          <article class="agency-step">
+            <span class="agency-step__number">{index + 1}</span>
+            <p>{step}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <AgencyCTA
+    eyebrow="Agency Partnerships"
+    title="Need a reliable dev partner?"
+    subtitle="White-label support for launches, backend builds, automation projects, and ongoing client work."
+    buttonLabel="Start a Conversation"
+    href="https://calendly.com/s19devops/30min"
+    secondaryText="Built for agencies that want to grow without hiring."
+    external={true}
+  />
+</MainLayout>
+
+<style>
+  .agency-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(5.5rem, 10vw, 8rem) 1rem;
+    color: #fff;
+    text-align: center;
+    background:
+      linear-gradient(135deg, rgba(0, 30, 65, 0.92), rgba(10, 45, 96, 0.84)),
+      url('/images/hero-bg.webp') center/cover no-repeat;
+    isolation: isolate;
+  }
+
+  .agency-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      radial-gradient(circle at top left, rgba(215, 188, 35, 0.26), transparent 30%);
+    background-size: 86px 86px, 86px 86px, auto;
+    opacity: 0.24;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .agency-hero__preload {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .agency-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fade-rise 0.75s ease-out both;
+  }
+
+  .agency-hero__eyebrow,
+  .agency-heading__eyebrow,
+  .agency-aside__label {
+    margin: 0 0 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(215, 188, 35, 0.96);
+  }
+
+  .agency-heading__eyebrow--dark,
+  .agency-aside__label {
+    color: #0a2d60;
+  }
+
+  .agency-hero h1,
+  .agency-heading h2 {
+    margin: 0;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+  }
+
+  .agency-heading h2 {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+  }
+
+  .agency-hero__subtitle,
+  .agency-copy,
+  .agency-heading p,
+  .agency-aside p,
+  .agency-step p,
+  .agency-card p {
+    line-height: 1.7;
+  }
+
+  .agency-hero__subtitle {
+    max-width: 56ch;
+    margin: 1.25rem auto 0;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .agency-hero__button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.92rem 1.85rem;
+    border-radius: 9999px;
+    background: #d7bc23;
+    color: #001e41;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .agency-hero__button:hover {
+    background: #c0a820;
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+    text-decoration: none;
+  }
+
+  .agency-hero__secondary {
+    margin: 1rem 0 0;
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .agency-section {
+    padding: clamp(4.5rem, 7vw, 6rem) 1rem;
+  }
+
+  .agency-section--dark,
+  .agency-section--navy {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    isolation: isolate;
+  }
+
+  .agency-section--dark {
+    background:
+      linear-gradient(180deg, #041a39, #0a2d60);
+  }
+
+  .agency-section--navy {
+    background:
+      linear-gradient(135deg, #08254e, #0e376d);
+  }
+
+  .agency-section--dark::before,
+  .agency-section--navy::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      radial-gradient(circle at bottom right, rgba(215, 188, 35, 0.18), transparent 26%);
+    background-size: 72px 72px, 72px 72px, auto;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .agency-section--light {
+    background: linear-gradient(180deg, #f6f9fd, #ffffff);
+    color: #001e41;
+  }
+
+  .agency-heading {
+    max-width: 760px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+  }
+
+  .agency-heading--left {
+    margin: 0 0 2rem;
+    text-align: left;
+  }
+
+  .agency-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.35rem;
+  }
+
+  .agency-card {
+    padding: 1.75rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    animation: fade-rise 0.7s ease-out both;
+  }
+
+  .agency-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(215, 188, 35, 0.35);
+    box-shadow: 0 24px 42px rgba(0, 0, 0, 0.2);
+  }
+
+  .agency-card h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .agency-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .agency-card__icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-bottom: 1.15rem;
+    border-radius: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(215, 188, 35, 0.18), rgba(255, 255, 255, 0.08));
+    color: #f2d55f;
+  }
+
+  .agency-card__icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .agency-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .agency-copy {
+    margin: 1rem 0 0;
+    font-size: 1.03rem;
+    color: rgba(0, 30, 65, 0.85);
+  }
+
+  .agency-checks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .agency-checks li {
+    position: relative;
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: 0.9rem;
+    background: #fff;
+    border: 1px solid #d7e2ef;
+    box-shadow: 0 10px 24px rgba(8, 32, 67, 0.08);
+    font-weight: 600;
+  }
+
+  .agency-checks li::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 9999px;
+    background: #0a2d60;
+    box-shadow: inset 0 0 0 4px rgba(215, 188, 35, 0.92);
+  }
+
+  .agency-aside {
+    padding: 1.75rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(10, 45, 96, 0.08), rgba(10, 45, 96, 0.02));
+    border: 1px solid rgba(10, 45, 96, 0.14);
+    box-shadow: 0 18px 36px rgba(8, 32, 67, 0.08);
+  }
+
+  .agency-aside h3 {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    color: #001e41;
+  }
+
+  .agency-aside p {
+    margin: 1rem 0 0;
+    color: rgba(0, 30, 65, 0.82);
+  }
+
+  .agency-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .agency-step {
+    position: relative;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(10px);
+    animation: fade-rise 0.7s ease-out both;
+  }
+
+  .agency-step__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 1rem;
+    border-radius: 9999px;
+    background: #d7bc23;
+    color: #001e41;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .agency-step p {
+    margin: 0;
+    font-size: 1.02rem;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  @media (max-width: 1080px) {
+    .agency-grid,
+    .agency-steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .agency-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .agency-hero {
+      padding-top: 4.75rem;
+      padding-bottom: 5rem;
+    }
+
+    .agency-grid,
+    .agency-checks,
+    .agency-steps {
+      grid-template-columns: 1fr;
+    }
+
+    .agency-card,
+    .agency-step,
+    .agency-aside,
+    .agency-checks li {
+      padding: 1.35rem;
+    }
+
+    .agency-checks li {
+      padding-left: 2.8rem;
+    }
+  }
+
+  @keyframes fade-rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
