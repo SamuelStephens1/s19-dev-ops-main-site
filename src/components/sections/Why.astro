@@ -30,8 +30,8 @@ const highlights = [
       <img
         src="/images/why-img.webp"
         alt="Signal DevOps team values: veteran-built, secure by design, compliant, and direct engineering support"
-        width="720"
-        height="405"
+        width="1024"
+        height="1536"
         loading="eager"
         decoding="async"
         fetchpriority="high"
@@ -90,6 +90,9 @@ const highlights = [
 
   .why__media {
     position: relative;
+    width: 100%;
+    max-width: 32rem;
+    justify-self: end;
     padding: 1rem;
     border-radius: 1.5rem;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
@@ -98,6 +101,8 @@ const highlights = [
   }
 
   .why__media img {
+    width: 100%;
+    height: auto;
     border-radius: 1rem;
   }
 
@@ -109,6 +114,10 @@ const highlights = [
     .why__title,
     .why__copy {
       max-width: none;
+    }
+
+    .why__media {
+      justify-self: center;
     }
   }
 </style>
