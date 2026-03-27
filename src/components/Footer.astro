@@ -1,58 +1,68 @@
 ---
 const today = new Date();
 
-const COMPANY_NAME = "Signal Development Operations, LLC";
-const ADDRESS_TEXT = "335 N. Peachtree Ave, Cookeville, TN 38501";
-const PHONE_DISPLAY = "(931) 536-2227";
-const PHONE_TEL = "+19315362227";
-const EMAIL = "s19devops@outlook.com";
+const COMPANY_NAME = 'Signal Development Operations, LLC';
+const ADDRESS_TEXT = '335 N. Peachtree Ave, Cookeville, TN 38501';
+const PHONE_DISPLAY = '(931) 536-2227';
+const PHONE_TEL = '+19315362227';
+const EMAIL = 's19devops@outlook.com';
 
 const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS_TEXT)}&output=embed`;
 const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(ADDRESS_TEXT)}`;
 ---
 
 <footer class="footer">
-  <div class="wrap">
-    <div class="grid">
-      <!-- Contact -->
-      <section class="card">
-        <h3>Contact Us</h3>
+  <div class="container footer__wrap">
+    <div class="footer__intro">
+      <div class="footer__introLead">
+        <p class="eyebrow footer__eyebrow">Signal DevOps</p>
+        <h2>Modern infrastructure, secure delivery, and white-label build power.</h2>
+      </div>
+      <div class="footer__introMeta">
+        <p>
+          Work directly with engineers who can move from strategy to implementation without handing your project across three teams.
+        </p>
+        <a class="footer__introCta" href="https://calendly.com/s19devops/30min">Book a Consultation</a>
+      </div>
+    </div>
 
-        <!-- Keep action/method for graceful fallback, but JS intercepts it -->
-        <form id="contactForm" method="POST" action="/api/contact" class="form" novalidate>
+    <div class="footer__grid">
+      <section class="footer__card footer__card--contact">
+        <h3>Contact Us</h3>
+        <form id="contactForm" method="POST" action="/api/contact" class="footer__form" novalidate>
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="Work email" required />
-          <textarea name="message" rows="4" placeholder="How can we help?" required></textarea>
-
-          <!-- Honeypot -->
-          <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" />
-
-          <button type="submit" class="btn">Send Message</button>
-          <div id="contactStatus" class="status" role="status" aria-live="polite" hidden></div>
+          <textarea name="message" rows="5" placeholder="Tell us what you are building." required></textarea>
+          <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="footer__hp" />
+          <button type="submit" class="footer__button">Send Message</button>
+          <div id="contactStatus" class="footer__status" role="status" aria-live="polite" hidden></div>
         </form>
       </section>
 
-      <!-- Info -->
-      <section class="card card--tight">
-        <h3>Our Info</h3>
-        <p><strong>{COMPANY_NAME}</strong></p>
-        <p>{ADDRESS_TEXT}</p>
-
-        <p class="muted"><strong>Hours</strong></p>
-        <ul class="hours">
-          <li>Mon–Fri: 9:00 AM – 6:00 PM</li>
-          <li>Sat: By appointment</li>
-          <li>Sun: Closed</li>
-        </ul>
-
-        <p><strong>Phone:</strong> <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a></p>
-        <p><strong>Email:</strong> <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      <section class="footer__card">
+        <h3>Reach Us</h3>
+        <div class="footer__meta">
+          <p><strong>{COMPANY_NAME}</strong></p>
+          <p>{ADDRESS_TEXT}</p>
+          <p><strong>Phone:</strong> <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a></p>
+          <p><strong>Email:</strong> <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+        </div>
+        <div class="footer__hours">
+          <span>Hours</span>
+          <ul>
+            <li>Mon-Fri: 9:00 AM - 6:00 PM</li>
+            <li>Sat: By appointment</li>
+            <li>Sun: Closed</li>
+          </ul>
+        </div>
+        <a class="footer__link" href="https://www.linkedin.com/company/signal-development-operations/posts/?feedView=all" target="_blank" rel="noopener">
+          Connect on LinkedIn
+        </a>
       </section>
 
-      <!-- Map -->
-      <section class="card">
-        <h3>Find Us</h3>
-        <div class="map">
+      <section class="footer__card">
+        <h3>Visit</h3>
+        <div class="footer__map">
           <iframe
             src={mapSrc}
             allowfullscreen
@@ -65,78 +75,261 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
             fetchpriority="low"
           ></iframe>
         </div>
-        <a class="link" href={directionsHref} target="_blank" rel="noopener noreferrer">Get Directions</a>
+        <a class="footer__link" href={directionsHref} target="_blank" rel="noopener noreferrer">Get Directions</a>
       </section>
     </div>
 
-    <div class="bottom">
-      <p>© {today.getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
-      <div class="social">
-        <a href="https://linkedin.com/company/yourfirm" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
+    <div class="footer__bottom">
+      <p>&copy; {today.getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
+      <p>Built for secure delivery, AI systems, cloud, and agency partnerships.</p>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer{background:#f9fafb;color:#334155}
-  .wrap{max-width:1200px;margin:0 auto;padding:2rem 1rem}
-
-  .grid{
-    display:grid;gap:1.25rem;
-    grid-template-columns:repeat(3,1fr);
+  .footer {
+    position: relative;
+    padding: 0 0 2rem;
+    background:
+      linear-gradient(180deg, rgba(4, 10, 24, 0), rgba(4, 10, 24, 0.84) 18%, #040914 100%);
+    color: var(--color-text);
   }
-  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
 
-  .card{
-    background:#fff;border:1px solid #e5e7eb;border-radius:12px;
-    padding:1rem 1.25rem; box-shadow:0 2px 4px rgba(0,0,0,.05);
-    text-align:center;
+  .footer__wrap {
+    position: relative;
+    padding-top: 2rem;
   }
-  .card--tight p{ margin:.3rem 0; }
-  .card h3{margin:.25rem 0 .6rem; font-size:1.1rem; color:#0f172a}
 
-  /* Contact form */
-  .form{display:flex;flex-direction:column;gap:.55rem; align-items:center}
-  .form input,.form textarea{
-    width:100%;border:1px solid #e5e7eb;border-radius:8px;
-    padding:.6rem;font-size:.95rem;
+  .footer__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 360px);
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0 1.25rem;
+    border-bottom: 1px solid rgba(121, 154, 216, 0.14);
   }
-  .form .hp{display:none}
-  .btn{
-    background:#1d4ed8;color:#fff;border:0;padding:.6rem .9rem;border-radius:8px;
-    font-weight:700;cursor:pointer;min-width:10rem
+
+  .footer__eyebrow {
+    margin-bottom: 0.55rem;
   }
-  .btn:hover{background:#1e40af}
-  .btn[disabled]{opacity:.6;cursor:not-allowed}
 
-  /* Inline status message */
-  .status{margin-top:.5rem;padding:.45rem .6rem;border-radius:8px;font-size:.92rem;
-    background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
-  .status.ok{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
-  .status.err{background:#fef2f2;color:#991b1b;border-color:#fecaca}
-
-  /* Hours */
-  .hours{list-style-position:inside;padding:0;margin:.25rem 0 .6rem;}
-  .hours li{margin:.15rem 0}
-
-  .link{color:#1d4ed8;text-decoration:none;margin-top:.4rem;display:inline-block}
-  .link:hover{text-decoration:underline}
-
-  .map{width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;margin-bottom:.4rem}
-  .map iframe{width:100%;height:100%;border:0}
-
-  .bottom{
-    margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e5e7eb;
-    display:flex;justify-content:space-between;align-items:center;font-size:.9rem;
+  .footer__intro h2 {
+    margin: 0;
+    max-width: 16ch;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
   }
-  @media (max-width:600px){ .bottom{flex-direction:column;text-align:center;gap:.5rem} }
-  .social{display:flex;gap:.75rem}
-  .social a{color:#334155;text-decoration:none}
-  .social a:hover{text-decoration:underline}
+
+  .footer__introMeta {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+
+  .footer__introMeta p {
+    margin: 0;
+    max-width: 34ch;
+    color: rgba(220, 231, 250, 0.82);
+    font-size: 0.98rem;
+  }
+
+  .footer__introCta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.9rem;
+    padding: 0.78rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(97, 215, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f6fbff;
+    font-size: 0.92rem;
+    font-weight: 800;
+  }
+
+  .footer__introCta:hover {
+    transform: translateY(-2px);
+    border-color: rgba(97, 215, 255, 0.42);
+    color: var(--color-cyan);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.85fr 0.95fr;
+    gap: 1.25rem;
+  }
+
+  .footer__card {
+    padding: 1.5rem;
+    border-radius: 1.35rem;
+    border: 1px solid rgba(121, 154, 216, 0.18);
+    background: linear-gradient(180deg, rgba(15, 29, 58, 0.9), rgba(9, 19, 39, 0.9));
+    box-shadow: var(--shadow-md);
+  }
+
+  .footer__card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .footer__form {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .footer__form input,
+  .footer__form textarea {
+    width: 100%;
+    border: 1px solid rgba(121, 154, 216, 0.2);
+    border-radius: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+  }
+
+  .footer__form input::placeholder,
+  .footer__form textarea::placeholder {
+    color: rgba(216, 227, 255, 0.5);
+  }
+
+  .footer__hp {
+    display: none;
+  }
+
+  .footer__button {
+    min-height: 3.2rem;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f0d44f, #d7bc23);
+    color: #071224;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  }
+
+  .footer__button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #f4dc65, #cfb212);
+  }
+
+  .footer__button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .footer__status {
+    padding: 0.75rem 0.9rem;
+    border-radius: 1rem;
+    font-size: 0.92rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(121, 154, 216, 0.18);
+  }
+
+  .footer__status.ok {
+    background: rgba(24, 150, 91, 0.12);
+    border-color: rgba(82, 214, 148, 0.3);
+    color: #cff5df;
+  }
+
+  .footer__status.err {
+    background: rgba(183, 48, 71, 0.16);
+    border-color: rgba(244, 123, 143, 0.34);
+    color: #ffd8de;
+  }
+
+  .footer__meta p,
+  .footer__hours li,
+  .footer__bottom p {
+    color: rgba(220, 231, 250, 0.76);
+  }
+
+  .footer__meta a,
+  .footer__link {
+    color: #fff;
+  }
+
+  .footer__hours {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(121, 154, 216, 0.14);
+  }
+
+  .footer__hours span {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .footer__hours ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .footer__map {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid rgba(121, 154, 216, 0.16);
+    margin-bottom: 1rem;
+  }
+
+  .footer__map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(0.25) contrast(1.05);
+  }
+
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+  }
+
+  .footer__link:hover {
+    color: var(--color-cyan);
+  }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(121, 154, 216, 0.14);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 1024px) {
+    .footer__intro,
+    .footer__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__intro {
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer__card {
+      padding: 1.2rem;
+    }
+
+    .footer__bottom {
+      flex-direction: column;
+    }
+  }
 </style>
 
-<!-- Intercept submit; stay on page; show “sent” or error -->
 <script is:inline>
   (() => {
     const form = document.getElementById('contactForm');
@@ -150,22 +343,24 @@ const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${enc
       e.preventDefault();
 
       statusEl.hidden = false;
-      statusEl.className = 'status';
-      statusEl.textContent = 'Sending…';
+      statusEl.className = 'footer__status';
+      statusEl.textContent = 'Sending...';
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
+      submitBtn.textContent = 'Sending...';
 
       try {
         const fd = new FormData(form);
         const res = await fetch(form.action, {
           method: 'POST',
           body: fd,
-          headers: { 'Accept': 'application/json' }
+          headers: { Accept: 'application/json' },
         });
 
         const raw = await res.text();
         let data = {};
-        try { data = JSON.parse(raw); } catch {}
+        try {
+          data = JSON.parse(raw);
+        } catch {}
 
         if (res.ok && data && data.ok) {
           statusEl.classList.add('ok');

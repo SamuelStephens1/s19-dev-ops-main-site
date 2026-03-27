@@ -7,26 +7,22 @@ const SITE_TITLE = 'Signal Development Operations LLC';
 
 <header class={styles.mainNav} data-role="main-nav" data-expanded="false">
   <div class={`container ${styles.mainNavContainer}`}>
-    <div class={styles.logo}>
-      <a href="/">
-        <img
-          src="/logo.webp"
-          alt={`${SITE_TITLE} logo`}
-          width="120"
-          height="170"
-          decoding="async"
-          fetchpriority="high"
-          loading="eager"
-        />
-      </a>
-    </div>
+    <a class={styles.logo} href="/">
+      <img
+        src="/logo.webp"
+        alt={`${SITE_TITLE} logo`}
+        width="120"
+        height="170"
+        decoding="async"
+        fetchpriority="high"
+        loading="eager"
+      />
+      <span class={styles.logoText}>
+        <strong>Signal DevOps</strong>
+        <small>AI, cloud, automation, and delivery</small>
+      </span>
+    </a>
 
-    <!-- 👇 CTA (visible on scroll, mobile only) -->
-    <div data-el="mobile-cta" class={styles.mobileCta} data-visible="false">
-      <a href="https://calendly.com/s19devops/30min">Schedule a Consultation</a>
-    </div>
-
-    <!-- Desktop nav (hidden on mobile) -->
     <nav class={styles.links} aria-label="Primary">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/services">Services</HeaderLink>
@@ -36,11 +32,15 @@ const SITE_TITLE = 'Signal Development Operations LLC';
       <HeaderLink href="/blog">Blog</HeaderLink>
     </nav>
 
-    <div class={styles.rightStack}>
+    <div class={styles.actions}>
+      <a class={styles.desktopCta} href="https://calendly.com/s19devops/30min">
+        Schedule a Consultation
+      </a>
+
       <button
         data-el="menu-btn"
         class={styles.menuButton}
-        aria-label="Open menu"
+        aria-label="Toggle menu"
         aria-controls="mobile-menu"
         aria-expanded="false"
         type="button"
@@ -59,25 +59,28 @@ const SITE_TITLE = 'Signal Development Operations LLC';
         </svg>
       </button>
     </div>
+  </div>
 
-    <div class={styles.desktopCta} data-el="desktop-cta" data-visible="false">
-      <a href="https://calendly.com/s19devops/30min">Schedule a Consultation</a>
+  <div
+    id="mobile-menu"
+    data-el="mobile-menu"
+    class={styles.mobileMenu}
+    aria-label="Mobile primary"
+    data-open="false"
+  >
+    <div class={`container ${styles.mobileMenuInner}`}>
+      <nav class={styles.mobileLinks}>
+        <HeaderLink href="/">Home</HeaderLink>
+        <HeaderLink href="/services">Services</HeaderLink>
+        <HeaderLink href="/agency-partners">Agency Partners</HeaderLink>
+        <HeaderLink href="/resources">Resources</HeaderLink>
+        <HeaderLink href="/about">About</HeaderLink>
+        <HeaderLink href="/blog">Blog</HeaderLink>
+      </nav>
+      <a class={styles.mobileCta} href="https://calendly.com/s19devops/30min">
+        Schedule a Consultation
+      </a>
     </div>
-
-    <nav
-      id="mobile-menu"
-      data-el="mobile-menu"
-      class={styles.mobileMenu}
-      aria-label="Mobile primary"
-      data-open="false"
-    >
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/services">Services</HeaderLink>
-      <HeaderLink href="/agency-partners">Agency Partners</HeaderLink>
-      <HeaderLink href="/resources">Resources</HeaderLink>
-      <HeaderLink href="/about">About</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-    </nav>
   </div>
 </header>
 
@@ -85,8 +88,7 @@ const SITE_TITLE = 'Signal Development Operations LLC';
   const header = document.querySelector('[data-role="main-nav"]');
   const btn = document.querySelector('[data-el="menu-btn"]');
   const menu = document.querySelector('[data-el="mobile-menu"]');
-  const ctaDesktop = document.querySelector('[data-el="desktop-cta"]');
-  const ctaMobile = document.querySelector('[data-el="mobile-cta"]');
+  const mobileLinks = menu?.querySelectorAll('a');
 
   const toggleMenu = () => {
     const isOpen = menu?.dataset.open === 'true';
@@ -101,24 +103,14 @@ const SITE_TITLE = 'Signal Development Operations LLC';
     btn.setAttribute('aria-expanded', 'false');
   };
 
-  const updateCTAs = () => {
-    const isScrolled = window.scrollY > 50;
-    const isMobile = window.innerWidth <= 720;
-
-    ctaMobile.dataset.visible = isMobile && isScrolled ? 'true' : 'false';
-    ctaDesktop.dataset.visible = !isMobile && isScrolled ? 'true' : 'false';
-  };
-
   btn?.addEventListener('click', toggleMenu);
+  mobileLinks?.forEach((link) => link.addEventListener('click', closeMenu));
+
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 721) closeMenu();
-    updateCTAs();
+    if (window.innerWidth >= 960) closeMenu();
   });
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeMenu();
   });
-
-  window.addEventListener('scroll', updateCTAs, { passive: true });
-  updateCTAs();
 </script>

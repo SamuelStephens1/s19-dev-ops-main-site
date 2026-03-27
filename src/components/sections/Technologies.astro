@@ -15,11 +15,11 @@ const technologies = [
   { name: 'GitHub Actions', icon: '/images/tech/github-actions.svg' },
   { name: 'GitLab CI', icon: '/images/tech/gitlab-ci.svg' },
   { name: 'Go', icon: '/images/tech/go.svg' },
-  { name: 'Google Cloud Platform', icon: '/images/tech/google-cloud-platform.svg' },
+  { name: 'Google Cloud', icon: '/images/tech/google-cloud-platform.svg' },
   { name: 'Grafana', icon: '/images/tech/grafana.svg' },
   { name: 'HashiCorp Vault', icon: '/images/tech/hashicorp-vault.svg' },
   { name: 'Helm', icon: '/images/tech/helm.svg' },
-  { name: 'HuggingFace', icon: '/images/tech/huggingface.svg' },
+  { name: 'Hugging Face', icon: '/images/tech/huggingface.svg' },
   { name: 'IBM Cloud', icon: '/images/tech/ibm-cloud.svg' },
   { name: 'Istio', icon: '/images/tech/istio.svg' },
   { name: 'Jenkins', icon: '/images/tech/jenkins.svg' },
@@ -46,65 +46,62 @@ const technologies = [
   { name: 'Turborepo', icon: '/images/tech/turborepo.svg' },
   { name: 'Visual Studio Code', icon: '/images/tech/visual-studio-code.svg' },
   { name: 'Vite', icon: '/images/tech/vite.svg' },
-  { name: 'Weights & Biases', icon: '/images/tech/weights-and-biases.svg' },
+  { name: 'Weights and Biases', icon: '/images/tech/weights-and-biases.svg' },
 ];
 ---
 
-<link rel="preload" as="image" href="/images/stack-bg.webp" fetchpriority="low">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
-<script type="module">
-  import 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js';
-</script>
+<section class="section-shell section-shell--light">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Tech Stack</p>
+      <h2 class="section-title">A modern toolkit chosen for performance, reliability, and delivery speed.</h2>
+      <p class="section-copy">
+        We work across cloud platforms, infrastructure tooling, observability stacks, security platforms, and the application layer.
+      </p>
+    </div>
 
-<section style="padding: 6rem 1rem; background: url('/images/stack-bg.webp') center/cover no-repeat; color: white; position: relative;">
-  <!-- Hidden img for LCP discoverability -->
-  <img
-    src="/images/stack-bg.webp"
-    width="1600"
-    height="900"
-    alt=""
-    aria-hidden="true"
-    fetchpriority="low"
-    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
-  />
-
-  <div style="max-width: 1200px; margin: auto;">
-    <h2 style="text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
-      Technologies We Work With
-    </h2>
-
-    <swiper-container
-      slides-per-view="2"
-      space-between="30"
-      navigation="true"
-      loop="true"
-      style="padding: 1rem;"
-    >
+    <div class="tech__grid">
       {technologies.map((tech) => (
-        <swiper-slide>
-          <div style="
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 260px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-            will-change: transform;
-          "
-          onmouseover="this.style.transform='translateY(-4px)'"
-          onmouseout="this.style.transform='none'"
-          >
-            <img src={tech.icon} alt={tech.name} width="64" height="64" loading="lazy" decoding="async" style="height: 64px; margin-bottom: 1rem;" />
-            <h3 style="font-size: 1.25rem; font-weight: 700;">{tech.name}</h3>
-          </div>
-        </swiper-slide>
+        <article class="tech__card surface-card">
+          <img src={tech.icon} alt={tech.name} width="64" height="64" loading="lazy" decoding="async" />
+          <h3>{tech.name}</h3>
+        </article>
       ))}
-    </swiper-container>
+    </div>
   </div>
 </section>
 
+<style>
+  .tech__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.95rem;
+  }
+
+  .tech__card {
+    display: grid;
+    place-items: center;
+    gap: 0.75rem;
+    min-height: 9.25rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .tech__card:hover {
+    transform: translateY(-4px);
+  }
+
+  .tech__card img {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .tech__card h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+</style>

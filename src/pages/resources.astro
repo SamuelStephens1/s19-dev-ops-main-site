@@ -73,26 +73,27 @@ const itemList = resources.map((r, i) => {
     <style>
       :root {
         --card-radius: 14px;
-        --card-border: 1px solid rgba(0,0,0,.08);
-        --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
-        --shadow-lg: 0 10px 20px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.06);
-        --ink: #0f172a; --muted: #64748b; --accent: #1d4ed8;
+        --card-border: 1px solid rgba(121,154,216,.18);
+        --shadow-sm: 0 8px 22px rgba(5,14,34,.12);
+        --shadow-lg: 0 18px 34px rgba(5,14,34,.18);
+        --ink: #0f172a; --muted: #64748b; --accent: #1d4ed8; --light-muted: rgba(216,227,255,.74);
       }
-      main { max-width: 1150px; margin: 0 auto; padding: 2rem 1rem 3rem; }
-      .lead { margin: .25rem 0 1.5rem; color: var(--muted); }
+      main { max-width: 1150px; margin: 0 auto; padding: 2.3rem 1rem 4rem; }
+      header h1 { margin: 0; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1; letter-spacing: -0.04em; }
+      .lead { margin: .7rem 0 1.6rem; color: var(--light-muted); max-width: 58ch; }
 
       .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
       @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
       @media (max-width: 640px)  { .grid { grid-template-columns: 1fr; } }
 
-      .card { border: var(--card-border); border-radius: var(--card-radius); background: #fff; box-shadow: var(--shadow-sm);
+      .card { border: var(--card-border); border-radius: var(--card-radius); background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,250,255,.94)); box-shadow: var(--shadow-sm);
               overflow: hidden; transition: transform .15s ease, box-shadow .15s ease; display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
       .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
       .thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #f2f4f7; }
 
-      .body { padding: 0.9rem 1rem 0.5rem; text-align: center; }
-      .title { margin: 0; font-weight: 800; font-size: 1.05rem; line-height: 1.25; }
+      .body { padding: 0.9rem 1rem 0.5rem; text-align: center; color: var(--ink); }
+      .title { margin: 0; font-weight: 800; font-size: 1.05rem; line-height: 1.25; color: var(--ink); }
       .desc { margin: .45rem 0 0; color: var(--muted); font-size: .95rem; line-height: 1.5; min-height: 3rem; }
       .meta { margin: .6rem 0 0; font-size: .85rem; color: var(--muted); }
 

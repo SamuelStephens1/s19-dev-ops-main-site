@@ -1,27 +1,68 @@
-<section style="padding: 6rem 1rem; background-color: #001E41; color: white; text-align: center;">
-  <div style="max-width: 720px; margin: auto;">
-    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">
-      Ready to build something serious?
-    </h2>
-    <p style="font-size: 1.125rem; margin-bottom: 2rem;">
-      Book a free consultation with real engineers, not sales reps.
-    </p>
-    <a
-      href="https://calendly.com/s19devops/30min"
-      style="
-        display: inline-block;
-        background-color: #D7BC23;
-        color: #001E41;
-        font-weight: 700;
-        padding: 0.85rem 1.75rem;
-        border-radius: 9999px;
-        text-decoration: none;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-        will-change: background-color;
-      "
-    >
-      Book a Consultation
-    </a>
+<section class="section-shell book">
+  <div class="container">
+    <div class="book__card glass-card">
+      <div>
+        <p class="eyebrow">Ready To Build</p>
+        <h2>Need senior technical help without the usual slowdown?</h2>
+        <p>
+          Book a consultation and talk directly with engineers about the system, timeline, and delivery path you actually need.
+        </p>
+      </div>
+
+      <div class="book__actions">
+        <a class="button-primary" href="https://calendly.com/s19devops/30min">Book a Consultation</a>
+        <span>Cloud, AI, DevOps, automation, and white-label support.</span>
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  .book__card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.8rem;
+  }
+
+  .book__card h2 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .book__card p:last-of-type {
+    max-width: 56ch;
+    margin: 1rem 0 0;
+    color: var(--color-muted);
+  }
+
+  .book__actions {
+    display: grid;
+    gap: 0.8rem;
+    justify-items: end;
+  }
+
+  .book__actions span {
+    color: rgba(234, 240, 255, 0.72);
+    font-weight: 700;
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .book__card {
+      grid-template-columns: 1fr;
+    }
+
+    .book__actions {
+      justify-items: start;
+    }
+
+    .book__actions span {
+      text-align: left;
+    }
+  }
+</style>

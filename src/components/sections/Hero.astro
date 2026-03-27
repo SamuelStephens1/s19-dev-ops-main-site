@@ -1,12 +1,4 @@
-<section 
-  style="
-    position: relative;
-    background: url('/images/hero-bg.webp') center/cover no-repeat;
-    color: white;
-    padding: 8rem 1rem;
-    text-align: center;
-  "
->
+<section class="hero">
   <img
     src="/images/hero-bg.webp"
     width="1920"
@@ -14,60 +6,284 @@
     alt=""
     aria-hidden="true"
     fetchpriority="high"
-    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
+    loading="eager"
+    decoding="async"
+    class="hero__preload"
   />
 
-  <div style="max-width: 960px; margin: auto; position: relative; z-index: 1;">
-    <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.25rem; letter-spacing: -0.02em;">
-      AI-Powered IT Solutions
-    </h1>
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow">AI infrastructure, secure delivery, and modern automation</p>
+      <h1>AI-Powered IT Solutions</h1>
+      <p class="hero__summary">
+        Federal, commercial, and research missions - secure, scalable, and veteran-built.
+      </p>
 
-    <p style="font-size: 1.25rem; margin: 0 auto 2.25rem; max-width: 52ch; opacity: .95;">
-      Federal, commercial, and research missions — secure, scalable, and veteran-built.
-    </p>
-
-    <!-- Primary CTA -->
-    <a
-      href="https://calendly.com/s19devops/30min"
-      style="
-        background: #D7BC23;
-        color: #001E41;
-        padding: 0.9rem 1.9rem;
-        font-weight: 800;
-        border-radius: 9999px;
-        text-decoration: none;
-        font-size: 1rem;
-        display: inline-block;
-        box-shadow: 0 10px 22px rgba(0,0,0,.18);
-      "
-    >
-      Schedule a Consultation
-    </a>
-
-    <!-- Secondary CTA block -->
-    <div style="margin-top: 1.25rem;">
-      <div style="font-size: .98rem; opacity: .92; margin-bottom: .7rem;">
-        Considering us for a Federal or State contract?
+      <div class="button-row hero__actions">
+        <a class="button-primary" href="https://calendly.com/s19devops/30min">Schedule a Consultation</a>
+        <a
+          class="button-secondary"
+          href="https://s19devops.fedgovadv.info/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Prime/Sub Contracting Info
+        </a>
       </div>
 
-      <a
-        href="https://s19devops.fedgovadv.info/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="
-          display: inline-block;
-          padding: 0.65rem 1.1rem;
-          border-radius: 9999px;
-          text-decoration: none;
-          font-weight: 800;
-          font-size: .95rem;
-          color: rgba(255,255,255,.95);
-          border: 1px solid rgba(255,255,255,.45);
-          background: rgba(0,0,0,.18);
-        "
-      >
-        Prime/Sub Contracting Info →
-      </a>
+      <div class="hero__stats">
+        <span class="stat-chip">Senior engineers</span>
+        <span class="stat-chip">Secure by design</span>
+        <span class="stat-chip">Fast delivery cycles</span>
+      </div>
+
+      <div class="hero__partner glass-card">
+        <div>
+          <p class="eyebrow hero__partnerEyebrow">Agency Partnerships</p>
+          <h2>Agency Owner? Stop Turning Away Work.</h2>
+        </div>
+        <p>
+          We partner with agencies to handle development, backend systems, and automation - so you can scale without hiring.
+        </p>
+        <div class="button-row hero__partnerActions">
+          <a class="button-primary" href="/agency-partners">Become a Partner</a>
+          <span class="hero__partnerNote">White-label delivery. US-based communication. No hiring required.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__panel glass-card">
+        <div class="hero__panelHeader">
+          <div>
+            <span class="hero__panelLabel">Delivery Signal</span>
+            <strong>High-output engineering support</strong>
+          </div>
+          <span class="hero__panelStatus">Live</span>
+        </div>
+
+        <div class="hero__panelGrid">
+          <article>
+            <span>Cloud + DevOps</span>
+            <strong>Secure platforms, CI/CD, observability</strong>
+          </article>
+          <article>
+            <span>AI + Automation</span>
+            <strong>LLM workflows, internal tools, API systems</strong>
+          </article>
+          <article>
+            <span>White-label build support</span>
+            <strong>Invisible delivery for agency client work</strong>
+          </article>
+        </div>
+
+        <div class="hero__signal">
+          <div class="hero__signalBar"></div>
+          <div class="hero__signalBar hero__signalBar--mid"></div>
+          <div class="hero__signalBar hero__signalBar--short"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(6rem, 10vw, 8.5rem) 0 clamp(4.5rem, 7vw, 6rem);
+    background:
+      linear-gradient(135deg, rgba(4, 10, 24, 0.75), rgba(9, 19, 39, 0.58)),
+      url('/images/hero-bg.webp') center/cover no-repeat;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      radial-gradient(circle at top left, rgba(97, 215, 255, 0.2), transparent 26%),
+      radial-gradient(circle at bottom right, rgba(215, 188, 35, 0.14), transparent 26%);
+    background-size: 72px 72px, 72px 72px, auto, auto;
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .hero__preload {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .hero__content,
+  .hero__visual {
+    animation: fade-rise 0.8s ease both;
+  }
+
+  .hero h1 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .hero__summary {
+    max-width: 58ch;
+    margin: 1.1rem 0 0;
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    color: var(--color-muted);
+  }
+
+  .hero__actions {
+    margin-top: 2rem;
+  }
+
+  .hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero__partner {
+    margin-top: 2rem;
+    padding: 1.5rem;
+  }
+
+  .hero__partner h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .hero__partner p {
+    margin: 0.9rem 0 0;
+    color: var(--color-muted);
+  }
+
+  .hero__partnerActions {
+    margin-top: 1.2rem;
+  }
+
+  .hero__partnerNote {
+    color: rgba(234, 240, 255, 0.72);
+    font-weight: 700;
+  }
+
+  .hero__panel {
+    padding: 1.5rem;
+  }
+
+  .hero__panelHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .hero__panelLabel {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-cyan);
+  }
+
+  .hero__panelHeader strong {
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+
+  .hero__panelStatus {
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(97, 215, 255, 0.16);
+    color: #dff8ff;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  .hero__panelGrid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero__panelGrid article {
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .hero__panelGrid span {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .hero__signal {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+    align-items: end;
+    margin-top: 1.5rem;
+    min-height: 7rem;
+  }
+
+  .hero__signalBar {
+    height: 100%;
+    min-height: 5.5rem;
+    border-radius: 999px 999px 0.9rem 0.9rem;
+    background: linear-gradient(180deg, rgba(97, 215, 255, 0.9), rgba(97, 215, 255, 0.16));
+  }
+
+  .hero__signalBar--mid {
+    min-height: 4.25rem;
+  }
+
+  .hero__signalBar--short {
+    min-height: 3.2rem;
+  }
+
+  @media (max-width: 960px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      max-width: 10ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      padding-top: 5.5rem;
+    }
+
+    .hero__partner,
+    .hero__panel {
+      padding: 1.25rem;
+    }
+  }
+</style>

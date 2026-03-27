@@ -1,32 +1,82 @@
-<section style="padding: 6rem 1rem; background-color: white; color: #001E41;">
-  <div style="max-width: 800px; margin: auto; text-align: center;">
-    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">How We Work</h2>
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Collaborative Planning',
+    description: 'We align on mission outcomes, delivery constraints, compliance needs, and the technical shape of the work.',
+  },
+  {
+    number: '02',
+    title: 'Fast Build Cycles',
+    description: 'We move quickly with real implementation work, clear milestones, and systems that can be iterated in production.',
+  },
+  {
+    number: '03',
+    title: 'Transparent Delivery',
+    description: 'You get direct visibility into progress, engineering decisions, and the work needed to support the system long-term.',
+  },
+];
+---
 
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1rem; font-weight: bold; color: #D7BC23; margin-bottom: 0.25rem; letter-spacing: 2px;">
-        STEP ONE
-      </h3>
-      <hr style="width: 60px; border: 2px solid #D7BC23; margin: 0 auto 1.5rem auto;" />
-      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Collaborative Planning</h3>
-      <p style="max-width: 600px; margin: auto;">We begin with deep discovery, aligning with mission goals, compliance needs, and team structure.</p>
+<section class="section-shell how">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">How We Work</p>
+      <h2 class="section-title">High-trust collaboration with clear momentum.</h2>
+      <p class="section-copy">
+        We keep the process simple: align fast, build fast, communicate clearly, and leave you with systems your team can trust.
+      </p>
     </div>
 
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1rem; font-weight: bold; color: #0A2D60; margin-bottom: 0.25rem; letter-spacing: 2px;">
-        STEP TWO
-      </h3>
-      <hr style="width: 60px; border: 2px solid #0A2D60; margin: 0 auto 1.5rem auto;" />
-      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Rapid Prototyping</h3>
-      <p style="max-width: 600px; margin: auto;">We ship working infrastructure fast — with automation, documentation, and iteration from day one.</p>
-    </div>
-
-    <div>
-      <h3 style="font-size: 1rem; font-weight: bold; color: #D7BC23; margin-bottom: 0.25rem; letter-spacing: 2px;">
-        STEP THREE
-      </h3>
-      <hr style="width: 60px; border: 2px solid #D7BC23; margin: 0 auto 1.5rem auto;" />
-      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Transparent Delivery</h3>
-      <p style="max-width: 600px; margin: auto;">We manage delivery in Git, hold regular working sessions, and build in a no-BS, zero-handoff approach.</p>
+    <div class="how__grid">
+      {steps.map((step) => (
+        <article class="how__card glass-card">
+          <span class="how__number">{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .how__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .how__card {
+    padding: 1.5rem;
+  }
+
+  .how__number {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(97, 215, 255, 0.18), rgba(255, 255, 255, 0.08));
+    color: #dff8ff;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .how__card h3 {
+    margin: 1.1rem 0 0.55rem;
+    font-size: 1.3rem;
+  }
+
+  .how__card p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 960px) {
+    .how__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

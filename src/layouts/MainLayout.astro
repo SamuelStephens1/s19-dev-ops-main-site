@@ -12,10 +12,10 @@ const { title, description } = Astro.props;
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0d1117" />
   </head>
-  <body class="bg-white text-gray-900 antialiased">
+  <body class="site-shell">
     <Header />
 
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" tabindex="-1" class="site-main">
       <slot />
     </main>
 

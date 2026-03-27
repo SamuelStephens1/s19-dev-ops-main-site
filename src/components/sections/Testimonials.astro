@@ -1,18 +1,29 @@
 ---
-import { Swiper, SwiperSlide } from 'swiper/astro';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { register } from 'swiper/element/bundle';
-register();
+const testimonials = [
+  {
+    quote: 'Signal Development Operations does amazing work. I was very impressed by their advanced skills. They went beyond my expectations in timeliness and ability.',
+    source: 'Upwork Client',
+  },
+  {
+    quote: 'Signal DevOps transformed our cloud infrastructure in weeks, not months.',
+    source: 'Federal Agency Lead Engineer',
+  },
+  {
+    quote: 'Their team built a hardened AI pipeline that passed compliance out of the box.',
+    source: 'Research Institute CTO',
+  },
+  {
+    quote: 'From planning through delivery, Signal DevOps exceeded expectations at every step.',
+    source: 'Enterprise CIO',
+  },
+  {
+    quote: 'They gave us the reliability and automation we needed to scale without extra overhead.',
+    source: 'Small Business Owner',
+  },
+];
 ---
 
-<link rel="preload" as="image" href="/images/testimonials-bg.webp" fetchpriority="low" />
-
-<section 
-  style="padding: 6rem 1rem; background: url('/images/testimonials-bg.webp') center/cover no-repeat; color: white; text-align: center; position: relative;"
->
-  <!-- Hidden LCP-friendly image for testimonial background -->
+<section class="section-shell testimonials">
   <img
     src="/images/testimonials-bg.webp"
     width="1600"
@@ -20,65 +31,102 @@ register();
     alt=""
     aria-hidden="true"
     fetchpriority="low"
-    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
+    class="testimonials__preload"
   />
 
-  <div style="max-width: 900px; margin: auto;">
-    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">Client Testimonials</h2>
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Client Feedback</p>
+      <h2 class="section-title">Trusted by teams that needed the work done right.</h2>
+      <p class="section-copy">
+        We are most often brought in when the timeline is tight, the system matters, and there is no room for vague delivery.
+      </p>
+    </div>
 
-    <swiper-container
-      slides-per-view="1"
-      navigation="true"
-      pagination="true"
-      autoplay-delay="8000"
-      loop="true"
-      style="padding-bottom: 2rem;"
-    >
-      <swiper-slide>
-        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
-          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
-            "Signal Development Operations does amazing work. I was very impressed by their advanced skills. They went beyond my expectations in timeliness and ability."
-          </blockquote>
-          <p>— Upwork Client</p>
-        </div>
-      </swiper-slide>
-
-      <swiper-slide>
-        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
-          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
-            "Signal DevOps transformed our cloud infrastructure in weeks, not months."
-          </blockquote>
-          <p>— Federal Agency Lead Engineer</p>
-        </div>
-      </swiper-slide>
-
-      <swiper-slide>
-        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
-          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
-            "Their team built a hardened AI pipeline that passed compliance out of the box."
-          </blockquote>
-          <p>— Research Institute CTO</p>
-        </div>
-      </swiper-slide>
-
-      <swiper-slide>
-        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
-          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
-            "From planning through delivery, Signal DevOps exceeded expectations at every step."
-          </blockquote>
-          <p>— Enterprise CIO</p>
-        </div>
-      </swiper-slide>
-
-      <swiper-slide>
-        <div style="background: rgba(0, 30, 65, 0.85); padding: 3rem; border-radius: 1rem; font-size: 1.125rem;">
-          <blockquote style="font-style: italic; margin-bottom: 1.5rem;">
-            "They gave us the reliability and automation we needed to scale without extra overhead."
-          </blockquote>
-          <p>— Small Business Owner</p>
-        </div>
-      </swiper-slide>
-
-    </swiper-container>
+    <div class="testimonials__grid">
+      {testimonials.map((item, index) => (
+        <article class:list={['testimonials__card', 'glass-card', { 'testimonials__card--featured': index === 0 }]}>
+          <blockquote>{item.quote}</blockquote>
+          <p>{item.source}</p>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
+
+<style>
+  .testimonials {
+    position: relative;
+    background:
+      linear-gradient(135deg, rgba(4, 10, 24, 0.82), rgba(9, 19, 39, 0.7)),
+      url('/images/testimonials-bg.webp') center/cover no-repeat;
+  }
+
+  .testimonials::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .testimonials__preload {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  .testimonials__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .testimonials__card {
+    padding: 1.4rem;
+  }
+
+  .testimonials__card--featured {
+    grid-column: span 2;
+  }
+
+  .testimonials__card blockquote {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: #fff;
+  }
+
+  .testimonials__card p {
+    margin: 1rem 0 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  @media (max-width: 960px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .testimonials__card--featured {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials__card--featured {
+      grid-column: span 1;
+    }
+  }
+</style>

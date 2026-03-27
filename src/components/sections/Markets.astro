@@ -1,87 +1,95 @@
-<section
-  style="
-    position: relative;
-    background: url('/images/market-bg.webp') center/cover no-repeat;
-    color: white;
-    padding: 6rem 1rem;
-  "
->
-  <!-- Hidden image to make background LCP-discoverable -->
-  <img
-    src="/images/market-bg.webp"
-    width="1600"
-    height="900"
-    alt=""
-    aria-hidden="true"
-    fetchpriority="low"
-    style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;"
-  />
+---
+const markets = [
+  {
+    title: 'Federal Agencies',
+    description: 'Secure cloud, automation, and delivery support for defense, intel, and civilian missions.',
+  },
+  {
+    title: 'Small and Medium Businesses',
+    description: 'Enterprise discipline for teams that need scalable systems without enterprise overhead.',
+  },
+  {
+    title: 'Enterprises',
+    description: 'Platform engineering, hybrid cloud, and delivery acceleration for teams that need momentum.',
+  },
+  {
+    title: 'Research and Universities',
+    description: 'Infrastructure and data workflows ready for regulated research and grant-backed programs.',
+  },
+  {
+    title: 'Startups',
+    description: 'Modern foundations for fast-moving product teams that need to ship without rewriting later.',
+  },
+  {
+    title: 'Nonprofits and NGOs',
+    description: 'Cost-aware, resilient systems for mission-driven organizations with real compliance needs.',
+  },
+];
+---
 
-  <div style="max-width: 1100px; margin: auto;">
-    <h2 style="font-size: 2.25rem; font-weight: 700; text-align: center; margin-bottom: 3rem;">
-      Markets We Serve
-    </h2>
+<section class="section-shell section-shell--light">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Markets We Serve</p>
+      <h2 class="section-title">Built for teams with real stakes, real deadlines, and real constraints.</h2>
+      <p class="section-copy">
+        From public sector delivery to agency overflow work and startup acceleration, we build technical systems that can hold up under pressure.
+      </p>
+    </div>
 
-    <div
-      style="
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 3rem;
-      "
-    >
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Federal Agencies
-        </h3>
-        <p>
-          Our cleared teams deliver for defense, intel, and civilian agencies — from secure cloud to tactical edge computing.
-        </p>
-      </div>
-
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Small & Medium Businesses
-        </h3>
-        <p>
-          We help SMBs punch above their weight — secure, scalable infrastructure without the overhead of legacy systems.
-        </p>
-      </div>
-
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Enterprises
-        </h3>
-        <p>
-          From hybrid cloud to platform engineering, we bring velocity to enterprise teams through battle-tested automation.
-        </p>
-      </div>
-
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Research & Universities
-        </h3>
-        <p>
-          We support groundbreaking research with secure data lakes, ML pipelines, and infrastructure ready for sensitive grants.
-        </p>
-      </div>
-
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Startups
-        </h3>
-        <p>
-          Speed and scale without compromise — we build resilient MVP infrastructure that grows with your product.
-        </p>
-      </div>
-
-      <div>
-        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; border-left: 3px solid #D7BC23; padding-left: 0.75rem;">
-          Nonprofits & NGOs
-        </h3>
-        <p>
-          Mission-driven support for organizations needing secure, cost-effective systems that meet compliance and funding needs.
-        </p>
-      </div>
+    <div class="markets__grid">
+      {markets.map((market) => (
+        <article class="markets__card surface-card">
+          <span class="markets__accent"></span>
+          <h3>{market.title}</h3>
+          <p>{market.description}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .markets__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem;
+  }
+
+  .markets__card {
+    padding: 1.35rem;
+  }
+
+  .markets__accent {
+    display: block;
+    width: 3rem;
+    height: 0.25rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-accent));
+  }
+
+  .markets__card h3 {
+    margin: 1rem 0 0.6rem;
+    font-size: 1.2rem;
+    line-height: 1.15;
+  }
+
+  .markets__card p {
+    margin: 0;
+    color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 960px) {
+    .markets__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .markets__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

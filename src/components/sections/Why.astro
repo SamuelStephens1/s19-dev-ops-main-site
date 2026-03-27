@@ -1,15 +1,114 @@
-<section style="padding: 6rem 1rem; background-color: #f4f6f8;">
-  <div style="max-width: 960px; margin: auto; text-align: center;">
-    <link rel="preload" as="image" href="/images/why-img.webp" fetchpriority="high" />
-    <img 
-      src="/images/why-img.webp" 
-      alt="Why Signal DevOps — veteran-owned, secure by design, compliant, real DevOps" 
-      width="720"
-      height="405"
-      style="width: 100%; max-width: 720px; height: auto; margin: auto; border-radius: 0.5rem;" 
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-    />
+---
+const highlights = [
+  'Veteran-built delivery culture',
+  'Security and compliance baked into the work',
+  'Direct access to the engineers doing the build',
+  'White-label support when your team needs invisible capacity',
+];
+---
+
+<section class="section-shell why">
+  <div class="container why__grid">
+    <div class="why__content">
+      <p class="eyebrow">Why Signal DevOps</p>
+      <h2 class="section-title why__title">Senior builders who can move fast without creating risk.</h2>
+      <p class="section-copy why__copy">
+        We are at our best when the work is technical, the timeline matters, and the solution has to hold up in the real world after launch.
+      </p>
+
+      <div class="why__list">
+        {highlights.map((item) => (
+          <div class="why__item glass-card">
+            <span class="why__dot"></span>
+            <p>{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="why__media">
+      <img
+        src="/images/why-img.webp"
+        alt="Signal DevOps team values: veteran-built, secure by design, compliant, and direct engineering support"
+        width="720"
+        height="405"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
   </div>
 </section>
+
+<style>
+  .why {
+    position: relative;
+  }
+
+  .why__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .why__title,
+  .why__copy {
+    max-width: 13ch;
+    margin-left: 0;
+  }
+
+  .why__copy {
+    max-width: 56ch;
+  }
+
+  .why__list {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .why__item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .why__dot {
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-accent));
+    flex: none;
+  }
+
+  .why__item p {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .why__media {
+    position: relative;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(121, 154, 216, 0.18);
+    box-shadow: var(--shadow-md);
+  }
+
+  .why__media img {
+    border-radius: 1rem;
+  }
+
+  @media (max-width: 960px) {
+    .why__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .why__title,
+    .why__copy {
+      max-width: none;
+    }
+  }
+</style>

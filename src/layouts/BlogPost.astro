@@ -34,14 +34,21 @@ const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
     <style>
       :root {
         --container: 75ch;
-        --muted: #6b7280;
-        --border: #e5e7eb;
+        --muted: rgba(216, 227, 255, 0.72);
+        --border: rgba(121, 154, 216, 0.18);
       }
 
       main {
         max-width: var(--container);
         margin: 0 auto;
-        padding: 2rem 1rem 3rem;
+        padding: 2.3rem 1rem 4rem;
+      }
+
+      main > h1 {
+        margin: 0;
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
       }
 
       .meta {
@@ -64,6 +71,7 @@ const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
       article {
         line-height: 1.75;
         font-size: 1.06rem;
+        color: rgba(234, 242, 255, 0.88);
       }
 
       article h1,
@@ -72,6 +80,16 @@ const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
       article h4 {
         margin-top: 1.8rem;
         margin-bottom: 0.8rem;
+        color: #fff;
+      }
+
+      article p,
+      article li {
+        color: rgba(226, 236, 255, 0.84);
+      }
+
+      article a {
+        color: #8ddbff;
       }
 
       article hr {
@@ -87,9 +105,11 @@ const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
 
       article blockquote {
         border-left: 4px solid var(--border);
-        padding-left: 1rem;
-        color: #374151;
+        padding: 0.85rem 1rem;
+        color: rgba(243, 247, 255, 0.92);
         margin: 1rem 0;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 0 1rem 1rem 0;
       }
 
       .tags {
@@ -104,19 +124,19 @@ const isoDate = pubDate ? new Date(pubDate).toISOString() : "";
         padding: 0.15rem 0.5rem;
         border-radius: 999px;
         font-size: 0.8rem;
-        color: #374151;
-        background: #fff;
+        color: #e6efff;
+        background: rgba(255, 255, 255, 0.05);
       }
 
       .back {
         display: inline-block;
         margin-bottom: 1rem;
-        color: #2563eb;
+        color: #8ddbff;
         text-decoration: none;
       }
 
       .back:hover {
-        text-decoration: underline;
+        color: #c5f0ff;
       }
     </style>
   </head>

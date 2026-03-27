@@ -17,12 +17,32 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     <style>
       :root {
         --card-radius: 14px;
-        --card-border: 1px solid rgba(0,0,0,.08);
-        --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
-        --shadow-lg: 0 10px 20px rgba(0,0,0,.12), 0 3px 6px rgba(0,0,0,.06);
+        --card-border: 1px solid rgba(121, 154, 216, 0.18);
+        --shadow-sm: 0 8px 22px rgba(5, 14, 34, 0.12);
+        --shadow-lg: 0 18px 34px rgba(5, 14, 34, 0.18);
+        --ink: #101a30;
+        --muted: #63738c;
+        --light-muted: rgba(216, 227, 255, 0.74);
       }
 
-      main { max-width: 1150px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+      main { max-width: 1150px; margin: 0 auto; padding: 2.3rem 1rem 4rem; }
+
+      .pageHeader {
+        margin-bottom: 1.5rem;
+      }
+
+      .pageHeader h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .pageHeader p {
+        margin: 0.7rem 0 0;
+        max-width: 58ch;
+        color: var(--light-muted);
+      }
 
       .cards {
         display: grid;
@@ -38,7 +58,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       .card {
         border: var(--card-border);
         border-radius: var(--card-radius);
-        background: #fff;
+        background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,250,255,.94));
         box-shadow: var(--shadow-sm);
         overflow: hidden;
         transition: transform .15s ease, box-shadow .15s ease;
@@ -68,12 +88,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         align-content: start;
         text-align: center;
         gap: .35rem;
+        color: var(--ink);
       }
 
       .title {
         margin: 0;
         font-weight: 800;
         font-size: 1.05rem;
+        color: var(--ink);
         line-height: 1.25;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -84,7 +106,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
       .date {
         margin: 0;
-        color: #6b7280;
+        color: var(--muted);
         font-size: .9rem;
       }
     </style>
@@ -94,7 +116,10 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
     <main>
       <section aria-labelledby="blog-heading">
-        <h1 id="blog-heading" class="sr-only">Blog</h1>
+        <header class="pageHeader">
+          <h1 id="blog-heading">Blog</h1>
+          <p>Practical notes on AI systems, cloud operations, security, and delivery from the engineering side of the work.</p>
+        </header>
 
         <ul class="cards">
           {posts.map(({ slug, data }) => {
